@@ -1,0 +1,42 @@
+#ifndef HIDTOOL_MOUSE_HOOKER_HPP
+#define HIDTOOL_MOUSE_HOOKER_HPP
+
+#include <hidtool/defines.hpp>
+#include "mouse_event.hpp"
+
+namespace hidtool
+{
+
+using MouseEventHandler = bool (*)(MouseEvent);
+
+class MouseHookerPrivate;
+
+/**
+ * @note 若未特别说明，此类的所有成员函数都是线程安全的。
+ * @attention 不要在工作线程中（即事件处理回调中）调用成员函数。
+ */
+class HIDTOOL_API MouseHooker
+{
+public:
+    static MouseHooker& getInstance();
+    static bool isSupportBlockEventPropagation() noexcept;
+
+    bool run();
+    void stop();
+    bool isRunning() const;
+
+    /// @note 在运行后才能正常设置。
+    bool setEventHandler(const MouseEventHandler& eventHandler);
+
+private:
+    explicit MouseHooker(MouseHookerPrivate&);
+    ~MouseHooker() = default;
+    MouseHooker(const MouseHooker&) = delete;
+    MouseHooker& operator=(const MouseHooker&) = delete;
+
+    MouseHookerPrivate& pri_;
+};
+
+} // namespace hidtool
+
+#endif // !HIDTOOL_MOUSE_HOOKER_HPP
