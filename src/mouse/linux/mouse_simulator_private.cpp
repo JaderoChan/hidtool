@@ -19,9 +19,9 @@ MouseSimulatorPrivate& MouseSimulatorPrivate::getInstance()
     return instance;
 }
 
-AbsMoveRange MouseSimulatorPrivate::getAbsMoveRange()
+MouseSimulator::AbsMoveRange MouseSimulatorPrivate::getAbsMoveRange()
 {
-    AbsMoveRange result;
+    MouseSimulator::AbsMoveRange result;
 
     result.minX = ABS_MIN_X;
     result.maxX = ABS_MAX_X;

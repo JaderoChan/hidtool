@@ -22,7 +22,7 @@ MouseSimulator& MouseSimulator::getInstance()
     return instance;
 }
 
-AbsMoveRange MouseSimulator::getAbsMoveRange()
+MouseSimulator::AbsMoveRange MouseSimulator::getAbsMoveRange()
 { return MouseSimulatorPrivate::getAbsMoveRange(); }
 
 bool MouseSimulator::initialize()

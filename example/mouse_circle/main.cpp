@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
     MouseSimulator& msSim = MouseSimulator::getInstance();
     msSim.initialize();
 
-    AbsMoveRange range = MouseSimulator::getAbsMoveRange();
+    auto range = MouseSimulator::getAbsMoveRange();
     int32_t halfWidth = (range.maxX - range.minX) / 2;
     int32_t halfHeight = (range.maxY - range.minY) / 2;
 

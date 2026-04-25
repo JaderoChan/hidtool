@@ -7,14 +7,6 @@
 namespace hidtool
 {
 
-struct AbsMoveRange
-{
-    int32_t minX = 0;
-    int32_t maxX = 0;
-    int32_t minY = 0;
-    int32_t maxY = 0;
-};
-
 class MouseSimulatorPrivate;
 
 /**
@@ -24,6 +16,14 @@ class MouseSimulatorPrivate;
 class HIDTOOL_API MouseSimulator
 {
 public:
+    struct AbsMoveRange
+    {
+        int32_t minX = 0;
+        int32_t maxX = 0;
+        int32_t minY = 0;
+        int32_t maxY = 0;
+    };
+
     static MouseSimulator& getInstance();
 
     static AbsMoveRange getAbsMoveRange();

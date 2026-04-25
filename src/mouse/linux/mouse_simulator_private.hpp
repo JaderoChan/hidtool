@@ -14,7 +14,7 @@ class MouseSimulatorPrivate
 public:
     static MouseSimulatorPrivate& getInstance();
 
-    static AbsMoveRange getAbsMoveRange();
+    static MouseSimulator::AbsMoveRange getAbsMoveRange();
 
     bool initialize();
     void destroy();

@@ -28,9 +28,9 @@ MouseSimulatorPrivate& MouseSimulatorPrivate::getInstance()
     return instance;
 }
 
-AbsMoveRange MouseSimulatorPrivate::getAbsMoveRange()
+MouseSimulator::AbsMoveRange MouseSimulatorPrivate::getAbsMoveRange()
 {
-    AbsMoveRange result;
+    MouseSimulator::AbsMoveRange result;
     VirtualScreenInfo vsi = VirtualScreenInfo::getLatest();
 
     result.minX = vsi.x;
