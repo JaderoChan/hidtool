@@ -7,9 +7,6 @@ namespace hidtool
 
 HookerPrivate::~HookerPrivate()
 {
-    if (!isRunning_.load())
-        return;
-
     PostThreadMessageA(workerThreadId_, WM_QUIT, 0, 0);
     if (workerThread_.joinable())
         workerThread_.join();
