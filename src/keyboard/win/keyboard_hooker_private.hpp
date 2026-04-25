@@ -22,7 +22,7 @@ private:
     KeyboardHookerPrivate& operator=(const KeyboardHookerPrivate&) = delete;
 
     HHOOK setWindowHook() override;
-    void onSetEventHandler(WPARAM eventHandler) override;
+    void handleSetEventHandlerEvent(WPARAM eventHandler) override;
 
     static LRESULT WINAPI LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
 

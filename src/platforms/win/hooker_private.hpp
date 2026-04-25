@@ -22,15 +22,16 @@ public:
     bool isRunning() const;
 
 protected:
-    bool setEventHandler(WPARAM eventHandler);
+    bool sendSetEventHandlerEvent(WPARAM eventHandler);
 
     virtual HHOOK setWindowHook() = 0;
-    virtual void onSetEventHandler(WPARAM eventHandler) = 0;
+    virtual void handleSetEventHandlerEvent(WPARAM eventHandler) = 0;
+
+    mutable std::mutex operateMtx_;
 
 private:
     void work(std::promise<bool>& runningResult);
 
-    mutable std::mutex operateMtx_;
     std::atomic<bool> isRunning_{false};
     std::thread workerThread_;
     DWORD workerThreadId_ = 0;

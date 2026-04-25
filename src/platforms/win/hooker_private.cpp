@@ -60,7 +60,7 @@ bool HookerPrivate::isRunning() const
     return isRunning_.load();
 }
 
-bool HookerPrivate::setEventHandler(WPARAM eventHandler)
+bool HookerPrivate::sendSetEventHandlerEvent(WPARAM eventHandler)
 {
     return (PostThreadMessageA(
         workerThreadId_,
@@ -92,7 +92,7 @@ void HookerPrivate::work(std::promise<bool>& runningResult)
         switch (msg.message)
         {
             case WM_SET_EVENT_HANDLER:
-                onSetEventHandler(msg.wParam);
+                handleSetEventHandlerEvent(msg.wParam);
                 break;
             default:
                 break;

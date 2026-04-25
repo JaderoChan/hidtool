@@ -20,7 +20,15 @@ MouseHookerPrivate& MouseHookerPrivate::getInstance()
 
 bool MouseHookerPrivate::setEventHandler(const MouseEventHandler& eventHandler)
 {
-    return HookerPrivate::setEventHandler(reinterpret_cast<WPARAM>(eventHandler));
+    std::lock_guard<std::mutex> locker(operateMtx_);
+
+    if (!isRunning())
+    {
+        eventHandler_ = eventHandler;
+        return true;
+    }
+
+    return HookerPrivate::sendSetEventHandlerEvent(reinterpret_cast<WPARAM>(eventHandler));
 }
 
 HHOOK MouseHookerPrivate::setWindowHook()
@@ -28,7 +36,7 @@ HHOOK MouseHookerPrivate::setWindowHook()
     return SetWindowsHookExA(WH_MOUSE_LL, &LowLevelMouseProc, nullptr, 0);
 }
 
-void MouseHookerPrivate::onSetEventHandler(WPARAM eventHandler)
+void MouseHookerPrivate::handleSetEventHandlerEvent(WPARAM eventHandler)
 {
     eventHandler_ = reinterpret_cast<MouseEventHandler>(static_cast<intptr_t>(eventHandler));
 }

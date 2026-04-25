@@ -22,7 +22,7 @@ private:
     MouseHookerPrivate& operator=(const MouseHookerPrivate&) = delete;
 
     HHOOK setWindowHook() override;
-    void onSetEventHandler(WPARAM eventHandler) override;
+    void handleSetEventHandlerEvent(WPARAM eventHandler) override;
 
     static LRESULT WINAPI LowLevelMouseProc(int nCode, WPARAM wParam, LPARAM lParam);
 

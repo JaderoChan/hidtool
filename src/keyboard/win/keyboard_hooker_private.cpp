@@ -20,7 +20,15 @@ KeyboardHookerPrivate& KeyboardHookerPrivate::getInstance()
 
 bool KeyboardHookerPrivate::setEventHandler(const KeyboardEventHandler& eventHandler)
 {
-    return HookerPrivate::setEventHandler(reinterpret_cast<WPARAM>(eventHandler));
+    std::lock_guard<std::mutex> locker(operateMtx_);
+
+    if (!isRunning())
+    {
+        eventHandler_ = eventHandler;
+        return true;
+    }
+
+    return HookerPrivate::sendSetEventHandlerEvent(reinterpret_cast<WPARAM>(eventHandler));
 }
 
 HHOOK KeyboardHookerPrivate::setWindowHook()
@@ -28,7 +36,7 @@ HHOOK KeyboardHookerPrivate::setWindowHook()
     return SetWindowsHookExA(WH_KEYBOARD_LL, &LowLevelKeyboardProc, nullptr, 0);
 }
 
-void KeyboardHookerPrivate::onSetEventHandler(WPARAM eventHandler)
+void KeyboardHookerPrivate::handleSetEventHandlerEvent(WPARAM eventHandler)
 {
     eventHandler_ = reinterpret_cast<KeyboardEventHandler>(static_cast<intptr_t>(eventHandler));
 }

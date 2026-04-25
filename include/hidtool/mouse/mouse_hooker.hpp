@@ -25,7 +25,6 @@ public:
     void stop();
     bool isRunning() const;
 
-    /// @note 在运行后才能正常设置。
     bool setEventHandler(const MouseEventHandler& eventHandler);
 
 private:
