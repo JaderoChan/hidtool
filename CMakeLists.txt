@@ -144,6 +144,32 @@ if(WIN32)
     target_link_libraries(${PROJECT_NAME} PRIVATE atomic)   # For 16 bytes atomic.
 endif()
 
+if(APPLE)
+    find_library(COREFOUNDATION_LIBRARY CoreFoundation)
+    if(COREFOUNDATION_LIBRARY)
+        message(STATUS "${MSG_PREFIX} Found CoreFoundation: ${COREFOUNDATION_LIBRARY}.")
+        target_link_libraries(${PROJECT_NAME} PRIVATE ${COREFOUNDATION_LIBRARY})
+    else()
+        message(FATAL_ERROR "${MSG_PREFIX} Not found CoreFoundation.")
+    endif()
+
+    find_library(CARBON_LIBRARY Carbon)
+    if(CARBON_LIBRARY)
+        message(STATUS "${MSG_PREFIX} Found Carbon: ${CARBON_LIBRARY}.")
+        target_link_libraries(${PROJECT_NAME} PRIVATE ${CARBON_LIBRARY})
+    else()
+        message(FATAL_ERROR "${MSG_PREFIX} Not found Carbon.")
+    endif()
+
+    find_library(COREGRAPHICS_LIBRARY CoreGraphics)
+    if(COREGRAPHICS_LIBRARY)
+        message(STATUS "${MSG_PREFIX} Found CoreGraphics: ${COREGRAPHICS_LIBRARY}.")
+        target_link_libraries(${PROJECT_NAME} PRIVATE ${COREGRAPHICS_LIBRARY})
+    else()
+        message(FATAL_ERROR "${MSG_PREFIX} Not found CoreGraphics.")
+    endif()
+endif()
+
 # Configure third-party dependencies.
 find_package(Threads REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE Threads::Threads)
