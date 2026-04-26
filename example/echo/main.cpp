@@ -25,7 +25,7 @@ static const char* getMouseButtonString(MouseButton button)
         case MouseButton::MSBTN_FORWARD:
             return "Forward";
         default:
-            return "";
+            return "Unknown button";
     }
 }
 
