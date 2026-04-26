@@ -8,6 +8,7 @@ namespace hidtool
 
 enum MouseButton : uint8_t
 {
+    MSBTN_NONE,
     MSBTN_LEFT,
     MSBTN_RIGHT,
     MSBTN_MIDDLE,

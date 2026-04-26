@@ -10,10 +10,12 @@ struct KeyboardEvent
 {
     enum EventType : uint8_t
     {
+        ET_NONE,
         ET_PRESS,
         ET_RELEASE
     };
 
+    constexpr KeyboardEvent() noexcept = default;
     constexpr explicit KeyboardEvent(EventType eventType) noexcept
         : eventType(eventType) {}
     constexpr KeyboardEvent(EventType eventType, uint32_t nativeKey) noexcept
@@ -21,7 +23,7 @@ struct KeyboardEvent
     KeyboardEvent(EventType eventType, KeyboardKey key) noexcept
         : eventType(eventType), nativeKey(keyboardKeyToNativeKey(key)) {};
 
-    EventType eventType;
+    EventType eventType = ET_NONE;
     uint32_t nativeKey = 0;
 };
 

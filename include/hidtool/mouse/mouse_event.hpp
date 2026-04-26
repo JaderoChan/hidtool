@@ -10,12 +10,16 @@ struct MouseEvent
 {
     enum EventType : uint8_t
     {
+        ET_NONE,
         ET_ABS_MOVE,    ///< Absolute move event.
         ET_REL_MOVE,    ///< Relative move event.
         ET_WHEEL,
         ET_PRESS,
         ET_RELEASE
     };
+
+    constexpr MouseEvent() noexcept
+        : pos{0, 0} {}
 
     constexpr explicit MouseEvent(EventType eventType) noexcept
         : eventType(eventType), pos{0, 0} {}
@@ -55,7 +59,7 @@ struct MouseEvent
         return result;
     }
 
-    EventType eventType;
+    EventType eventType = ET_NONE;
     union
     {
         /**

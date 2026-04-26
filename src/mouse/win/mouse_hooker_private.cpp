@@ -27,7 +27,7 @@ LRESULT WINAPI MouseHookerPrivate::LowLevelMouseProc(int nCode, WPARAM wParam, L
 
     if (nCode == HC_ACTION)
     {
-        MouseEvent event(MouseEvent::ET_ABS_MOVE);
+        MouseEvent event;
         if (mouseEventFromParam(event, wParam, lParam))
         {
             auto eventHandler = hooker.getEventHandler<MouseEventHandler>();

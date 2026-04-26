@@ -27,7 +27,7 @@ LRESULT WINAPI KeyboardHookerPrivate::LowLevelKeyboardProc(int nCode, WPARAM wPa
 
     if (nCode == HC_ACTION)
     {
-        KeyboardEvent event(KeyboardEvent::ET_PRESS);
+        KeyboardEvent event;
         if (keyboardEventFromParam(event, wParam, lParam))
         {
             auto eventHandler = hooker.getEventHandler<KeyboardEventHandler>();
