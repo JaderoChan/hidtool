@@ -22,7 +22,23 @@ public:
     bool isRunning() const;
 
 protected:
-    bool setEventHandler(intptr_t eventHandler);
+    template <typename T>
+    bool setEventHandler(T eventHandler)
+    {
+        std::lock_guard<std::mutex> locker(operateMtx_);
+
+        if (!isRunning_.load())
+        {
+            eventHandler_ = reinterpret_cast<intptr_t>(eventHandler);
+            return true;
+        }
+
+        return (PostThreadMessageA(
+            workerThreadId_,
+            WM_SET_EVENT_HANDLER,
+            reinterpret_cast<intptr_t>(eventHandler),
+            0) != 0);
+    }
 
     template <typename T>
     static T getEventHandler() { return reinterpret_cast<T>(eventHandler_); }

@@ -13,7 +13,7 @@ KeyboardHookerPrivate& KeyboardHookerPrivate::getInstance()
 
 bool KeyboardHookerPrivate::setEventHandler(const KeyboardEventHandler& eventHandler)
 {
-    return HookerPrivate::setEventHandler(reinterpret_cast<intptr_t>(eventHandler));
+    return HookerPrivate::setEventHandler<KeyboardEventHandler>(eventHandler);
 }
 
 HHOOK KeyboardHookerPrivate::setWindowHook()

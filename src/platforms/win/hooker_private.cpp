@@ -60,23 +60,6 @@ bool HookerPrivate::isRunning() const
     return isRunning_.load();
 }
 
-bool HookerPrivate::setEventHandler(intptr_t eventHandler)
-{
-    std::lock_guard<std::mutex> locker(operateMtx_);
-
-    if (!isRunning_.load())
-    {
-        eventHandler_ = eventHandler;
-        return true;
-    }
-
-    return (PostThreadMessageA(
-        workerThreadId_,
-        WM_SET_EVENT_HANDLER,
-        static_cast<WPARAM>(eventHandler),
-        0) != 0);
-}
-
 void HookerPrivate::work(std::promise<bool>& runningResult)
 {
     HHOOK hook = setWindowHook();
