@@ -62,47 +62,48 @@ bool MouseSimulatorPrivate::isInitialized() const
 
 bool MouseSimulatorPrivate::sendEvent(const MouseEvent& event)
 {
-    switch (event.eventType())
+    switch (event.eventType)
     {
         case MouseEvent::ET_REL_MOVE:
-            return moveBy(event.x(), event.y());
+            return moveBy(event.pos.x, event.pos.y);
         case MouseEvent::ET_ABS_MOVE:
-            return moveTo(event.x(), event.y());
+            return moveTo(event.pos.x, event.pos.y);
         case MouseEvent::ET_WHEEL:
-            return wheel(event.wheelDelta());
+            return wheel(event.wheelDelta);
         case MouseEvent::ET_PRESS:
-            return pressButton(event.button());
+            return pressButton(event.button);
         case MouseEvent::ET_RELEASE:
-            return releaseButton(event.button());
+            return releaseButton(event.button);
         default:
             return false;
     }
 }
 
-size_t MouseSimulatorPrivate::sendEvent(const std::vector<MouseEvent>& events)
+size_t MouseSimulatorPrivate::sendEvent(const MouseEvent* events, size_t count)
 {
     if (!isInitialized_.load())
         return 0;
 
     size_t sent = 0;
-    for (const auto& event : events)
+    for (size_t i = 0; i < count; ++i)
     {
-        switch (event.eventType())
+        const auto& event = events[i];
+        switch (event.eventType)
         {
             case MouseEvent::ET_REL_MOVE:
-                sent += moveBy(event.x(), event.y());
+                sent += moveBy(event.pos.x, event.pos.y);
                 break;
             case MouseEvent::ET_ABS_MOVE:
-                sent += moveTo(event.x(), event.y());
+                sent += moveTo(event.pos.x, event.pos.y);
                 break;
             case MouseEvent::ET_WHEEL:
-                sent += wheel(event.wheelDelta());
+                sent += wheel(event.wheelDelta);
                 break;
             case MouseEvent::ET_PRESS:
-                sent += pressButton(event.button());
+                sent += pressButton(event.button);
                 break;
             case MouseEvent::ET_RELEASE:
-                sent += releaseButton(event.button());
+                sent += releaseButton(event.button);
                 break;
             default:
                 continue;

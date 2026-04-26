@@ -50,37 +50,36 @@ bool KeyboardSimulatorPrivate::isInitialized() const
 
 bool KeyboardSimulatorPrivate::sendEvent(const KeyboardEvent& event)
 {
-    switch (event.eventType())
+    switch (event.eventType)
     {
         case KeyboardEvent::ET_PRESS:
-            return pressKey(event.nativeKey());
+            return pressKey(event.nativeKey);
         case KeyboardEvent::ET_RELEASE:
-            return releaseKey(event.nativeKey());
-        case KeyboardEvent::ET_NONE:
+            return releaseKey(event.nativeKey);
         default:
             return false;
     }
 }
 
-size_t KeyboardSimulatorPrivate::sendEvent(const std::vector<KeyboardEvent>& events)
+size_t KeyboardSimulatorPrivate::sendEvent(const KeyboardEvent* events, size_t count)
 {
     if (!isInitialized_.load())
         return 0;
 
     size_t sent = 0;
-    for (const auto& event : events)
+    for (size_t i = 0; i < count; ++i)
     {
-        switch (event.eventType())
+        const auto& event = events[i];
+        switch (event.eventType)
         {
             case KeyboardEvent::ET_PRESS:
-                sent += pressKey(event.nativeKey());
+                sent += pressKey(event.nativeKey);
                 break;
             case KeyboardEvent::ET_RELEASE:
-                sent += releaseKey(event.nativeKey());
+                sent += releaseKey(event.nativeKey);
                 break;
-            case KeyboardEvent::ET_NONE:
             default:
-                continue;
+                break;
         }
     }
 

@@ -19,7 +19,7 @@ public:
     bool isInitialized() const;
 
     bool sendEvent(const KeyboardEvent& event);
-    size_t sendEvent(const std::vector<KeyboardEvent>& events);
+    size_t sendEvent(const KeyboardEvent* events, size_t count);
 
     bool pressKey(uint32_t nativeKey);
     bool releaseKey(uint32_t nativeKey);
