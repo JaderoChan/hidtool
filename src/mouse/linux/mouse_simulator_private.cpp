@@ -188,7 +188,6 @@ static inline bool setInputEventButton(struct input_event& ie, MouseButton butto
         case MouseButton::MSBTN_BACK:
             ie.code = BTN_BACK;
             break;
-        case MouseButton::MSBTN_NONE:
         default:
             return false;
     }

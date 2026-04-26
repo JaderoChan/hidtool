@@ -6,7 +6,7 @@
 namespace hidtool
 {
 
-constexpr struct input_event createSyncEvent()
+inline struct input_event createSyncEvent()
 {
     struct input_event ie = {0};
 
