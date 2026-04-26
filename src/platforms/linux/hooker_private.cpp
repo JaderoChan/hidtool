@@ -313,7 +313,7 @@ void HookerPrivate::handleEvdevChanged(int fd)
             continue;
         }
 
-        if (n == -1 && (errno == EINTR || errno == EAGAIN))
+        if (n == -1 && errno == EINTR)
             continue;
 
         break;
