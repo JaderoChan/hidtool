@@ -95,6 +95,7 @@ bool UInput::sendEvent(const struct input_event* ies, size_t count)
     while (written < total)
     {
         ssize_t n = write(uinputFd_, p + written, total - written);
+
         if (n > 0)
         {
             written += static_cast<size_t>(n);
