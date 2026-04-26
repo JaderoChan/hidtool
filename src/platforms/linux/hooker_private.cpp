@@ -17,28 +17,7 @@ constexpr const char* EVDEV_DIR = "/dev/input/";
 
 HookerPrivate::~HookerPrivate()
 {
-    WorkEvent event{WorkEvent::END};
-    sendWorkEvent(event);
-
-    if (workerThread_.joinable())
-        workerThread_.join();
-
-    close(watchedFds_[0].fd);
-    watchedFds_[0].fd = -1;
-
-    close(watchedFds_[1].fd);
-    watchedFds_[1].fd = -1;
-
-    for (auto it = watchedFds_.begin() + 2; it != watchedFds_.end();)
-    {
-        close(it->fd);
-        it = watchedFds_.erase(it);
-    }
-
-    evdevNames_.clear();
-
     eventHandler_ = 0;
-    workEvents_.clear();
 }
 
 bool HookerPrivate::run()
@@ -71,6 +50,11 @@ void HookerPrivate::stop()
         workerThread_.join();
 
     cleanupAllFds();
+
+    {
+        std::lock_guard<std::mutex> locker(workEventsMtx_);
+        workEvents_.clear();
+    }
 
     isRunning_.store(false);
 }

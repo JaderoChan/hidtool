@@ -5,13 +5,8 @@ namespace hidtool
 
 HookerPrivate::~HookerPrivate()
 {
-    PostThreadMessageA(workerThreadId_, WM_QUIT, 0, 0);
-    if (workerThread_.joinable())
-        workerThread_.join();
-
+    stop();
     eventHandler_ = 0;
-    workerThreadId_ = 0;
-    isRunning_.store(false);
 }
 
 bool HookerPrivate::run()
@@ -48,6 +43,7 @@ void HookerPrivate::stop()
     if (workerThread_.joinable())
         workerThread_.join();
 
+    workerThreadId_ = 0;
     isRunning_.store(false);
 }
 
