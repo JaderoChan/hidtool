@@ -23,12 +23,14 @@ HHOOK KeyboardHookerPrivate::setWindowHook()
 
 LRESULT WINAPI KeyboardHookerPrivate::LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 {
+    static KeyboardHookerPrivate& hooker = getInstance();
+
     if (nCode == HC_ACTION)
     {
         KeyboardEvent event(KeyboardEvent::ET_PRESS);
         if (keyboardEventFromParam(event, wParam, lParam))
         {
-            auto eventHandler = getEventHandler<KeyboardEventHandler>();
+            auto eventHandler = hooker.getEventHandler<KeyboardEventHandler>();
             if (eventHandler && !eventHandler(event))
                 return 1;
         }

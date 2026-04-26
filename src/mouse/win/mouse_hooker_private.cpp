@@ -23,12 +23,14 @@ HHOOK MouseHookerPrivate::setWindowHook()
 
 LRESULT WINAPI MouseHookerPrivate::LowLevelMouseProc(int nCode, WPARAM wParam, LPARAM lParam)
 {
+    static MouseHookerPrivate& hooker = getInstance();
+
     if (nCode == HC_ACTION)
     {
         MouseEvent event(MouseEvent::ET_ABS_MOVE);
         if (mouseEventFromParam(event, wParam, lParam))
         {
-            auto eventHandler = getEventHandler<MouseEventHandler>();
+            auto eventHandler = hooker.getEventHandler<MouseEventHandler>();
             if (eventHandler && !eventHandler(event))
                 return 1;
         }

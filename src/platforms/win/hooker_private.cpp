@@ -3,8 +3,6 @@
 namespace hidtool
 {
 
-intptr_t HookerPrivate::eventHandler_ = 0;
-
 HookerPrivate::~HookerPrivate()
 {
     PostThreadMessageA(workerThreadId_, WM_QUIT, 0, 0);

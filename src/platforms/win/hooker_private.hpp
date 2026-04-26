@@ -43,14 +43,14 @@ protected:
     }
 
     template <typename T>
-    static T getEventHandler() { return reinterpret_cast<T>(eventHandler_); }
+    T getEventHandler() { return reinterpret_cast<T>(eventHandler_); }
 
     virtual HHOOK setWindowHook() = 0;
 
 private:
     void work(std::promise<bool>& runningResult);
 
-    static intptr_t eventHandler_;
+    intptr_t eventHandler_ = 0;
 
     mutable std::mutex operateMtx_;
     std::atomic<bool> isRunning_{false};
