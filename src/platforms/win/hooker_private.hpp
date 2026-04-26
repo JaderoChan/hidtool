@@ -22,16 +22,19 @@ public:
     bool isRunning() const;
 
 protected:
-    bool sendSetEventHandlerEvent(WPARAM eventHandler);
+    bool setEventHandler(intptr_t eventHandler);
+
+    template <typename T>
+    static T getEventHandler() { return reinterpret_cast<T>(eventHandler_); }
 
     virtual HHOOK setWindowHook() = 0;
-    virtual void handleSetEventHandlerEvent(WPARAM eventHandler) = 0;
-
-    mutable std::mutex operateMtx_;
 
 private:
     void work(std::promise<bool>& runningResult);
 
+    static intptr_t eventHandler_;
+
+    mutable std::mutex operateMtx_;
     std::atomic<bool> isRunning_{false};
     std::thread workerThread_;
     DWORD workerThreadId_ = 0;

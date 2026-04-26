@@ -17,16 +17,13 @@ public:
 
 private:
     MouseHookerPrivate() = default;
-    ~MouseHookerPrivate();
+    ~MouseHookerPrivate() = default;
     MouseHookerPrivate(const MouseHookerPrivate&) = delete;
     MouseHookerPrivate& operator=(const MouseHookerPrivate&) = delete;
 
     HHOOK setWindowHook() override;
-    void handleSetEventHandlerEvent(WPARAM eventHandler) override;
 
     static LRESULT WINAPI LowLevelMouseProc(int nCode, WPARAM wParam, LPARAM lParam);
-
-    static MouseEventHandler eventHandler_;
 };
 
 } // namespace hidtool

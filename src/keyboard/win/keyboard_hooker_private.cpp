@@ -5,13 +5,6 @@
 namespace hidtool
 {
 
-KeyboardEventHandler KeyboardHookerPrivate::eventHandler_ = nullptr;
-
-KeyboardHookerPrivate::~KeyboardHookerPrivate()
-{
-    eventHandler_ = nullptr;
-}
-
 KeyboardHookerPrivate& KeyboardHookerPrivate::getInstance()
 {
     static KeyboardHookerPrivate instance;
@@ -20,25 +13,12 @@ KeyboardHookerPrivate& KeyboardHookerPrivate::getInstance()
 
 bool KeyboardHookerPrivate::setEventHandler(const KeyboardEventHandler& eventHandler)
 {
-    std::lock_guard<std::mutex> locker(operateMtx_);
-
-    if (!isRunning())
-    {
-        eventHandler_ = eventHandler;
-        return true;
-    }
-
-    return HookerPrivate::sendSetEventHandlerEvent(reinterpret_cast<WPARAM>(eventHandler));
+    return HookerPrivate::setEventHandler(reinterpret_cast<intptr_t>(eventHandler));
 }
 
 HHOOK KeyboardHookerPrivate::setWindowHook()
 {
     return SetWindowsHookExA(WH_KEYBOARD_LL, &LowLevelKeyboardProc, nullptr, 0);
-}
-
-void KeyboardHookerPrivate::handleSetEventHandlerEvent(WPARAM eventHandler)
-{
-    eventHandler_ = reinterpret_cast<KeyboardEventHandler>(static_cast<intptr_t>(eventHandler));
 }
 
 LRESULT WINAPI KeyboardHookerPrivate::LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
@@ -48,7 +28,7 @@ LRESULT WINAPI KeyboardHookerPrivate::LowLevelKeyboardProc(int nCode, WPARAM wPa
         KeyboardEvent event(KeyboardEvent::ET_PRESS);
         if (keyboardEventFromParam(event, wParam, lParam))
         {
-            auto eventHandler = KeyboardHookerPrivate::eventHandler_;
+            auto eventHandler = getEventHandler<KeyboardEventHandler>();
             if (eventHandler && !eventHandler(event))
                 return 1;
         }

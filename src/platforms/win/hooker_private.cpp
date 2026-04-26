@@ -3,7 +3,9 @@
 namespace hidtool
 {
 
-#define WM_SET_EVENT_HANDLER (WM_USER + 1)
+#define WM_SET_EVENT_HANDLER (WM_USER + 1)\
+
+intptr_t HookerPrivate::eventHandler_ = 0;
 
 HookerPrivate::~HookerPrivate()
 {
@@ -11,6 +13,7 @@ HookerPrivate::~HookerPrivate()
     if (workerThread_.joinable())
         workerThread_.join();
 
+    eventHandler_ = 0;
     workerThreadId_ = 0;
     isRunning_.store(false);
 }
@@ -57,12 +60,20 @@ bool HookerPrivate::isRunning() const
     return isRunning_.load();
 }
 
-bool HookerPrivate::sendSetEventHandlerEvent(WPARAM eventHandler)
+bool HookerPrivate::setEventHandler(intptr_t eventHandler)
 {
+    std::lock_guard<std::mutex> locker(operateMtx_);
+
+    if (!isRunning_.load())
+    {
+        eventHandler_ = eventHandler;
+        return true;
+    }
+
     return (PostThreadMessageA(
         workerThreadId_,
         WM_SET_EVENT_HANDLER,
-        eventHandler,
+        static_cast<WPARAM>(eventHandler),
         0) != 0);
 }
 
@@ -89,7 +100,7 @@ void HookerPrivate::work(std::promise<bool>& runningResult)
         switch (msg.message)
         {
             case WM_SET_EVENT_HANDLER:
-                handleSetEventHandlerEvent(msg.wParam);
+                eventHandler_ = static_cast<intptr_t>(msg.wParam);
                 break;
             default:
                 break;
