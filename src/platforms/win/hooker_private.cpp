@@ -3,8 +3,6 @@
 namespace hidtool
 {
 
-#define WM_SET_EVENT_HANDLER (WM_USER + 1)\
-
 intptr_t HookerPrivate::eventHandler_ = 0;
 
 HookerPrivate::~HookerPrivate()

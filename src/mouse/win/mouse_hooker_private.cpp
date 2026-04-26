@@ -13,7 +13,7 @@ MouseHookerPrivate& MouseHookerPrivate::getInstance()
 
 bool MouseHookerPrivate::setEventHandler(const MouseEventHandler& eventHandler)
 {
-    return HookerPrivate::setEventHandler(reinterpret_cast<intptr_t>(eventHandler));
+    return HookerPrivate::setEventHandler<MouseEventHandler>(eventHandler);
 }
 
 HHOOK MouseHookerPrivate::setWindowHook()

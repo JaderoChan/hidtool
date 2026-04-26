@@ -11,6 +11,8 @@
 namespace hidtool
 {
 
+constexpr UINT WM_SET_EVENT_HANDLER = (WM_USER + 1);
+
 class HookerPrivate
 {
 public:
