@@ -101,10 +101,7 @@ bool UInput::sendEvent(const struct input_event* ies, size_t count)
             continue;
         }
 
-        if (n == -1 && errno == EINTR)
-            continue;   // Interrupted by signal, retry write.
-
-        if (n == -1 && errno == EAGAIN)
+        if (n == -1 && (errno == EINTR || errno == EAGAIN))
             continue;
 
         break;
