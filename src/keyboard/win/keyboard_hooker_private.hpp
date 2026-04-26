@@ -2,7 +2,6 @@
 #define HIDTOOL_KEYBOARD_HOOKER_PRIVATE_HPP
 
 #include <platforms/win/hooker_private.hpp>
-
 #include <hidtool/keyboard/keyboard_hooker.hpp>
 
 namespace hidtool
