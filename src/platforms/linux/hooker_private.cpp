@@ -37,7 +37,7 @@ HookerPrivate::~HookerPrivate()
 
     evdevNames_.clear();
 
-    eventHandler_ = nullptr;
+    eventHandler_ = 0;
     workEvents_.clear();
 }
 
@@ -249,7 +249,7 @@ void HookerPrivate::cleanupAllFds()
     workEvents_.clear();
 }
 
-void HookerPrivate::handleWorkEvent(int fd)
+void HookerPrivate::handleWorkEvent(int fd, bool& shouldClose)
 {
     uint64_t eventCount;
     ssize_t n = read(fd, &eventCount, 8);
@@ -332,7 +332,7 @@ void HookerPrivate::work()
         // Handle work events.
         struct pollfd workEventPollfd = watchedFds_[0];
         if (workEventPollfd.revents & POLLIN)
-            handleWorkEvent(workEventPollfd.fd);
+            handleWorkEvent(workEventPollfd.fd, shouldClose);
 
         // Handle input devices changed event.
         struct pollfd inotifyPollfd = watchedFds_[1];

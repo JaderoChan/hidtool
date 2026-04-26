@@ -75,7 +75,7 @@ private:
     void cleanupEvdevFds();
     void cleanupAllFds();
 
-    void handleWorkEvent(int fd);
+    void handleWorkEvent(int fd, bool& shouldClose);
     void handleEvdevChanged(int fd);
 
     void work();
@@ -93,7 +93,7 @@ private:
     std::vector<struct pollfd> watchedFds_{2, pollfd{-1, 0, 0}};
     std::vector<std::string> evdevNames_;
 
-    intptr_t eventHandler_ = nullptr;
+    intptr_t eventHandler_ = 0;
 
     mutable std::mutex operateMtx_;
     std::atomic<bool> isRunning_{false};
