@@ -18,7 +18,7 @@ inline void setPressKeyInputEvent(struct input_event& ie, uint32_t nativeKey)
 inline void setReleaseKeyInputEvent(struct input_event& ie, uint32_t nativeKey)
 {
     ie.type = EV_KEY;
-    ie.value = 0;   // 1 is release.
+    ie.value = 0;   // 0 is release.
     ie.code = static_cast<__s32>(nativeKey);
 }
 

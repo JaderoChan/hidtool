@@ -47,12 +47,12 @@ bool KeyboardSimulatorPrivate::isInitialized() const
 
 bool KeyboardSimulatorPrivate::sendEvent(const KeyboardEvent& event)
 {
-    if (!isInitialized_.load)
+    if (!isInitialized_.load())
         return false;
 
     struct input_event iePair[2] = {0};
     iePair[0].type = EV_KEY;
-    iePair[0].code = static_cast<__s32>(nativeKey);
+    iePair[0].code = static_cast<__s32>(event.nativeKey);
     setSyncReportEvent(iePair[1]);
 
     switch (event.eventType)
@@ -77,7 +77,6 @@ size_t KeyboardSimulatorPrivate::sendEvent(const KeyboardEvent* events, size_t c
 
     struct input_event iePair[2] = {0};
     iePair[0].type = EV_KEY;
-    iePair[0].code = static_cast<__s32>(nativeKey);
     setSyncReportEvent(iePair[1]);
 
     size_t sent = 0;
@@ -87,9 +86,11 @@ size_t KeyboardSimulatorPrivate::sendEvent(const KeyboardEvent* events, size_t c
         switch (event.eventType)
         {
             case KeyboardEvent::ET_PRESS:
+                iePair[0].code = static_cast<__s32>(event.nativeKey);
                 iePair[0].value = 1;    // 1 is press.
                 break;
             case KeyboardEvent::ET_RELEASE:
+                iePair[0].code = static_cast<__s32>(event.nativeKey);
                 iePair[0].value = 0;    // 0 is release.
                 break;
             default:
@@ -133,9 +134,9 @@ bool KeyboardSimulatorPrivate::clickKey(uint32_t nativeKey)
 
     struct input_event ies[4] = {0};
     setPressKeyInputEvent(ies[0], nativeKey);
-    setSyncReportEvent(iePair[1]);
+    setSyncReportEvent(ies[1]);
     setReleaseKeyInputEvent(ies[2], nativeKey);
-    setSyncReportEvent(iePair[3]);
+    setSyncReportEvent(ies[3]);
 
     return kbdUInput_.sendEvent(ies, 4);
 }

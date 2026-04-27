@@ -35,7 +35,7 @@ bool MouseHookerPrivate::isAccessDevice(int fd)
         return false;
 
     static auto hasBit = [](uint8_t* bits, uint32_t bit)
-    { return (bits[bit / 8] & (1u < (bit % 8))) != 0; }
+    { return (bits[bit / 8] & (1u < (bit % 8))) != 0; };
 
     // 如果含有 `EV_ABS` 事件，则必须包含 `ABS_X` 和 `ABS_Y` 事件。
     if ((evBits & (1u << EV_ABS)) != 0)
@@ -44,7 +44,7 @@ bool MouseHookerPrivate::isAccessDevice(int fd)
         if (ioctl(fd, EVIOCGBIT(EV_ABS, sizeof(absBits)), absBits) == -1)
             return false;
 
-        if (!hasBit(absBits, ABS_X) || !hasBits(absBits, ABS_Y))
+        if (!hasBit(absBits, ABS_X) || !hasBit(absBits, ABS_Y))
             return false;
     }
 
@@ -148,8 +148,8 @@ void MouseHookerPrivate::handleInputEvent(int fd)
                     if (absState.hasX && absState.hasY)
                     {
                         event.eventType = MouseEvent::ET_ABS_MOVE;
-                        event.pos.x = absState.x;
-                        event.pos.y = absState.y;
+                        event.absPos.x = absState.x;
+                        event.absPos.y = absState.y;
                     }
 
                     break;
@@ -160,11 +160,11 @@ void MouseHookerPrivate::handleInputEvent(int fd)
                     {
                         case REL_X:
                             event.eventType = MouseEvent::ET_REL_MOVE;
-                            event.pos.x = static_cast<int32_t>(ie.value);
+                            event.relPos.dx = static_cast<int32_t>(ie.value);
                             break;
                         case REL_Y:
                             event.eventType = MouseEvent::ET_REL_MOVE;
-                            event.pos.y = static_cast<int32_t>(ie.value);
+                            event.relPos.dy = static_cast<int32_t>(ie.value);
                             break;
                         case REL_WHEEL:
                             event.eventType = MouseEvent::ET_WHEEL;
