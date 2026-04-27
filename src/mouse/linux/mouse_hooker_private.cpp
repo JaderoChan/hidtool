@@ -31,11 +31,11 @@ bool MouseHookerPrivate::isAccessDevice(int fd)
         return false;
 
     // 必须含有 `EV_KEY` 事件，并且含有 `EV_ABS` 和 `EV_REL` 任一事件。
-    if (((evBits & (1u << EV_ABS)) == 0 && (evBits & (1u << EV_REL)) == 0) || (evBits & (1u << EV_KEY)) == 0)
+    if (((evBits & (1u << EV_ABS)) == 0 || (evBits & (1u << EV_REL)) == 0) && (evBits & (1u << EV_KEY)) == 0)
         return false;
 
     static auto hasBit = [](uint8_t* bits, uint32_t bit)
-    { return (bits[bit / 8] & (1u < (bit % 8))) != 0; };
+    { return (bits[bit / 8] & (1u << (bit % 8))) != 0; };
 
     // 如果含有 `EV_ABS` 事件，则必须包含 `ABS_X` 和 `ABS_Y` 事件。
     if ((evBits & (1u << EV_ABS)) != 0)

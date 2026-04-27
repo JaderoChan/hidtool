@@ -43,7 +43,7 @@ bool KeyboardHookerPrivate::isAccessDevice(int fd)
     size_t checkedCount = sizeof(checkedKeys) / sizeof(uint32_t);
 
     static auto hasKey = [](uint8_t* keyBits, uint32_t key)
-    { return (keyBits[key / 8] & (1u < (key % 8))) != 0; };
+    { return (keyBits[key / 8] & (1u << (key % 8))) != 0; };
 
     // 判断此设备是否具备以上定义的键值。
     for (size_t i = 0; i < checkedCount; ++i)
