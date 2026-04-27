@@ -27,6 +27,7 @@ public:
 
     /**
      * @brief 绝对移动。
+     * @note 当发送超过坐标范围的绝对移动事件时，会将其钳制在合法范围内。
      * @sa `MouseEvent::absPos`
      */
     bool moveTo(const AbsolutePos& absPos);

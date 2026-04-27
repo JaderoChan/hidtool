@@ -68,8 +68,7 @@ struct MouseEvent
          * @note
          * 在 **Windows** 和 **MacOS** 平台下，无论是 `MouseHooker` 事件处理函数中获得的绝对移动事件还是
          * 通过 `MouseSimulator` 发送的绝对移动事件，此坐标始终以虚拟屏幕空间范围为基准。
-         * 在 **Linux** 平台下，此坐标在 X 和 Y 轴上始终限定为 `[0, 65535]`。
-         * @note 当发送超过坐标范围的绝对移动事件时，会将其钳制在合法范围内。
+         * 在 **Linux** 平台下，通过 `MouseSimulator` 发送的绝对移动事件，此坐标在 X 和 Y 轴上始终限定为 `[0, 65535]`。
          * @sa `getAbsolutePosRange()'
          */
         AbsolutePos absPos;
