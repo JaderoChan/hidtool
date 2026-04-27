@@ -29,11 +29,11 @@ bool KeyboardHookerPrivate::isAccessDevice(int fd)
         return false;
 
     // 必须含有 `EV_KEY` 事件。
-    if ((evBits & (1 << EV_KEY)) == 0)
+    if ((evBits & (1u << EV_KEY)) == 0)
         return false;
 
     // 获取输入设备具备的键值。
-    unsigned char keyBits[KEY_MAX / 8 + 1];
+    uint8_t keyBits[KEY_MAX / 8 + 1];
     if (ioctl(fd, EVIOCGBIT(EV_KEY, sizeof(keyBits)), keyBits) == -1)
         return false;
 
@@ -42,7 +42,7 @@ bool KeyboardHookerPrivate::isAccessDevice(int fd)
     uint32_t checkedKeys[] = {KEY_0, KEY_A, KEY_SPACE, KEY_ESC};
     size_t checkedCount = sizeof(checkedKeys) / sizeof(uint32_t);
 
-    static auto hasKey = [](unsigned char* keyBits, uint32_t key)
+    static auto hasKey = [](uint8_t* keyBits, uint32_t key)
     { return (keyBits[key / 8] & (1u < (key % 8))) != 0; };
 
     // 判断此设备是否具备以上定义的键值。

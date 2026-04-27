@@ -25,27 +25,42 @@ bool MouseHookerPrivate::setEventHandler(const MouseEventHandler& eventHandler)
 
 bool MouseHookerPrivate::isAccessDevice(int fd)
 {
+    // 获取输入设备具备的事件。
     unsigned long evBits = 0;
     if (ioctl(fd, EVIOCGBIT(0, sizeof(evBits)), &evBits) == -1)
         return false;
 
-    if (((evBits & (1 << EV_ABS)) == 0 && (evBits & (1 << EV_REL)) == 0) || (evBits & (1 << EV_KEY)) == 0)
+    // 必须含有 `EV_KEY` 事件，并且含有 `EV_ABS` 和 `EV_REL` 任一事件。
+    if (((evBits & (1u << EV_ABS)) == 0 && (evBits & (1u << EV_REL)) == 0) || (evBits & (1u << EV_KEY)) == 0)
         return false;
 
-    // Check absolute move.
+    static auto hasBit = [](uint8_t* bits, uint32_t bit)
+    { return (bits[bit / 8] & (1u < (bit % 8))) != 0; }
 
-    // Check relative move.
+    // 如果含有 `EV_ABS` 事件，则必须包含 `ABS_X` 和 `ABS_Y` 事件。
+    if ((evBits & (1u << EV_ABS)) != 0)
+    {
+        uint8_t absBits[ABS_MAX / 8 + 1];
+        if (ioctl(fd, EVIOCGBIT(EV_ABS, sizeof(absBits)), absBits) == -1)
+            return false;
 
-    // Check mouse wheel.
-//     unsigned char relBits[REL_MAX / 8 + 1];
-//     if (ioctl(fd, EVIOCGBIT(EV_REL, sizeof(relBits)), relBits) == -1)
-//         return false;
-//
-//     if ((relBits[REL_WHEEL / 8] & (1u << (REL_WHEEL % 8))) == 0)
-//         return false;
+        if (!hasBit(absBits, ABS_X) || !hasBits(absBits, ABS_Y))
+            return false;
+    }
 
-    // Check mouse buttons.
-    unsigned char keyBits[KEY_MAX / 8 + 1];
+    // 如果含有 `EV_REL` 事件，则必须包含 `REL_WHEEL` 或 `REL_X`，`REL_Y` 事件。
+    if ((evBits & (1u << EV_REL)) != 0)
+    {
+        uint8_t relBits[REL_MAX / 8 + 1];
+        if (ioctl(fd, EVIOCGBIT(EV_REL, sizeof(relBits)), relBits) == -1)
+            return false;
+
+        if (!hasBit(relBits, REL_WHEEL) && (!hasBit(relBits, REL_X) || !hasBit(relBits, REL_Y)))
+            return false;
+    }
+
+    // 必须包含指定的鼠标按键。
+    uint8_t keyBits[KEY_MAX / 8 + 1];
     if (ioctl(fd, EVIOCGBIT(EV_KEY, sizeof(keyBits)), keyBits) == -1)
         return false;
 
@@ -54,7 +69,7 @@ bool MouseHookerPrivate::isAccessDevice(int fd)
 
     for (size_t i = 0; i < checkedCount; ++i)
     {
-        if ((keyBits[checkedKeys[i] / 8] & (1u << (checkedKeys[i] % 8))) == 0)
+        if (!hasBit(keyBits, checkedKeys[i]))
             return false;
     }
 
