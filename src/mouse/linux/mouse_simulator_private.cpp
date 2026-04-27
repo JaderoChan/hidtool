@@ -154,8 +154,7 @@ bool MouseSimulatorPrivate::wheel(int32_t wheelDelta)
         return false;
 
     struct input_event ies[2] = {0};
-
-    setWheelInputEvent(ies[0], wheelDelta);
+    setWheelInputEvent(ies[0], wheelDelta / 120);
     setSyncReportEvent(ies[1]);
 
     return mouseUInput_.sendEvent(ies, 2);
@@ -213,7 +212,7 @@ bool MouseSimulatorPrivate::wheel(const AbsolutePos& absPos, int32_t wheelDelta)
     setAbsoluteMoveInputEvent(ies[0], ies[1], absPos);
     setSyncReportEvent(ies[2]);
 
-    setWheelInputEvent(ies[3], wheelDelta);
+    setWheelInputEvent(ies[3], wheelDelta / 120);
     setSyncReportEvent(ies[4]);
 
     return mouseUInput_.sendEvent(ies, 5);
