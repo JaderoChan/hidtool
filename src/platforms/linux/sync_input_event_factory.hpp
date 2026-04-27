@@ -1,5 +1,5 @@
-#ifndef HIDTOOL_INPUT_EVENT_FACTORY_HPP
-#define HIDTOOL_INPUT_EVENT_FACTORY_HPP
+#ifndef HIDTOOL_SYNC_INPUT_EVENT_FACTORY_HPP
+#define HIDTOOL_SYNC_INPUT_EVENT_FACTORY_HPP
 
 #include <linux/input.h>
 
@@ -17,4 +17,4 @@ inline void setSyncReportEvent(struct input_event& ie)
 
 } // namespace hidtool
 
-#endif // !HIDTOOL_INPUT_EVENT_FACTORY_HPP
+#endif // !HIDTOOL_SYNC_INPUT_EVENT_FACTORY_HPP
