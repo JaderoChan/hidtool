@@ -66,11 +66,13 @@ bool MouseSimulatorPrivate::sendEvent(const MouseEvent& event)
             setSyncReportEvent(ies[1]);
             return mouseUInput_.sendEvent(ies, 2);
         case MouseEvent::ET_PRESS:
-            setPressButtonInputEvent(ies[0], event.button);
+            if (!setPressButtonInputEvent(ies[0], event.button))
+                return false;
             setSyncReportEvent(ies[1]);
             return mouseUInput_.sendEvent(ies, 2);
         case MouseEvent::ET_RELEASE:
-            setReleaseButtonInputEvent(ies[0], event.button);
+            if (setReleaseButtonInputEvent(ies[0], event.button))
+                return false;
             setSyncReportEvent(ies[1]);
             return mouseUInput_.sendEvent(ies, 2);
         default:
@@ -107,12 +109,14 @@ size_t MouseSimulatorPrivate::sendEvent(const MouseEvent* events, size_t count)
                 sent += mouseUInput_.sendEvent(ies, 2);
                 break;
             case MouseEvent::ET_PRESS:
-                setPressButtonInputEvent(ies[0], event.button);
+                if (!setPressButtonInputEvent(ies[0], event.button))
+                    continue;
                 setSyncReportEvent(ies[1]);
                 sent += mouseUInput_.sendEvent(ies, 2);
                 break;
             case MouseEvent::ET_RELEASE:
-                setReleaseButtonInputEvent(ies[0], event.button);
+                if (!setReleaseButtonInputEvent(ies[0], event.button))
+                    continue;
                 setSyncReportEvent(ies[1]);
                 sent += mouseUInput_.sendEvent(ies, 2);
                 break;

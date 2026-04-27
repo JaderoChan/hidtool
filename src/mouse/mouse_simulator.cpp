@@ -6,7 +6,6 @@
     #include "apple/mouse_simulator_private.hpp"
 #elif defined(HIDTOOL_LINUX)
     #include "linux/mouse_simulator_private.hpp"
-#include "mouse_simulator.hpp"
 #else
     #error "Unspported platform"
 #endif // HIDTOOL_WIN
