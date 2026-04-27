@@ -29,7 +29,7 @@ static const char* getMouseButtonString(MouseButton button)
     }
 }
 
-static bool keyboardEventHandler(KeyboardEvent event)
+static bool keyboardEventHandler(const KeyboardEvent& event)
 {
     auto key = keyboardKeyFromNativeKey(event.nativeKey);
     switch (event.eventType)
@@ -52,15 +52,15 @@ static bool keyboardEventHandler(KeyboardEvent event)
 
     return true;
 }
-static bool mouseEventHandler(MouseEvent event)
+static bool mouseEventHandler(const MouseEvent& event)
 {
     switch (event.eventType)
     {
         case MouseEvent::ET_ABS_MOVE:
-            printf("Mouse absolute move: [%d, %d].\n", event.pos.x, event.pos.y);
+            printf("Mouse absolute move: [%d, %d].\n", event.absPos.x, event.absPos.y);
             break;
         case MouseEvent::ET_REL_MOVE:
-            printf("Mouse relative move: [%d, %d].\n", event.pos.x, event.pos.y);
+            printf("Mouse relative move: [%d, %d].\n", event.relPos.dx, event.relPos.dy);
             break;
         case MouseEvent::ET_WHEEL:
             printf("Mouse wheel: %d.\n", event.wheelDelta);
@@ -81,26 +81,26 @@ static bool mouseEventHandler(MouseEvent event)
 int main(int argc, char* argv[])
 {
     KeyboardHooker& kbdHooker = KeyboardHooker::getInstance();
-    if (!kbdHooker.run())
-    {
-        printf("Failed to run the keyboard hooker.\n");
-        return -1;
-    }
     if (!kbdHooker.setEventHandler(&keyboardEventHandler))
     {
         printf("Failed to set the keyboard event handler.\n");
         return -1;
     }
-
-    MouseHooker& msHooker = MouseHooker::getInstance();
-    if (!msHooker.run())
+    if (!kbdHooker.run())
     {
-        printf("Failed to run the mouse hooker.\n");
+        printf("Failed to run the keyboard hooker.\n");
         return -1;
     }
+
+    MouseHooker& msHooker = MouseHooker::getInstance();
     if (!msHooker.setEventHandler(&mouseEventHandler))
     {
         printf("Failed to set the mouse event handler.\n");
+        return -1;
+    }
+    if (!msHooker.run())
+    {
+        printf("Failed to run the mouse hooker.\n");
         return -1;
     }
 
