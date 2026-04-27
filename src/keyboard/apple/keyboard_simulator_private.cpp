@@ -5,10 +5,7 @@
 namespace hidtool
 {
 
-KeyboardSimulatorPrivate::~KeyboardSimulatorPrivate()
-{
-    isInitialized_.store(false);
-}
+KeyboardSimulatorPrivate::~KeyboardSimulatorPrivate() { destroy(); }
 
 KeyboardSimulatorPrivate& KeyboardSimulatorPrivate::getInstance()
 {

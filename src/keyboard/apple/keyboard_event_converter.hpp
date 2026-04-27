@@ -33,7 +33,7 @@ inline CGEventFlags keycodeToModifierMask(CGKeyCode keyCode)
     }
 }
 
-inline bool keyboardEventToCGEvent(const KeyboardEvent& event, CGEventRef& cgEvent)
+[[nodiscard]] inline bool keyboardEventToCGEvent(const KeyboardEvent& event, CGEventRef& cgEvent)
 {
     CGKeyCode keyCode = static_cast<CGKeyCode>(event.nativeKey);
     switch (event.eventType)
@@ -52,7 +52,7 @@ inline bool keyboardEventToCGEvent(const KeyboardEvent& event, CGEventRef& cgEve
     return cgEvent != nullptr;
 }
 
-inline bool keyboardEventFromCGEvent(KeyboardEvent& event, CGEventType cgEventType, const CGEventRef& cgEvent)
+[[nodiscard]] inline bool keyboardEventFromCGEvent(KeyboardEvent& event, CGEventType cgEventType, const CGEventRef& cgEvent)
 {
     CGKeyCode keycode = CGEventGetIntegerValueField(cgEvent, kCGKeyboardEventKeycode);
 

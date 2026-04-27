@@ -1,7 +1,7 @@
 #ifndef HIDTOOL_MOUSE_SIMULATOR_PRIVATE_HPP
 #define HIDTOOL_MOUSE_SIMULATOR_PRIVATE_HPP
 
-#include <atomic>
+#include <atomic>   // atomic
 
 #include <hidtool/mouse/mouse_simulator.hpp>
 
@@ -18,10 +18,10 @@ public:
     bool isInitialized() const;
 
     bool sendEvent(const MouseEvent& event);
-    size_t sendEvent(const std::vector<MouseEvent>& events);
+    size_t sendEvent(const MouseEvent* events, size_t count);
 
-    bool moveTo(int32_t x, int32_t y);
-    bool moveBy(int32_t dx, int32_t dy);
+    bool moveTo(const AbsolutePos& absPos);
+    bool moveBy(const RelativePos& relPos);
 
     bool wheel(int32_t wheelDelta);
 
@@ -29,11 +29,13 @@ public:
     bool releaseButton(MouseButton button);
     bool clickButton(MouseButton button);
 
-private:
-    MouseSimulatorPrivate() = default;
-    ~MouseSimulatorPrivate();
-    MouseSimulatorPrivate(const MouseSimulatorPrivate&) = delete;
-    MouseSimulatorPrivate& operator=(const MouseSimulatorPrivate&) = delete;
+    bool wheel(const AbsolutePos& absPos, int32_t wheelDelta);
+    bool pressButton(const AbsolutePos& absPos, MouseButton button);
+    bool releaseButton(const AbsolutePos& absPos, MouseButton button);
+    bool clickButton(const AbsolutePos& absPos, MouseButton button);
+
+    bool drag(const AbsolutePos& endPos, MouseButton button);
+    bool drag(const AbsolutePos& startPos, const AbsolutePos& endPos, MouseButton button);
 
     std::atomic<bool> isInitialized_{false};
 };

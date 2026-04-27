@@ -5,10 +5,7 @@
 namespace hidtool
 {
 
-MouseSimulatorPrivate::~MouseSimulatorPrivate()
-{
-    isInitialized_.store(false);
-}
+MouseSimulatorPrivate::~MouseSimulatorPrivate() { destroy(); }
 
 MouseSimulatorPrivate& MouseSimulatorPrivate::getInstance()
 {
@@ -39,19 +36,19 @@ bool MouseSimulatorPrivate::sendEvent(const MouseEvent& event)
         return false;
 }
 
-size_t MouseSimulatorPrivate::sendEvent(const std::vector<MouseEvent>& events)
+size_t MouseSimulatorPrivate::sendEvent(const MouseEvent* events, size_t count)
 {
     if (!isInitialized_.load())
         return 0;
 }
 
-bool MouseSimulatorPrivate::moveTo(int32_t x, int32_t y)
+bool MouseSimulatorPrivate::moveTo(const AbsolutePos& absPos)
 {
     if (!isInitialized_.load())
         return false;
 }
 
-bool MouseSimulatorPrivate::moveBy(int32_t dx, int32_t dy)
+bool MouseSimulatorPrivate::moveBy(const RelativePos& relPos)
 {
     if (!isInitialized_.load())
         return false;
@@ -105,13 +102,13 @@ bool MouseSimulatorPrivate::clickButton(const AbsolutePos& absPos, MouseButton b
         return false;
 }
 
-bool MouseSimulatorPrivate::drag(const AbsolutePos& endPos)
+bool MouseSimulatorPrivate::drag(const AbsolutePos& endPos, MouseButton button)
 {
     if (!isInitialized_.load())
         return false;
 }
 
-bool MouseSimulatorPrivate::drag(const AbsolutePos& startPos, const AbsolutePos& endPos)
+bool MouseSimulatorPrivate::drag(const AbsolutePos& startPos, const AbsolutePos& endPos, MouseButton button)
 {
     if (!isInitialized_.load())
         return false;
