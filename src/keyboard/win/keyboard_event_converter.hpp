@@ -8,7 +8,7 @@
 namespace hidtool
 {
 
-inline bool keyboardEventToInput(const KeyboardEvent& event, INPUT& input)
+[[nodiscard]] inline bool keyboardEventToInput(const KeyboardEvent& event, INPUT& input)
 {
     switch (event.eventType)
     {
@@ -28,7 +28,7 @@ inline bool keyboardEventToInput(const KeyboardEvent& event, INPUT& input)
     return true;
 }
 
-inline bool keyboardEventFromParam(KeyboardEvent& event, WPARAM wParam, LPARAM lParam)
+[[nodiscard]] inline bool keyboardEventFromParam(KeyboardEvent& event, WPARAM wParam, LPARAM lParam)
 {
     KBDLLHOOKSTRUCT* kbdllhs = reinterpret_cast<KBDLLHOOKSTRUCT*>(static_cast<intptr_t>(lParam));
     if (!kbdllhs)

@@ -1,12 +1,12 @@
 #ifndef HIDTOOL_UINPUT_HPP
 #define HIDTOOL_UINPUT_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <string>
-#include <mutex>
+#include <cstddef>  // size_t
+#include <cstdint>  // uint16_t
+#include <string>   // string
+#include <mutex>    // mutex, lock_guard
 
-#include <linux/input.h>
+#include <linux/input.h>    // input_event
 
 namespace hidtool
 {
@@ -30,9 +30,10 @@ protected:
 
 private:
     int uinputFd_ = -1;
+    // 用于互斥涉及到 `uinputFd_` 读写的操作。
     mutable std::mutex uinputFdMtx_;
 };
 
-} // namespace hidism
+} // namespace hidtool
 
 #endif // !HIDTOOL_UINPUT_HPP

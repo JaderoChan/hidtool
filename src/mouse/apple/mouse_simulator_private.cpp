@@ -7,9 +7,6 @@ namespace hidtool
 
 MouseSimulatorPrivate::~MouseSimulatorPrivate()
 {
-    if (!isInitialized_.load())
-        return;
-
     isInitialized_.store(false);
 }
 
@@ -22,17 +19,13 @@ MouseSimulatorPrivate& MouseSimulatorPrivate::getInstance()
 bool MouseSimulatorPrivate::initialize()
 {
     bool expected = false;
-    if (!isInitialized_.compare_exchange_strong(expected, true))
-        return false;
-
-    return true;
+    return isInitialized_.compare_exchange_strong(expected, true);
 }
 
 void MouseSimulatorPrivate::destroy()
 {
     bool expected = true;
-    if (!isInitialized_.compare_exchange_strong(expected, false))
-        return;
+    isInitialized_.compare_exchange_strong(expected, false);
 }
 
 bool MouseSimulatorPrivate::isInitialized() const
@@ -52,13 +45,13 @@ size_t MouseSimulatorPrivate::sendEvent(const std::vector<MouseEvent>& events)
         return 0;
 }
 
-bool MouseSimulatorPrivate::moveBy(int32_t dx, int32_t dy)
+bool MouseSimulatorPrivate::moveTo(int32_t x, int32_t y)
 {
     if (!isInitialized_.load())
         return false;
 }
 
-bool MouseSimulatorPrivate::moveTo(int32_t x, int32_t y)
+bool MouseSimulatorPrivate::moveBy(int32_t dx, int32_t dy)
 {
     if (!isInitialized_.load())
         return false;
@@ -83,6 +76,42 @@ bool MouseSimulatorPrivate::releaseButton(MouseButton button)
 }
 
 bool MouseSimulatorPrivate::clickButton(MouseButton button)
+{
+    if (!isInitialized_.load())
+        return false;
+}
+
+bool MouseSimulatorPrivate::wheel(const AbsolutePos& absPos, int32_t wheelDelta)
+{
+    if (!isInitialized_.load())
+        return false;
+}
+
+bool MouseSimulatorPrivate::pressButton(const AbsolutePos& absPos, MouseButton button)
+{
+    if (!isInitialized_.load())
+        return false;
+}
+
+bool MouseSimulatorPrivate::releaseButton(const AbsolutePos& absPos, MouseButton button)
+{
+    if (!isInitialized_.load())
+        return false;
+}
+
+bool MouseSimulatorPrivate::clickButton(const AbsolutePos& absPos, MouseButton button)
+{
+    if (!isInitialized_.load())
+        return false;
+}
+
+bool MouseSimulatorPrivate::drag(const AbsolutePos& endPos)
+{
+    if (!isInitialized_.load())
+        return false;
+}
+
+bool MouseSimulatorPrivate::drag(const AbsolutePos& startPos, const AbsolutePos& endPos)
 {
     if (!isInitialized_.load())
         return false;

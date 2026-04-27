@@ -1,44 +1,21 @@
 #include "mouse_simulator_private.hpp"
 
-#include <algorithm>
-#include <future>
-#include <vector>
+#include <future>       // promise, future
+#include <vector>       // vector
 
-#include "mouse_event_converter.hpp"
+#include <windows.h>    // INPUT, SendInput()
+
+#include "input_factory.hpp"
 
 namespace hidtool
 {
 
-MouseSimulatorPrivate::~MouseSimulatorPrivate()
-{
-    if (!isInitialized_.load())
-        return;
-
-    PostThreadMessageA(displayChangedHandlerThreadId_, WM_QUIT, 0, 0);
-    if (displayChangedHandlerThread_.joinable())
-        displayChangedHandlerThread_.join();
-
-    displayChangedHandlerThreadId_ = 0;
-    isInitialized_.store(false);
-}
+MouseSimulatorPrivate::~MouseSimulatorPrivate() { destroy(); }
 
 MouseSimulatorPrivate& MouseSimulatorPrivate::getInstance()
 {
     static MouseSimulatorPrivate instance;
     return instance;
-}
-
-MouseSimulator::AbsMoveRange MouseSimulatorPrivate::getAbsMoveRange()
-{
-    MouseSimulator::AbsMoveRange result;
-    VirtualScreenInfo vsi = VirtualScreenInfo::getLatest();
-
-    result.minX = vsi.x;
-    result.minY = vsi.y;
-    result.maxX = vsi.x + vsi.width;
-    result.maxY = vsi.y + vsi.height;
-
-    return result;
 }
 
 bool MouseSimulatorPrivate::initialize()
@@ -48,19 +25,20 @@ bool MouseSimulatorPrivate::initialize()
     if (isInitialized_.load())
         return false;
 
+    // 初始化虚拟屏幕空间信息。
     virtualScreenInfo_.store(VirtualScreenInfo::getLatest());
 
     std::promise<void> threadIdIsReady;
     auto fut = threadIdIsReady.get_future();
 
+    // 创建屏幕显示变更检测线程。
     displayChangedHandlerThread_ = std::thread([=, &threadIdIsReady]()
     {
         displayChangedHandlerThreadId_ = GetCurrentThreadId();
         threadIdIsReady.set_value();
 
+        // 屏幕显示变更处理。
         handleDisplayChanged();
-
-        displayChangedHandlerThreadId_ = 0;
     });
 
     isInitialized_.store(true);
@@ -76,10 +54,14 @@ void MouseSimulatorPrivate::destroy()
     if (!isInitialized_.load())
         return;
 
+    // 向屏幕显示变更检测线程发送退出事件。
     PostThreadMessageA(displayChangedHandlerThreadId_, WM_QUIT, 0, 0);
+    // 等待线程退出。
     if (displayChangedHandlerThread_.joinable())
         displayChangedHandlerThread_.join();
 
+    // 重置相关字段。
+    displayChangedHandlerThreadId_ = 0;
     isInitialized_.store(false);
 }
 
@@ -94,9 +76,30 @@ bool MouseSimulatorPrivate::sendEvent(const MouseEvent& event)
         return false;
 
     INPUT input = {0};
-    if (mouseEventToInput(event, input))
-        return SendInput(1, &input, sizeof(INPUT)) == 1;
-    return false;
+    switch (event.eventType)
+    {
+        case MouseEvent::ET_ABS_MOVE:
+            setAbsoluteMoveInput(input, event.absPos, virtualScreenInfo_.load());
+            break;
+        case MouseEvent::ET_REL_MOVE:
+            setRelativeMoveInput(input, event.relPos);
+            break;
+        case MouseEvent::ET_WHEEL:
+            setWheelInput(input, event.wheelDelta);
+            break;
+        case MouseEvent::ET_PRESS:
+            if (!setPressButtonInput(input, event.button))
+                return false;
+            break;
+        case MouseEvent::ET_RELEASE:
+            if (!setReleaseButtonInput(input, event.button))
+                return false;
+            break;
+        default:
+            return false;
+    }
+
+    return SendInput(1, &input, sizeof(INPUT)) == 1;
 }
 
 size_t MouseSimulatorPrivate::sendEvent(const MouseEvent* events, size_t count)
@@ -109,48 +112,56 @@ size_t MouseSimulatorPrivate::sendEvent(const MouseEvent* events, size_t count)
 
     for (size_t i = 0; i < count; ++i)
     {
+        const auto& event = events[i];
         INPUT input = {0};
-        if (mouseEventToInput(events[i], input))
-            inputs.emplace_back(std::move(input));
+
+        switch (event.eventType)
+        {
+            case MouseEvent::ET_ABS_MOVE:
+                setAbsoluteMoveInput(input, event.absPos, virtualScreenInfo_.load());
+                break;
+            case MouseEvent::ET_REL_MOVE:
+                setRelativeMoveInput(input, event.relPos);
+                break;
+            case MouseEvent::ET_WHEEL:
+                setWheelInput(input, event.wheelDelta);
+                break;
+            case MouseEvent::ET_PRESS:
+                if (!setPressButtonInput(input, event.button))
+                    continue;
+                break;
+            case MouseEvent::ET_RELEASE:
+                if (!setReleaseButtonInput(input, event.button))
+                    continue;
+                break;
+            default:
+                continue;
+        }
+
+        inputs.emplace_back(std::move(input));
     }
 
     return SendInput(static_cast<UINT>(inputs.size()), inputs.data(), sizeof(INPUT));
 }
 
-bool MouseSimulatorPrivate::moveBy(int32_t dx, int32_t dy)
+bool MouseSimulatorPrivate::moveTo(const AbsolutePos& absPos)
 {
     if (!isInitialized_.load())
         return false;
 
     INPUT input = {0};
-    input.type = INPUT_MOUSE;
-    input.mi.dwFlags = MOUSEEVENTF_MOVE;
-    input.mi.dx = static_cast<LONG>(dx);
-    input.mi.dy = static_cast<LONG>(dy);
+    setAbsoluteMoveInput(input, absPos, virtualScreenInfo_.load());
 
     return SendInput(1, &input, sizeof(INPUT)) == 1;
 }
 
-bool MouseSimulatorPrivate::moveTo(int32_t x, int32_t y)
+bool MouseSimulatorPrivate::moveBy(const RelativePos& relPos)
 {
     if (!isInitialized_.load())
         return false;
 
-    VirtualScreenInfo vsi = virtualScreenInfo_.load();
-
-    // Normalize position.
-    LONG nx = static_cast<LONG>(static_cast<double>(x - vsi.x) / (vsi.width - 1) * 65535.0);
-    LONG ny = static_cast<LONG>(static_cast<double>(y - vsi.y) / (vsi.height - 1) * 65535.0);
-
-    // Clamp.
-    nx = std::max(0L, std::min(65535L, nx));
-    ny = std::max(0L, std::min(65535L, ny));
-
     INPUT input = {0};
-    input.type = INPUT_MOUSE;
-    input.mi.dwFlags = MOUSEEVENTF_ABS_MOVE;
-    input.mi.dx = nx;
-    input.mi.dy = ny;
+    setRelativeMoveInput(input, relPos);
 
     return SendInput(1, &input, sizeof(INPUT)) == 1;
 }
@@ -161,9 +172,7 @@ bool MouseSimulatorPrivate::wheel(int32_t wheelDelta)
         return false;
 
     INPUT input = {0};
-    input.type = INPUT_MOUSE;
-    input.mi.dwFlags = MOUSEEVENTF_WHEEL;
-    input.mi.mouseData = static_cast<DWORD>(wheelDelta);
+    setWheelInput(input, wheelDelta);
 
     return SendInput(1, &input, sizeof(INPUT)) == 1;
 }
@@ -174,8 +183,7 @@ bool MouseSimulatorPrivate::pressButton(MouseButton button)
         return false;
 
     INPUT input = {0};
-    input.type = INPUT_MOUSE;
-    if (!setPressMouseButtonInput(input, button))
+    if (!setPressButtonInput(input, button))
         return false;
 
     return SendInput(1, &input, sizeof(INPUT)) == 1;
@@ -187,8 +195,7 @@ bool MouseSimulatorPrivate::releaseButton(MouseButton button)
         return false;
 
     INPUT input = {0};
-    input.type = INPUT_MOUSE;
-    if (!setReleaseMouseButtonInput(input, button))
+    if (!setReleaseButtonInput(input, button))
         return false;
 
     return SendInput(1, &input, sizeof(INPUT)) == 1;
@@ -200,26 +207,111 @@ bool MouseSimulatorPrivate::clickButton(MouseButton button)
         return false;
 
     INPUT inputs[2] = {0};
-    inputs[0].type = INPUT_MOUSE;
-    inputs[1].type = INPUT_MOUSE;
-    if (!setPressMouseButtonInput(inputs[0], button))
+    if (!setPressButtonInput(inputs[0], button))
         return false;
-    if (!setReleaseMouseButtonInput(inputs[1], button))
+    if (!setReleaseButtonInput(inputs[1], button))
         return false;
 
     return SendInput(2, inputs, sizeof(INPUT)) == 2;
 }
 
+bool MouseSimulatorPrivate::wheel(const AbsolutePos& absPos, int32_t wheelDelta)
+{
+    if (!isInitialized_.load())
+        return false;
+
+    INPUT inputs[2] = {0};
+    setAbsoluteMoveInput(inputs[0], absPos, virtualScreenInfo_.load());
+    setWheelInput(inputs[1], wheelDelta);
+
+    return SendInput(2, inputs, sizeof(INPUT)) == 2;
+}
+
+bool MouseSimulatorPrivate::pressButton(const AbsolutePos& absPos, MouseButton button)
+{
+    if (!isInitialized_.load())
+        return false;
+
+    INPUT inputs[2] = {0};
+    setAbsoluteMoveInput(inputs[0], absPos, virtualScreenInfo_.load());
+    if (!setPressButtonInput(inputs[1], button))
+        return false;
+
+    return SendInput(2, inputs, sizeof(INPUT)) == 2;
+}
+
+bool MouseSimulatorPrivate::releaseButton(const AbsolutePos& absPos, MouseButton button)
+{
+    if (!isInitialized_.load())
+        return false;
+
+    INPUT inputs[2] = {0};
+    setAbsoluteMoveInput(inputs[0], absPos, virtualScreenInfo_.load());
+    if (!setReleaseButtonInput(inputs[1], button))
+        return false;
+
+    return SendInput(2, inputs, sizeof(INPUT)) == 2;
+}
+
+bool MouseSimulatorPrivate::clickButton(const AbsolutePos& absPos, MouseButton button)
+{
+    if (!isInitialized_.load())
+        return false;
+
+    INPUT inputs[3] = {0};
+    setAbsoluteMoveInput(inputs[0], absPos, virtualScreenInfo_.load());
+    if (!setPressButtonInput(inputs[1], button))
+        return false;
+    if (!setReleaseButtonInput(inputs[2], button))
+        return false;
+
+    return SendInput(3, inputs, sizeof(INPUT)) == 3;
+}
+
+bool MouseSimulatorPrivate::drag(const AbsolutePos& endPos, MouseButton button)
+{
+    if (!isInitialized_.load())
+        return false;
+
+    INPUT inputs[3] = {0};
+    if (!setPressButtonInput(inputs[0], button))
+        return false;
+    setAbsoluteMoveInput(inputs[1], endPos, virtualScreenInfo_.load());
+    if (!setReleaseButtonInput(inputs[2], button))
+        return false;
+
+    return SendInput(3, inputs, sizeof(INPUT)) == 3;
+}
+
+bool MouseSimulatorPrivate::drag(const AbsolutePos& startPos, const AbsolutePos& endPos, MouseButton button)
+{
+    if (!isInitialized_.load())
+        return false;
+
+    auto vsi = virtualScreenInfo_.load();
+
+    INPUT inputs[4] = {0};
+    setAbsoluteMoveInput(inputs[0], startPos, vsi);
+    if (!setPressButtonInput(inputs[1], button))
+        return false;
+    setAbsoluteMoveInput(inputs[2], endPos, vsi);
+    if (!setReleaseButtonInput(inputs[3], button))
+        return false;
+
+    return SendInput(4, inputs, sizeof(INPUT)) == 4;
+}
+
 void MouseSimulatorPrivate::handleDisplayChanged()
 {
     MSG msg = {0};
-    // Force the system to create the message queue.
+    // 强制系统创建消息循环。
     PeekMessageA(&msg, nullptr, WM_USER, WM_USER, PM_NOREMOVE);
 
     while (GetMessageA(&msg, nullptr, 0, 0) != 0)
     {
         switch (msg.message)
         {
+            // TODO：测试有效性。
             case WM_DISPLAYCHANGE:
                 virtualScreenInfo_.store(VirtualScreenInfo::getLatest());
                 break;

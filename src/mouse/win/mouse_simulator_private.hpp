@@ -1,11 +1,11 @@
 #ifndef HIDTOOL_MOUSE_SIMULATOR_PRIVATE_HPP
 #define HIDTOOL_MOUSE_SIMULATOR_PRIVATE_HPP
 
-#include <atomic>
-#include <mutex>
-#include <thread>
+#include <atomic>   // atomic
+#include <mutex>    // mutex, lock_guard
+#include <thread>   // thread
 
-#include <windows.h>
+#include <windows.h>    // DWORD
 
 #include <hidtool/mouse/mouse_simulator.hpp>
 #include "virtual_screen_info.hpp"
@@ -18,8 +18,6 @@ class MouseSimulatorPrivate
 public:
     static MouseSimulatorPrivate& getInstance();
 
-    static MouseSimulator::AbsMoveRange getAbsMoveRange();
-
     bool initialize();
     void destroy();
     bool isInitialized() const;
@@ -27,14 +25,22 @@ public:
     bool sendEvent(const MouseEvent& event);
     size_t sendEvent(const MouseEvent* events, size_t count);
 
-    bool moveBy(int32_t dx, int32_t dy);
-    bool moveTo(int32_t x, int32_t y);
+    bool moveTo(const AbsolutePos& absPos);
+    bool moveBy(const RelativePos& relPos);
 
     bool wheel(int32_t wheelDelta);
 
     bool pressButton(MouseButton button);
     bool releaseButton(MouseButton button);
     bool clickButton(MouseButton button);
+
+    bool wheel(const AbsolutePos& absPos, int32_t wheelDelta);
+    bool pressButton(const AbsolutePos& absPos, MouseButton button);
+    bool releaseButton(const AbsolutePos& absPos, MouseButton button);
+    bool clickButton(const AbsolutePos& absPos, MouseButton button);
+
+    bool drag(const AbsolutePos& endPos, MouseButton button);
+    bool drag(const AbsolutePos& startPos, const AbsolutePos& endPos, MouseButton button);
 
 private:
     MouseSimulatorPrivate() = default;
@@ -44,6 +50,7 @@ private:
 
     void handleDisplayChanged();
 
+    // 用于互斥 `initialize()` 和 `destroy()` 操作。
     mutable std::mutex initDestrMtx_;
 
     std::atomic<bool> isInitialized_{false};

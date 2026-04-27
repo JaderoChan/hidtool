@@ -7,7 +7,8 @@
 namespace hidtool
 {
 
-using KeyboardEventHandler = bool (*)(KeyboardEvent);
+/** @note 返回值为 `true` 时正常传播接收到的事件，返回值为 `false` 时将阻止事件向其他程序传播。 */
+using KeyboardEventHandler = bool (*)(const KeyboardEvent&);
 
 class KeyboardHookerPrivate;
 
@@ -19,6 +20,8 @@ class HIDTOOL_API KeyboardHooker
 {
 public:
     static KeyboardHooker& getInstance();
+
+    /** @brief 检查当前环境是否支持阻断事件的传播。 */
     static bool isSupportBlockEventPropagation() noexcept;
 
     bool run();

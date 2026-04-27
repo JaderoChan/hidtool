@@ -1,6 +1,6 @@
 #include <hidtool/keyboard/keyboard_key.hpp>
 
-#include <linux/input-event-codes.h>
+#include <linux/input-event-codes.h>    // KEY_*
 
 namespace hidtool
 {

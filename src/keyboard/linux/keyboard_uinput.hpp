@@ -12,6 +12,6 @@ protected:
     bool setupUInputFd(int fd) override;
 };
 
-} // namespace hidism
+} // namespace hidtool
 
 #endif // !HIDTOOL_KEYBOARD_UINPUT_HPP

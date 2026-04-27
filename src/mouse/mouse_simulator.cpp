@@ -6,6 +6,7 @@
     #include "apple/mouse_simulator_private.hpp"
 #elif defined(HIDTOOL_LINUX)
     #include "linux/mouse_simulator_private.hpp"
+#include "mouse_simulator.hpp"
 #else
     #error "Unspported platform"
 #endif // HIDTOOL_WIN
@@ -22,9 +23,6 @@ MouseSimulator& MouseSimulator::getInstance()
     return instance;
 }
 
-MouseSimulator::AbsMoveRange MouseSimulator::getAbsMoveRange()
-{ return MouseSimulatorPrivate::getAbsMoveRange(); }
-
 bool MouseSimulator::initialize()
 { return pri_.initialize(); }
 
@@ -40,11 +38,11 @@ bool MouseSimulator::sendEvent(const MouseEvent& event)
 size_t MouseSimulator::sendEvent(const MouseEvent* events, size_t count)
 { return pri_.sendEvent(events, count); }
 
-bool MouseSimulator::moveBy(int32_t dx, int32_t dy)
-{ return pri_.moveBy(dx, dy); }
+bool MouseSimulator::moveTo(const AbsolutePos& absPos)
+{ return pri_.moveTo(absPos); }
 
-bool MouseSimulator::moveTo(int32_t x, int32_t y)
-{ return pri_.moveTo(x, y); }
+bool MouseSimulator::moveBy(const RelativePos& relPos)
+{ return pri_.moveBy(relPos); }
 
 bool MouseSimulator::wheel(int32_t wheelDelta)
 { return pri_.wheel(wheelDelta); }
@@ -57,5 +55,23 @@ bool MouseSimulator::releaseButton(MouseButton button)
 
 bool MouseSimulator::clickButton(MouseButton button)
 { return pri_.clickButton(button); }
+
+bool MouseSimulator::wheel(const AbsolutePos& absPos, int32_t wheelDelta)
+{ return pri_.wheel(absPos, wheelDelta); }
+
+bool MouseSimulator::pressButton(const AbsolutePos& absPos, MouseButton button)
+{ return pri_.pressButton(absPos, button); }
+
+bool MouseSimulator::releaseButton(const AbsolutePos& absPos, MouseButton button)
+{ return pri_.releaseButton(absPos, button); }
+
+bool MouseSimulator::clickButton(const AbsolutePos& absPos, MouseButton button)
+{ return pri_.clickButton(absPos, button); }
+
+bool MouseSimulator::drag(const AbsolutePos& endPos, MouseButton button)
+{ return pri_.drag(endPos, button); }
+
+bool MouseSimulator::drag(const AbsolutePos& startPos, const AbsolutePos& endPos, MouseButton button)
+{ return pri_.drag(startPos, endPos, button); }
 
 } // namespace hidtool

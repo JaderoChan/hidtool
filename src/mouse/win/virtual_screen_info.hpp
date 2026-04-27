@@ -1,7 +1,7 @@
 #ifndef HIDTOOL_VIRTUAL_SCREEN_INFO_HPP
 #define HIDTOOL_VIRTUAL_SCREEN_INFO_HPP
 
-#include <cstdint>
+#include <cstdint>  // int32_t
 
 namespace hidtool
 {

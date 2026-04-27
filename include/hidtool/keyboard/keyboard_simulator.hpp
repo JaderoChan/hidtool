@@ -9,9 +9,7 @@ namespace hidtool
 
 class KeyboardSimulatorPrivate;
 
-/**
- * @note 若未特别说明，此类的所有成员函数都是可重入的。
- */
+/** @note 若未特别说明，此类的所有成员函数都是线程安全的。 */
 class HIDTOOL_API KeyboardSimulator
 {
 public:
@@ -30,9 +28,14 @@ public:
     bool releaseKey(uint32_t nativeKey);
     bool releaseKey(KeyboardKey key);
 
-    /// @note 等同于 `pressKey()` 和 `releaseKey()` 的组合。
+    /**
+     * @name clickKey 函数
+     * @brief 等同于 `pressKey()` 与 `releaseKey()` 的组合。
+     * @{
+     */
     bool clickKey(uint32_t nativeKey);
     bool clickKey(KeyboardKey key);
+    /** @} */
 
 private:
     explicit KeyboardSimulator(KeyboardSimulatorPrivate&);

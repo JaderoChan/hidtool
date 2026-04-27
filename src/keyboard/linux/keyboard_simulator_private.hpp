@@ -1,7 +1,7 @@
 #ifndef HIDTOOL_KEYBOARD_SIMULATOR_PRIVATE_HPP
 #define HIDTOOL_KEYBOARD_SIMULATOR_PRIVATE_HPP
 
-#include <atomic>
+#include <atomic>   // atomic
 
 #include <hidtool/keyboard/keyboard_simulator.hpp>
 #include "keyboard_uinput.hpp"

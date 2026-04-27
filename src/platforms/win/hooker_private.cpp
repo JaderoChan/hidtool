@@ -5,7 +5,9 @@ namespace hidtool
 
 HookerPrivate::~HookerPrivate()
 {
+    // 由于工作线程循环中未调用纯虚函数，可以在基类析构函数中安全调用 `stop()` 接口以退出工作线程。
     stop();
+    // 重置字段
     eventHandler_ = 0;
 }
 
@@ -21,10 +23,12 @@ bool HookerPrivate::run()
 
     workerThread_ = std::thread([this, &runningResult]() { work(runningResult); });
 
+    // 检查线程启动成功与否。
     bool runningSuccess = fut.get();
     isRunning_.store(runningSuccess);
     if (!runningSuccess)
     {
+        // 如果线程启动失败则等待线程退出。
         if (workerThread_.joinable())
             workerThread_.join();
     }
@@ -39,10 +43,13 @@ void HookerPrivate::stop()
     if (!isRunning_.load())
         return;
 
+    // 向线程发送退出事件。
     PostThreadMessageA(workerThreadId_, WM_QUIT, 0, 0);
+    // 等待线程退出。
     if (workerThread_.joinable())
         workerThread_.join();
 
+    // 重置相关字段。
     workerThreadId_ = 0;
     isRunning_.store(false);
 }
@@ -63,13 +70,12 @@ void HookerPrivate::work(std::promise<bool>& runningResult)
 
     workerThreadId_ = GetCurrentThreadId();
     MSG msg = {0};
-    // Force the system to create the message queue.
+    // 强制系统创建消息循环。
     PeekMessageA(&msg, nullptr, WM_USER, WM_USER, PM_NOREMOVE);
 
     runningResult.set_value(true);
 
-    // Retrieves only messages on the current thread's message queue whose hwnd value is NULL.
-    // In this case the thread message as posted by `PostThreadMessage()`.
+    // 只接收由 `PostThreadMessage()` 接口发送的消息。
     while (GetMessageA(&msg, reinterpret_cast<HWND>(static_cast<intptr_t>(-1)), 0, 0) != 0)
     {
         switch (msg.message)
@@ -83,8 +89,6 @@ void HookerPrivate::work(std::promise<bool>& runningResult)
     }
 
     UnhookWindowsHookEx(hook);
-
-    workerThreadId_ = 0;
 }
 
 } // namespace hidtool

@@ -1,42 +1,34 @@
 #include "uinput.hpp"
 
-#include <cerrno>
-#include <cstdio>
+#include <cerrno>   // errno
+#include <cstdio>   // sprintf()
 
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/ioctl.h>
+#include <fcntl.h>          // open()
+#include <unistd.h>         // write(), close()
+#include <sys/ioctl.h>      // ioctl()
 
-#include <linux/uinput.h>
-#include <linux/input-event-codes.h>
+#include <linux/uinput.h>   // uinput...
 
 namespace hidtool
 {
 
-UInput::~UInput()
-{
-    std::lock_guard<std::mutex> locker(uinputFdMtx_);
-
-    if (uinputFd_ != -1)
-    {
-        ioctl(uinputFd_, UI_DEV_DESTROY);
-        close(uinputFd_);
-        uinputFd_ = -1;
-    }
-}
+UInput::~UInput() { cleanup(); }
 
 bool UInput::setup(const std::string& name, uint16_t vendor, uint16_t product, uint16_t version)
 {
     std::lock_guard<std::mutex> locker(uinputFdMtx_);
 
+    // 如果 `uinputFd_` 不为 -1，意味着已经是配置完成状态，直接返回 `false`。
     if (uinputFd_ != -1)
         return false;
 
+    // UInput文件位置。
     constexpr const char* uinputFilepath = "/dev/uinput";
     uinputFd_ = open(uinputFilepath, O_WRONLY | O_NONBLOCK);
     if (uinputFd_ == -1)
         return false;
 
+    // 配置 UInput 属性。
     struct uinput_setup usetup = {0};
     snprintf(usetup.name, sizeof(usetup.name), "%s", name.c_str());
     usetup.id.bustype = BUS_USB;
@@ -44,6 +36,7 @@ bool UInput::setup(const std::string& name, uint16_t vendor, uint16_t product, u
     usetup.id.product = product;
     usetup.id.version = version;
 
+    // 配置 UInput -> 派生类配置 UInput 功能 -> 创建 UInput。
     if ((ioctl(uinputFd_, UI_DEV_SETUP, &usetup) == -1) ||
         !setupUInputFd(uinputFd_) ||
         ioctl(uinputFd_, UI_DEV_CREATE) == -1)

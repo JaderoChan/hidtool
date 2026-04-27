@@ -2,6 +2,7 @@
 #define HIDTOOL_MOUSE_EVENT_HPP
 
 #include "mouse_button.hpp"
+#include "mouse_pos.hpp"
 
 namespace hidtool
 {
@@ -19,25 +20,26 @@ struct MouseEvent
     };
 
     constexpr MouseEvent() noexcept
-        : pos{0, 0} {}
+        : absPos() {}
 
     constexpr explicit MouseEvent(EventType eventType) noexcept
-        : eventType(eventType), pos{0, 0} {}
+        : eventType(eventType), absPos() {}
 
     static MouseEvent createAbsMoveEvent(int32_t x, int32_t y) noexcept
     {
         MouseEvent result(ET_ABS_MOVE);
-        result.pos = {x, y};
+        result.absPos = {x, y};
         return result;
     }
 
-    static MouseEvent createRelMoveEvent(int32_t x, int32_t y) noexcept
+    static MouseEvent createRelMoveEvent(int32_t dx, int32_t dy) noexcept
     {
         MouseEvent result(ET_REL_MOVE);
-        result.pos = {x, y};
+        result.relPos = {dx, dy};
         return result;
     }
 
+    /** @sa `wheelDelta` `MouseSimulator::wheel()` */
     static MouseEvent createWheelEvent(int32_t wheelDelta)
     {
         MouseEvent result(ET_WHEEL);
@@ -63,20 +65,16 @@ struct MouseEvent
     union
     {
         /**
-         * @note 在 **Windows** 和 **MacOS** 平台下，无论是 `MouseHooker` 事件处理函数中获得的绝对移动事件还是
-         * 通过 `MouseSimulator` 发送的绝对移动事件，此坐标始终以虚拟屏幕空间大小为参考。
-         * 而对于 **Linux** 平台下的绝对移动事件，此坐标在 X 和 Y 轴上始终限定为 `[0, 65535]`。
-         * 此外，在 **Linux** 下发送超过此坐标限制的绝对移动事件时，我们不会尝试将其钳制。
+         * @note
+         * 在 **Windows** 和 **MacOS** 平台下，无论是 `MouseHooker` 事件处理函数中获得的绝对移动事件还是
+         * 通过 `MouseSimulator` 发送的绝对移动事件，此坐标始终以虚拟屏幕空间范围为基准。
+         * 在 **Linux** 平台下，此坐标在 X 和 Y 轴上始终限定为 `[0, 65535]`。
+         * @note 当发送超过坐标范围的绝对移动事件时，会将其钳制在合法范围内。
+         * @sa `getAbsolutePosRange()'
          */
-        struct
-        {
-            int32_t x;
-            int32_t y;
-        } pos;
-        /**
-         * @note 此值的单位量是平台相关的，所以不要在跨平台程序中使用相同的度量以期望其在不同平台上的行为一致。
-         * （未来可能会进行优化）
-         */
+        AbsolutePos absPos;
+        RelativePos relPos;
+        /** @note 单位量为 `120`。值为正时，滚轮朝远离用户的方向滚动；值为负时，滚轮朝靠近用户的方向滚动。 */
         int32_t wheelDelta;
         MouseButton button;
     };

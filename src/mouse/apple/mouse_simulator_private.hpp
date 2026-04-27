@@ -20,8 +20,8 @@ public:
     bool sendEvent(const MouseEvent& event);
     size_t sendEvent(const std::vector<MouseEvent>& events);
 
-    bool moveBy(int32_t dx, int32_t dy);
     bool moveTo(int32_t x, int32_t y);
+    bool moveBy(int32_t dx, int32_t dy);
 
     bool wheel(int32_t wheelDelta);
 

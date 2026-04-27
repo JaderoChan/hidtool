@@ -1,12 +1,11 @@
 #include "mouse_hooker_private.hpp"
 
-#include <unordered_map>
+#include <unordered_map>    // unordered_map
 
-#include <unistd.h>     // read
+#include <unistd.h>         // read
+#include <sys/ioctl.h>      // ioctl()
 
-#include <sys/ioctl.h>  // ioctl()
-
-#include <linux/input-event-codes.h>
+#include <linux/input-event-codes.h>    // EV_*, ABS_*, REL_*, BTN_*
 
 namespace hidtool
 {
@@ -77,7 +76,7 @@ static inline void setMouseEventButton(MouseEvent& event, unsigned short inputEv
             break;
         case BTN_BACK:
             event.button = MouseButton::MSBTN_BACK;
-            break;;
+            break;
         case BTN_FORWARD:
             event.button = MouseButton::MSBTN_FORWARD;
             break;
@@ -90,6 +89,7 @@ void MouseHookerPrivate::handleInputEvent(int fd)
 {
     auto eventHandler = getEventHandler<MouseEventHandler>();
 
+    // 由于 Linux 的移动事件可能只上报单轴移动事件，通过此结构体保留双轴位置信息。
     struct AbsState
     {
         int32_t x = 0;
@@ -97,11 +97,13 @@ void MouseHookerPrivate::handleInputEvent(int fd)
         bool hasX = false;
         bool hasY = false;
     };
+    // 通过 `unordered_map` 存储不同设备的双轴位置信息。
     static std::unordered_map<int, AbsState> absStatesByFd;
+    // 获取当前设备的双轴位置信息。
     auto& absState = absStatesByFd[fd];
 
-    struct input_event ie;
     MouseEvent event;
+    struct input_event ie;
     while (true)
     {
         ssize_t n = read(fd, &ie, sizeof(struct input_event));
@@ -114,6 +116,7 @@ void MouseHookerPrivate::handleInputEvent(int fd)
                 {
                     switch (ie.code)
                     {
+                        // 更新当前设备的双轴位置信息。
                         case ABS_X:
                             absState.x = static_cast<int32_t>(ie.value);
                             absState.hasX = true;
@@ -126,6 +129,7 @@ void MouseHookerPrivate::handleInputEvent(int fd)
                             break;
                     }
 
+                    // 仅当双轴位置都已赋值时才上报事件。
                     if (absState.hasX && absState.hasY)
                     {
                         event.eventType = MouseEvent::ET_ABS_MOVE;
@@ -149,7 +153,8 @@ void MouseHookerPrivate::handleInputEvent(int fd)
                             break;
                         case REL_WHEEL:
                             event.eventType = MouseEvent::ET_WHEEL;
-                            event.wheelDelta = static_cast<int32_t>(ie.value);
+                            // 滚轮变化单位量为 120。
+                            event.wheelDelta = static_cast<int32_t>(ie.value) * 120;
                             break;
                         default:
                             break;
@@ -158,23 +163,27 @@ void MouseHookerPrivate::handleInputEvent(int fd)
                 }
                 case EV_KEY:
                 {
-                    event.eventType = (ie.value == 0 ? MouseEvent::ET_RELEASE : MouseEvent::ET_PRESS);
+                    event.eventType = (ie.value == 1 ? MouseEvent::ET_PRESS : MouseEvent::ET_RELEASE);
                     setMouseEventButton(event, ie.code);
                     break;
                 }
                 case EV_SYN:
                 {
+                    // 由于鼠标事件可能在 `SYN_REPORT` 之前有多个事件，
+                    // 所以需要在接收到 `SYN_REPORT` 事件时才调用事件处理程序。
                     if (ie.code == SYN_REPORT)
                     {
-                        if (event.eventType != MouseEvent::ET_NONE && eventHandler)
+                        if (eventHandler && event.eventType != MouseEvent::ET_NONE)
                             eventHandler(event);
                     }
 
+                    // 重置事件
                     event = MouseEvent();
                     break;
                 }
                 default:
                 {
+                    // 重置事件
                     event = MouseEvent();
                     break;
                 }

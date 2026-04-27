@@ -6,19 +6,15 @@
 namespace hidtool
 {
 
-inline struct input_event createSyncEvent()
+inline void setSyncReportEvent(struct input_event& ie)
 {
-    struct input_event ie = {0};
-
     ie.type = EV_SYN;
     ie.code = SYN_REPORT;
     ie.value = 0;
     ie.time.tv_sec = 0;
     ie.time.tv_usec = 0;
-
-    return ie;
 }
 
-} // namespace hidism
+} // namespace hidtool
 
 #endif // !HIDTOOL_INPUT_EVENT_FACTORY_HPP

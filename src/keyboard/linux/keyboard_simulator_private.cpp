@@ -1,17 +1,12 @@
 #include "keyboard_simulator_private.hpp"
 
-#include <platforms/linux/input_event_factory.hpp>
+#include <platforms/linux/sync_input_event_factory.hpp>
+#include "input_event_factory.hpp"
 
 namespace hidtool
 {
 
-KeyboardSimulatorPrivate::~KeyboardSimulatorPrivate()
-{
-    if (!isInitialized_.load())
-        return;
-
-    isInitialized_.store(false);
-}
+KeyboardSimulatorPrivate::~KeyboardSimulatorPrivate() { destroy(); }
 
 KeyboardSimulatorPrivate& KeyboardSimulatorPrivate::getInstance()
 {
@@ -25,6 +20,7 @@ bool KeyboardSimulatorPrivate::initialize()
     if (!isInitialized_.compare_exchange_strong(expected, true))
         return false;
 
+    // 配置键盘 UInput。
     if (!kbdUInput_.setup("JaderoChan HIDTOOL Keyboard UInput", 0x0310, 0x0001, 0x0001))
     {
         isInitialized_.store(false);
@@ -40,6 +36,7 @@ void KeyboardSimulatorPrivate::destroy()
     if (!isInitialized_.compare_exchange_strong(expected, false))
         return;
 
+    // 清理键盘 UInput。
     kbdUInput_.cleanup();
 }
 
@@ -50,21 +47,38 @@ bool KeyboardSimulatorPrivate::isInitialized() const
 
 bool KeyboardSimulatorPrivate::sendEvent(const KeyboardEvent& event)
 {
+    if (!isInitialized_.load)
+        return false;
+
+    struct input_event iePair[2] = {0};
+    iePair[0].type = EV_KEY;
+    iePair[0].code = static_cast<__s32>(nativeKey);
+    setSyncReportEvent(iePair[1]);
+
     switch (event.eventType)
     {
         case KeyboardEvent::ET_PRESS:
-            return pressKey(event.nativeKey);
+            iePair[0].value = 1;    // 1 is press.
+            break;
         case KeyboardEvent::ET_RELEASE:
-            return releaseKey(event.nativeKey);
+            iePair[0].value = 0;    // 0 is release.
+            break;
         default:
             return false;
     }
+
+    return kbdUInput_.sendEvent(iePair, 2);
 }
 
 size_t KeyboardSimulatorPrivate::sendEvent(const KeyboardEvent* events, size_t count)
 {
     if (!isInitialized_.load())
         return 0;
+
+    struct input_event iePair[2] = {0};
+    iePair[0].type = EV_KEY;
+    iePair[0].code = static_cast<__s32>(nativeKey);
+    setSyncReportEvent(iePair[1]);
 
     size_t sent = 0;
     for (size_t i = 0; i < count; ++i)
@@ -73,14 +87,16 @@ size_t KeyboardSimulatorPrivate::sendEvent(const KeyboardEvent* events, size_t c
         switch (event.eventType)
         {
             case KeyboardEvent::ET_PRESS:
-                sent += pressKey(event.nativeKey);
+                iePair[0].value = 1;    // 1 is press.
                 break;
             case KeyboardEvent::ET_RELEASE:
-                sent += releaseKey(event.nativeKey);
+                iePair[0].value = 0;    // 0 is release.
                 break;
             default:
-                break;
+                continue;
         }
+
+        sent += kbdUInput_.sendEvent(iePair, 2);
     }
 
     return sent;
@@ -92,12 +108,8 @@ bool KeyboardSimulatorPrivate::pressKey(uint32_t nativeKey)
         return false;
 
     struct input_event iePair[2] = {0};
-
-    iePair[0].type = EV_KEY;
-    iePair[0].value = 1;    // 1 is press.
-    iePair[0].code = static_cast<__s32>(nativeKey);
-
-    iePair[1] = createSyncEvent();
+    setPressKeyInputEvent(iePair[0], nativeKey);
+    setSyncReportEvent(iePair[1]);
 
     return kbdUInput_.sendEvent(iePair, 2);
 }
@@ -108,12 +120,8 @@ bool KeyboardSimulatorPrivate::releaseKey(uint32_t nativeKey)
         return false;
 
     struct input_event iePair[2] = {0};
-
-    iePair[0].type = EV_KEY;
-    iePair[0].value = 0;    // 0 is release.
-    iePair[0].code = static_cast<__s32>(nativeKey);
-
-    iePair[1] = createSyncEvent();
+    setReleaseKeyInputEvent(iePair[0], nativeKey);
+    setSyncReportEvent(iePair[1]);
 
     return kbdUInput_.sendEvent(iePair, 2);
 }
@@ -124,18 +132,10 @@ bool KeyboardSimulatorPrivate::clickKey(uint32_t nativeKey)
         return false;
 
     struct input_event ies[4] = {0};
-
-    ies[0].type = EV_KEY;
-    ies[0].value = 1;   // 1 is press.
-    ies[0].code = static_cast<__s32>(nativeKey);
-
-    ies[1] = createSyncEvent();
-
-    ies[2].type = EV_KEY;
-    ies[2].value = 0;   // 0 is release.
-    ies[2].code = static_cast<__s32>(nativeKey);
-
-    ies[3] = createSyncEvent();
+    setPressKeyInputEvent(ies[0], nativeKey);
+    setSyncReportEvent(iePair[1]);
+    setReleaseKeyInputEvent(ies[2], nativeKey);
+    setSyncReportEvent(iePair[3]);
 
     return kbdUInput_.sendEvent(ies, 4);
 }
