@@ -1,6 +1,6 @@
 #include <hidtool/keyboard/keyboard_key.hpp>
 
-#include <Carbon/Carbon.h>
+#include <Carbon/Carbon.h>  // kVK_*
 
 namespace hidtool
 {
