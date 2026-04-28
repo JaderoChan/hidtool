@@ -25,6 +25,7 @@ struct MouseEvent
     constexpr explicit MouseEvent(EventType type) noexcept
         : type(type), absPos() {}
 
+    /** @sa `absPos` */
     static MouseEvent createAbsMoveEvent(int32_t x, int32_t y) noexcept
     {
         MouseEvent result(ET_ABS_MOVE);
@@ -32,6 +33,7 @@ struct MouseEvent
         return result;
     }
 
+    /** @sa `relPos` */
     static MouseEvent createRelMoveEvent(int32_t dx, int32_t dy) noexcept
     {
         MouseEvent result(ET_REL_MOVE);
@@ -72,6 +74,10 @@ struct MouseEvent
          * @sa `getAbsolutePosRange()'
          */
         AbsolutePos absPos;
+        /**
+         * @details 由于 **MacOS** 平台下没有原生支持相对移动的 API，
+         * 所以在实现中将利用鼠标当前位置与相对移动值的和，通过绝对移动模拟相对移动。
+         */
         RelativePos relPos;
         /** @note 单位量为 `120`。值为正时，滚轮朝远离用户的方向滚动；值为负时，滚轮朝靠近用户的方向滚动。 */
         int32_t wheelDelta;

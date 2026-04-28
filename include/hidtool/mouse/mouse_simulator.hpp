@@ -33,7 +33,10 @@ public:
      */
     bool moveTo(const AbsolutePos& absPos);
 
-    /** @brief 相对移动。 */
+    /**
+     * @brief 相对移动。
+     * @sa `MouseEvent::relPos`
+     */
     bool moveBy(const RelativePos& relPos);
 
     /**
