@@ -14,15 +14,15 @@ static const char* getMouseButtonString(MouseButton button)
 {
     switch (button)
     {
-        case MouseButton::MSBTN_LEFT:
+        case MSBTN_LEFT:
             return "Left";
-        case MouseButton::MSBTN_RIGHT:
+        case MSBTN_RIGHT:
             return "Right";
-        case MouseButton::MSBTN_MIDDLE:
+        case MSBTN_MIDDLE:
             return "Middle";
-        case MouseButton::MSBTN_BACK:
+        case MSBTN_BACK:
             return "Back";
-        case MouseButton::MSBTN_FORWARD:
+        case MSBTN_FORWARD:
             return "Forward";
         default:
             return "Unknown button";

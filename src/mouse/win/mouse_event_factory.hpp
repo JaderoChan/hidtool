@@ -26,27 +26,27 @@ namespace hidtool
             break;
         case WM_LBUTTONDOWN:
             event.type = MouseEvent::ET_PRESS;
-            event.button = MouseButton::MSBTN_LEFT;
+            event.button = MSBTN_LEFT;
             break;
         case WM_LBUTTONUP:
             event.type = MouseEvent::ET_RELEASE;
-            event.button = MouseButton::MSBTN_LEFT;
+            event.button = MSBTN_LEFT;
             break;
         case WM_RBUTTONDOWN:
             event.type = MouseEvent::ET_PRESS;
-            event.button = MouseButton::MSBTN_RIGHT;
+            event.button = MSBTN_RIGHT;
             break;
         case WM_RBUTTONUP:
             event.type = MouseEvent::ET_RELEASE;
-            event.button = MouseButton::MSBTN_RIGHT;
+            event.button = MSBTN_RIGHT;
             break;
         case WM_MBUTTONDOWN:
             event.type = MouseEvent::ET_PRESS;
-            event.button = MouseButton::MSBTN_MIDDLE;
+            event.button = MSBTN_MIDDLE;
             break;
         case WM_MBUTTONUP:
             event.type = MouseEvent::ET_RELEASE;
-            event.button = MouseButton::MSBTN_MIDDLE;
+            event.button = MSBTN_MIDDLE;
             break;
         case WM_XBUTTONDOWN:    // Fallthrough
         case WM_XBUTTONUP:
@@ -54,10 +54,10 @@ namespace hidtool
             switch (HIWORD(msllh->mouseData))
             {
                 case XBUTTON1:
-                    event.button = MouseButton::MSBTN_BACK;
+                    event.button = MSBTN_BACK;
                     break;
                 case XBUTTON2:
-                    event.button = MouseButton::MSBTN_FORWARD;
+                    event.button = MSBTN_FORWARD;
                     break;
                 default:
                     return false;

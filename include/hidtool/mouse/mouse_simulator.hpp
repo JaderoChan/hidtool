@@ -82,9 +82,9 @@ public:
      */
     /** @brief 从鼠标当前位置拖拽鼠标至指定位置。 */
     bool drag(const AbsolutePos& endPos,
-        MouseButton button = MouseButton::MSBTN_LEFT);
+        MouseButton button = MSBTN_LEFT);
     bool drag(const AbsolutePos& startPos, const AbsolutePos& endPos,
-        MouseButton button = MouseButton::MSBTN_LEFT);
+        MouseButton button = MSBTN_LEFT);
     /** @} */
 
 private:

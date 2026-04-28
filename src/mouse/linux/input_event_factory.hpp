@@ -48,19 +48,19 @@ inline void setWheelInputEvent(struct input_event& ie, int32_t wheelDelta)
 {
     switch (button)
     {
-        case MouseButton::MSBTN_LEFT:
+        case MSBTN_LEFT:
             ie.code = BTN_LEFT;
             break;
-        case MouseButton::MSBTN_RIGHT:
+        case MSBTN_RIGHT:
             ie.code = BTN_RIGHT;
             break;
-        case MouseButton::MSBTN_MIDDLE:
+        case MSBTN_MIDDLE:
             ie.code = BTN_MIDDLE;
             break;
-        case MouseButton::MSBTN_FORWARD:
+        case MSBTN_FORWARD:
             ie.code = BTN_FORWARD;
             break;
-        case MouseButton::MSBTN_BACK:
+        case MSBTN_BACK:
             ie.code = BTN_BACK;
             break;
         default:

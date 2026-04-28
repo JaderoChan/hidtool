@@ -81,19 +81,19 @@ static inline void setMouseEventButton(MouseEvent& event, unsigned short inputEv
     switch (inputEventCode)
     {
         case BTN_LEFT:
-            event.button = MouseButton::MSBTN_LEFT;
+            event.button = MSBTN_LEFT;
             break;
         case BTN_RIGHT:
-            event.button = MouseButton::MSBTN_RIGHT;
+            event.button = MSBTN_RIGHT;
             break;
         case BTN_MIDDLE:
-            event.button = MouseButton::MSBTN_MIDDLE;
+            event.button = MSBTN_MIDDLE;
             break;
         case BTN_BACK:
-            event.button = MouseButton::MSBTN_BACK;
+            event.button = MSBTN_BACK;
             break;
         case BTN_FORWARD:
-            event.button = MouseButton::MSBTN_FORWARD;
+            event.button = MSBTN_FORWARD;
             break;
         default:
             break;
