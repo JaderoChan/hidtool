@@ -52,7 +52,8 @@ inline CGEventFlags keycodeToModifierMask(CGKeyCode keyCode)
     return cgEvent != nullptr;
 }
 
-[[nodiscard]] inline bool keyboardEventFromCGEvent(KeyboardEvent& event, CGEventType cgEventType, const CGEventRef& cgEvent)
+[[nodiscard]] inline bool
+keyboardEventFromCGEvent(KeyboardEvent& event, CGEventType cgEventType, const CGEventRef& cgEvent)
 {
     CGKeyCode keycode = CGEventGetIntegerValueField(cgEvent, kCGKeyboardEventKeycode);
 
