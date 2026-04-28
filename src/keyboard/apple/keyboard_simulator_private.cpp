@@ -1,7 +1,6 @@
 #include "keyboard_simulator_private.hpp"
 
 #include <CoreFoundation/CoreFoundation.h>
-#include <CoreGraphics/CGEvent.h>
 
 #include "keyboard_event_converter.hpp"
 
