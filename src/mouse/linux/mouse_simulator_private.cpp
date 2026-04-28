@@ -51,7 +51,7 @@ bool MouseSimulatorPrivate::sendEvent(const MouseEvent& event)
         return 0;
 
     struct input_event ies[3] = {0};
-    switch (event.eventType)
+    switch (event.type)
     {
         case MouseEvent::ET_REL_MOVE:
             setAbsoluteMoveInputEvent(ies[0], ies[1], event.absPos);
@@ -91,7 +91,7 @@ size_t MouseSimulatorPrivate::sendEvent(const MouseEvent* events, size_t count)
     for (size_t i = 0; i < count; ++i)
     {
         const auto& event = events[i];
-        switch (event.eventType)
+        switch (event.type)
         {
             case MouseEvent::ET_REL_MOVE:
                 setAbsoluteMoveInputEvent(ies[0], ies[1], event.absPos);

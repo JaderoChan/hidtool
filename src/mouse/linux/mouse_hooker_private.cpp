@@ -147,7 +147,7 @@ void MouseHookerPrivate::handleInputEvent(int fd)
                     // 仅当双轴位置都已赋值时才上报事件。
                     if (absState.hasX && absState.hasY)
                     {
-                        event.eventType = MouseEvent::ET_ABS_MOVE;
+                        event.type = MouseEvent::ET_ABS_MOVE;
                         event.absPos.x = absState.x;
                         event.absPos.y = absState.y;
                     }
@@ -159,15 +159,15 @@ void MouseHookerPrivate::handleInputEvent(int fd)
                     switch (ie.code)
                     {
                         case REL_X:
-                            event.eventType = MouseEvent::ET_REL_MOVE;
+                            event.type = MouseEvent::ET_REL_MOVE;
                             event.relPos.dx = static_cast<int32_t>(ie.value);
                             break;
                         case REL_Y:
-                            event.eventType = MouseEvent::ET_REL_MOVE;
+                            event.type = MouseEvent::ET_REL_MOVE;
                             event.relPos.dy = static_cast<int32_t>(ie.value);
                             break;
                         case REL_WHEEL:
-                            event.eventType = MouseEvent::ET_WHEEL;
+                            event.type = MouseEvent::ET_WHEEL;
                             // 滚轮变化单位量为 120。
                             event.wheelDelta = static_cast<int32_t>(ie.value) * 120;
                             break;
@@ -178,7 +178,7 @@ void MouseHookerPrivate::handleInputEvent(int fd)
                 }
                 case EV_KEY:
                 {
-                    event.eventType = (ie.value == 1 ? MouseEvent::ET_PRESS : MouseEvent::ET_RELEASE);
+                    event.type = (ie.value == 1 ? MouseEvent::ET_PRESS : MouseEvent::ET_RELEASE);
                     setMouseEventButton(event, ie.code);
                     break;
                 }
@@ -188,7 +188,7 @@ void MouseHookerPrivate::handleInputEvent(int fd)
                     // 所以需要在接收到 `SYN_REPORT` 事件时才调用事件处理程序。
                     if (ie.code == SYN_REPORT)
                     {
-                        if (eventHandler && event.eventType != MouseEvent::ET_NONE)
+                        if (eventHandler && event.type != MouseEvent::ET_NONE)
                             eventHandler(event);
                     }
 

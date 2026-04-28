@@ -32,7 +32,7 @@ static const char* getMouseButtonString(MouseButton button)
 static bool keyboardEventHandler(const KeyboardEvent& event)
 {
     auto key = keyboardKeyFromNativeKey(event.nativeKey);
-    switch (event.eventType)
+    switch (event.type)
     {
         case KeyboardEvent::ET_PRESS:
             printf("Key Pressed: %d.\n", key);
@@ -54,7 +54,7 @@ static bool keyboardEventHandler(const KeyboardEvent& event)
 }
 static bool mouseEventHandler(const MouseEvent& event)
 {
-    switch (event.eventType)
+    switch (event.type)
     {
         case MouseEvent::ET_ABS_MOVE:
             printf("Mouse absolute move: [%d, %d].\n", event.absPos.x, event.absPos.y);

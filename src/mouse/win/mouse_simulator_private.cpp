@@ -76,7 +76,7 @@ bool MouseSimulatorPrivate::sendEvent(const MouseEvent& event)
         return false;
 
     INPUT input = {0};
-    switch (event.eventType)
+    switch (event.type)
     {
         case MouseEvent::ET_ABS_MOVE:
             setAbsoluteMoveInput(input, event.absPos, virtualScreenInfo_.load());
@@ -115,7 +115,7 @@ size_t MouseSimulatorPrivate::sendEvent(const MouseEvent* events, size_t count)
         const auto& event = events[i];
         INPUT input = {0};
 
-        switch (event.eventType)
+        switch (event.type)
         {
             case MouseEvent::ET_ABS_MOVE:
                 setAbsoluteMoveInput(input, event.absPos, virtualScreenInfo_.load());

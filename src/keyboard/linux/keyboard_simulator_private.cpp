@@ -55,7 +55,7 @@ bool KeyboardSimulatorPrivate::sendEvent(const KeyboardEvent& event)
     iePair[0].code = static_cast<__s32>(event.nativeKey);
     setSyncReportEvent(iePair[1]);
 
-    switch (event.eventType)
+    switch (event.type)
     {
         case KeyboardEvent::ET_PRESS:
             iePair[0].value = 1;    // 1 is press.
@@ -83,7 +83,7 @@ size_t KeyboardSimulatorPrivate::sendEvent(const KeyboardEvent* events, size_t c
     for (size_t i = 0; i < count; ++i)
     {
         const auto& event = events[i];
-        switch (event.eventType)
+        switch (event.type)
         {
             case KeyboardEvent::ET_PRESS:
                 iePair[0].code = static_cast<__s32>(event.nativeKey);

@@ -16,14 +16,14 @@ struct KeyboardEvent
     };
 
     constexpr KeyboardEvent() noexcept = default;
-    constexpr explicit KeyboardEvent(EventType eventType) noexcept
-        : eventType(eventType) {}
-    constexpr KeyboardEvent(EventType eventType, uint32_t nativeKey) noexcept
-        : eventType(eventType), nativeKey(nativeKey) {};
-    KeyboardEvent(EventType eventType, KeyboardKey key) noexcept
-        : eventType(eventType), nativeKey(keyboardKeyToNativeKey(key)) {};
+    constexpr explicit KeyboardEvent(EventType type) noexcept
+        : type(type) {}
+    constexpr KeyboardEvent(EventType type, uint32_t nativeKey) noexcept
+        : type(type), nativeKey(nativeKey) {};
+    KeyboardEvent(EventType type, KeyboardKey key) noexcept
+        : type(type), nativeKey(keyboardKeyToNativeKey(key)) {};
 
-    EventType eventType = ET_NONE;
+    EventType type = ET_NONE;
     uint32_t nativeKey = 0;
 };
 

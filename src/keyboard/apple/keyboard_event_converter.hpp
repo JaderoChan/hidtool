@@ -36,7 +36,7 @@ inline CGEventFlags keycodeToModifierMask(CGKeyCode keyCode)
 [[nodiscard]] inline bool keyboardEventToCGEvent(const KeyboardEvent& event, CGEventRef& cgEvent)
 {
     CGKeyCode keyCode = static_cast<CGKeyCode>(event.nativeKey);
-    switch (event.eventType)
+    switch (event.type)
     {
         case KeyboardEvent::ET_PRESSED:
             cgEvent = CGEventCreateKeyboardEvent(nullptr, keyCode, true);
@@ -59,10 +59,10 @@ inline CGEventFlags keycodeToModifierMask(CGKeyCode keyCode)
     switch (cgEventType)
     {
         case kCGEventKeyDown:
-            event.eventType = KeyboardEvent::ET_PRESSED;
+            event.type = KeyboardEvent::ET_PRESSED;
             break;
         case kCGEventKeyUp:
-            event.eventType = KeyboardEvent::ET_RELEASED;
+            event.type = KeyboardEvent::ET_RELEASED;
             break;
         case kCGEventFlagsChanged:
         {
@@ -70,7 +70,7 @@ inline CGEventFlags keycodeToModifierMask(CGKeyCode keyCode)
             if (mask != 0)
             {
                 CGEventFlags flags = CGEventGetFlags(cgEvent);
-                event.eventType = (flags & mask) ? KeyboardEvent::ET_PRESSED : KeyboardEvent::ET_RELEASED;
+                event.type = (flags & mask) ? KeyboardEvent::ET_PRESSED : KeyboardEvent::ET_RELEASED;
             }
             break;
         }

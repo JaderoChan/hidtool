@@ -70,7 +70,7 @@ void KeyboardHookerPrivate::handleInputEvent(int fd)
             if (eventHandler && ie.type == EV_KEY)
             {
                 KeyboardEvent event;
-                event.eventType = (ie.value == 1 ? KeyboardEvent::ET_PRESS : KeyboardEvent::ET_RELEASE);
+                event.type = (ie.value == 1 ? KeyboardEvent::ET_PRESS : KeyboardEvent::ET_RELEASE);
                 event.nativeKey = static_cast<int32_t>(ie.code);
 
                 eventHandler(event);

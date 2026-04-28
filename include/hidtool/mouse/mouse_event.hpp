@@ -22,8 +22,8 @@ struct MouseEvent
     constexpr MouseEvent() noexcept
         : absPos() {}
 
-    constexpr explicit MouseEvent(EventType eventType) noexcept
-        : eventType(eventType), absPos() {}
+    constexpr explicit MouseEvent(EventType type) noexcept
+        : type(type), absPos() {}
 
     static MouseEvent createAbsMoveEvent(int32_t x, int32_t y) noexcept
     {
@@ -61,7 +61,7 @@ struct MouseEvent
         return result;
     }
 
-    EventType eventType = ET_NONE;
+    EventType type = ET_NONE;
     union
     {
         /**

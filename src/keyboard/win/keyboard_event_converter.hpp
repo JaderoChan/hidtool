@@ -10,7 +10,7 @@ namespace hidtool
 
 [[nodiscard]] inline bool keyboardEventToInput(const KeyboardEvent& event, INPUT& input)
 {
-    switch (event.eventType)
+    switch (event.type)
     {
         case KeyboardEvent::ET_PRESS:
             input.ki.dwFlags = 0;
@@ -38,11 +38,11 @@ namespace hidtool
     {
         case WM_KEYDOWN:    // Fallthrough
         case WM_SYSKEYDOWN:
-            event.eventType = KeyboardEvent::ET_PRESS;
+            event.type = KeyboardEvent::ET_PRESS;
             break;
         case WM_KEYUP:      // Fallthrough
         case WM_SYSKEYUP:
-            event.eventType = KeyboardEvent::ET_RELEASE;
+            event.type = KeyboardEvent::ET_RELEASE;
             break;
         default:
             return false;

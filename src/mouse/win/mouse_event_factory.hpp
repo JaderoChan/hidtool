@@ -17,40 +17,40 @@ namespace hidtool
     switch (wParam)
     {
         case WM_MOUSEMOVE:
-            event.eventType = MouseEvent::ET_ABS_MOVE;
+            event.type = MouseEvent::ET_ABS_MOVE;
             event.absPos = {msllh->pt.x, msllh->pt.y};
             break;
         case WM_MOUSEWHEEL:
-            event.eventType = MouseEvent::ET_WHEEL;
+            event.type = MouseEvent::ET_WHEEL;
             event.wheelDelta = static_cast<int32_t>(HIWORD(msllh->mouseData));
             break;
         case WM_LBUTTONDOWN:
-            event.eventType = MouseEvent::ET_PRESS;
+            event.type = MouseEvent::ET_PRESS;
             event.button = MouseButton::MSBTN_LEFT;
             break;
         case WM_LBUTTONUP:
-            event.eventType = MouseEvent::ET_RELEASE;
+            event.type = MouseEvent::ET_RELEASE;
             event.button = MouseButton::MSBTN_LEFT;
             break;
         case WM_RBUTTONDOWN:
-            event.eventType = MouseEvent::ET_PRESS;
+            event.type = MouseEvent::ET_PRESS;
             event.button = MouseButton::MSBTN_RIGHT;
             break;
         case WM_RBUTTONUP:
-            event.eventType = MouseEvent::ET_RELEASE;
+            event.type = MouseEvent::ET_RELEASE;
             event.button = MouseButton::MSBTN_RIGHT;
             break;
         case WM_MBUTTONDOWN:
-            event.eventType = MouseEvent::ET_PRESS;
+            event.type = MouseEvent::ET_PRESS;
             event.button = MouseButton::MSBTN_MIDDLE;
             break;
         case WM_MBUTTONUP:
-            event.eventType = MouseEvent::ET_RELEASE;
+            event.type = MouseEvent::ET_RELEASE;
             event.button = MouseButton::MSBTN_MIDDLE;
             break;
         case WM_XBUTTONDOWN:    // Fallthrough
         case WM_XBUTTONUP:
-            event.eventType = (wParam == WM_XBUTTONDOWN ? MouseEvent::ET_PRESS : MouseEvent::ET_RELEASE);
+            event.type = (wParam == WM_XBUTTONDOWN ? MouseEvent::ET_PRESS : MouseEvent::ET_RELEASE);
             switch (HIWORD(msllh->mouseData))
             {
                 case XBUTTON1:
