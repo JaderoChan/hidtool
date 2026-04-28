@@ -1,5 +1,7 @@
 #include "mouse_simulator_private.hpp"
 
+#include <CoreFoundation/CoreFoundation.h>
+
 #include "mouse_event_converter.hpp"
 
 namespace hidtool
@@ -15,6 +17,7 @@ MouseSimulatorPrivate& MouseSimulatorPrivate::getInstance()
 
 bool MouseSimulatorPrivate::initialize()
 {
+    // 无实际作用，仅与其他子模块保持一致性。`destroy()` 同理。
     bool expected = false;
     return isInitialized_.compare_exchange_strong(expected, true);
 }
