@@ -41,7 +41,7 @@ inline void setWheelInputEvent(struct input_event& ie, int32_t wheelDelta)
 {
     ie.type = EV_REL;
     ie.code = REL_WHEEL;
-    ie.value = static_cast<signed int>(wheelDelta);
+    ie.value = static_cast<signed int>(wheelDelta / 120);
 }
 
 [[nodiscard]] inline bool setInputEventButton(struct input_event& ie, MouseButton button)
