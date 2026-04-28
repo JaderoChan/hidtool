@@ -54,6 +54,21 @@ size_t KeyboardSimulatorPrivate::sendEvent(const KeyboardEvent* events, size_t c
 {
     if (!isInitialized_.load())
         return 0;
+
+    size_t sent = 0;
+
+    CGEventRef cgEvent = nullptr;
+    for (size_t i = 0; i < count; ++i)
+    {
+        if (keyboardEventToCGEvent(events[i], cgEvent))
+        {
+            CGEventPost(kCGHIDEventTap, cgEvent);
+            CFRelease(cgEvent);
+            sent++;
+        }
+    }
+
+    return sent
 }
 
 bool KeyboardSimulatorPrivate::pressKey(uint32_t nativeKey)
@@ -93,25 +108,26 @@ bool KeyboardSimulatorPrivate::clickKey(uint32_t nativeKey)
     if (!isInitialized_.load())
         return false;
 
-    int success = 0;
+    size_t sent = 0;
 
-    CGEventRef cgEvent = CGEventCreateKeyboardEvent(nullptr, nativeKey, true);
-    if (cgEvent)
+    CGEventRef pressKeyCgEvent = CGEventCreateKeyboardEvent(nullptr, nativeKey, true);
+    CGEventRef releaseKeyCgEvent = CGEventCreateKeyboardEvent(nullptr, nativeKey, false);
+
+    if (pressKeyCgEvent)
     {
-        CGEventPost(kCGHIDEventTap, cgEvent);
-        CFRelease(cgEvent);
-        success++;
+        CGEventPost(kCGHIDEventTap, pressKeyCgEvent);
+        CFRelease(pressKeyCgEvent);
+        sent++;
     }
 
-    cgEvent = CGEventCreateKeyboardEvent(nullptr, nativeKey, false);
-    if (cgEvent)
+    if (releaseKeyCgEvent)
     {
-        CGEventPost(kCGHIDEventTap, cgEvent);
-        CFRelease(cgEvent);
-        success++;
+        CGEventPost(kCGHIDEventTap, releaseKeyCgEvent);
+        CFRelease(releaseKeyCgEvent);
+        sent++;
     }
 
-    return success == 2;
+    return sent == 2;
 }
 
 } // namespace hidtool
