@@ -10,6 +10,7 @@ namespace hidtool
 class MouseSimulatorPrivate;
 
 /**
+ * @ingroup Simulators
  * @note 若未特别说明，此类的所有成员函数都是线程安全的。
  * 此外，除 `MouseSimulator::initialize()` 和 `MouseSimulator::destroy()` 外，其他成员函数都是可重入的。
  */

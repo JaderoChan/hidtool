@@ -9,7 +9,10 @@ namespace hidtool
 
 class KeyboardSimulatorPrivate;
 
-/** @note 若未特别说明，此类的所有成员函数都是线程安全的。 */
+/**
+ * @ingroup Simulators
+ * @note 若未特别说明，此类的所有成员函数都是可重入的。
+ */
 class HIDTOOL_API KeyboardSimulator
 {
 public:
