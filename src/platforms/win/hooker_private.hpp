@@ -60,6 +60,7 @@ private:
     mutable std::mutex operateMtx_;
     std::atomic<bool> isRunning_{false};
     std::thread workerThread_;
+
     DWORD workerThreadId_ = 0;
 };
 

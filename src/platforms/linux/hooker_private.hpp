@@ -96,6 +96,13 @@ private:
     // 判断指定路径的文件是否是字符设备。
     static bool isCharacterDevice(const std::string& filepath);
 
+    intptr_t eventHandler_ = 0;
+
+    // 用于互斥 `run()`，`stop()` 和 `setEventHandler()` 操作。
+    mutable std::mutex operateMtx_;
+    std::atomic<bool> isRunning_{false};
+    std::thread workerThread_;
+
     std::list<WorkEvent> workEvents_;
     mutable std::mutex workEventsMtx_;
 
@@ -105,13 +112,6 @@ private:
     std::vector<struct pollfd> watchedPollfds_{2, pollfd{-1, 0, 0}};
     // 存放已配置输入设备的名称，与 `watchedPollfds_` 第二个元素之后的 pollfd 形成对应关系。
     std::vector<std::string> evdevNames_;
-
-    intptr_t eventHandler_ = 0;
-
-    // 用于互斥 `run()`，`stop()` 和 `setEventHandler()` 操作。
-    mutable std::mutex operateMtx_;
-    std::atomic<bool> isRunning_{false};
-    std::thread workerThread_;
 };
 
 } // namespace hidtool

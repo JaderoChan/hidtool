@@ -1,7 +1,7 @@
 #ifndef HIDTOOL_KEYBOARD_HOOKER_PRIVATE_HPP
 #define HIDTOOL_KEYBOARD_HOOKER_PRIVATE_HPP
 
-#include <platforms/linux/hooker_private.hpp>
+#include <platforms/apple/hooker_private.hpp>
 #include <hidtool/keyboard/keyboard_hooker.hpp>
 
 namespace hidtool
@@ -19,6 +19,11 @@ private:
     ~KeyboardHookerPrivate();
     KeyboardHookerPrivate(const KeyboardHookerPrivate&) = delete;
     KeyboardHookerPrivate& operator=(const KeyboardHookerPrivate&) = delete;
+
+    CGEventMask getCGEventMask() const override;
+    CGEventTapCallBack getCGEventTapCallback() const override;
+
+    static CGEventRef keyboardTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void* data);
 };
 
 } // namespace hidtool
