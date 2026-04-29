@@ -1,6 +1,6 @@
 #include "mouse_simulator_private.hpp"
 
-#include <CoreFoundation/CoreFoundation.h>
+#include <CoreFoundation/CoreFoundation.h>  // CF*
 
 #include "mouse_event_converter.hpp"
 

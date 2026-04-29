@@ -1,7 +1,8 @@
 #ifndef HIDTOOL_KEYBOARD_EVENT_CONVERTER_HPP
 #define HIDTOOL_KEYBOARD_EVENT_CONVERTER_HPP
 
-#include <CoreGraphics/CGEvent.h>
+#include <Carbon/Carbon.h>          // kVK_*
+#include <CoreGraphics/CGEvent.h>   // kCG*, CG*
 
 #include <hidtool/keyboard/keyboard_event.hpp>
 
@@ -38,10 +39,10 @@ inline CGEventFlags keycodeToModifierMask(CGKeyCode keyCode)
     CGKeyCode keyCode = static_cast<CGKeyCode>(event.nativeKey);
     switch (event.type)
     {
-        case KeyboardEvent::ET_PRESSED:
+        case KeyboardEvent::ET_PRESS:
             cgEvent = CGEventCreateKeyboardEvent(nullptr, keyCode, true);
             break;
-        case KeyboardEvent::ET_RELEASED:
+        case KeyboardEvent::ET_RELEASE:
             cgEvent = CGEventCreateKeyboardEvent(nullptr, keyCode, false);
             break;
         default:
@@ -60,10 +61,10 @@ keyboardEventFromCGEvent(KeyboardEvent& event, CGEventType cgEventType, const CG
     switch (cgEventType)
     {
         case kCGEventKeyDown:
-            event.type = KeyboardEvent::ET_PRESSED;
+            event.type = KeyboardEvent::ET_PRESS;
             break;
         case kCGEventKeyUp:
-            event.type = KeyboardEvent::ET_RELEASED;
+            event.type = KeyboardEvent::ET_RELEASE;
             break;
         case kCGEventFlagsChanged:
         {
@@ -71,7 +72,7 @@ keyboardEventFromCGEvent(KeyboardEvent& event, CGEventType cgEventType, const CG
             if (mask != 0)
             {
                 CGEventFlags flags = CGEventGetFlags(cgEvent);
-                event.type = (flags & mask) ? KeyboardEvent::ET_PRESSED : KeyboardEvent::ET_RELEASED;
+                event.type = (flags & mask) ? KeyboardEvent::ET_PRESS : KeyboardEvent::ET_RELEASE;
             }
             break;
         }

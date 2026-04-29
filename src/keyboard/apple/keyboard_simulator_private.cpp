@@ -1,6 +1,7 @@
 #include "keyboard_simulator_private.hpp"
 
-#include <CoreFoundation/CoreFoundation.h>
+#include <CoreGraphics/CGEvent.h>           // kCG*, CG*
+#include <CoreFoundation/CoreFoundation.h>  // CF*
 
 #include "keyboard_event_converter.hpp"
 
@@ -67,7 +68,7 @@ size_t KeyboardSimulatorPrivate::sendEvent(const KeyboardEvent* events, size_t c
         }
     }
 
-    return sent
+    return sent;
 }
 
 bool KeyboardSimulatorPrivate::pressKey(uint32_t nativeKey)

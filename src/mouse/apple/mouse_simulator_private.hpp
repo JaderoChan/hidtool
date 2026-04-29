@@ -37,6 +37,12 @@ public:
     bool drag(const AbsolutePos& endPos, MouseButton button);
     bool drag(const AbsolutePos& startPos, const AbsolutePos& endPos, MouseButton button);
 
+private:
+    MouseSimulatorPrivate() = default;
+    ~MouseSimulatorPrivate();
+    MouseSimulatorPrivate(const MouseSimulatorPrivate&) = delete;
+    MouseSimulatorPrivate& operator=(const MouseSimulatorPrivate&) = delete;
+
     std::atomic<bool> isInitialized_{false};
 };
 

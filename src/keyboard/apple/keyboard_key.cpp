@@ -11,154 +11,154 @@ uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept
     {
         case KBDKEY_NONE:               return 0;
         // Number keys
-        case KBDKEY_0;                  return kVK_ANSI_0;
-        case KBDKEY_1;                  return kVK_ANSI_1;
-        case KBDKEY_2;                  return kVK_ANSI_2;
-        case KBDKEY_3;                  return kVK_ANSI_3;
-        case KBDKEY_4;                  return kVK_ANSI_4;
-        case KBDKEY_5;                  return kVK_ANSI_5;
-        case KBDKEY_6;                  return kVK_ANSI_6;
-        case KBDKEY_7;                  return kVK_ANSI_7;
-        case KBDKEY_8;                  return kVK_ANSI_8;
-        case KBDKEY_9;                  return kVK_ANSI_9;
+        case KBDKEY_0:                  return kVK_ANSI_0;
+        case KBDKEY_1:                  return kVK_ANSI_1;
+        case KBDKEY_2:                  return kVK_ANSI_2;
+        case KBDKEY_3:                  return kVK_ANSI_3;
+        case KBDKEY_4:                  return kVK_ANSI_4;
+        case KBDKEY_5:                  return kVK_ANSI_5;
+        case KBDKEY_6:                  return kVK_ANSI_6;
+        case KBDKEY_7:                  return kVK_ANSI_7;
+        case KBDKEY_8:                  return kVK_ANSI_8;
+        case KBDKEY_9:                  return kVK_ANSI_9;
 
         // ASCII letter keys
-        case KBDKEY_A;                  return kVK_ANSI_A;
-        case KBDKEY_B;                  return kVK_ANSI_B;
-        case KBDKEY_C;                  return kVK_ANSI_C;
-        case KBDKEY_D;                  return kVK_ANSI_D;
-        case KBDKEY_E;                  return kVK_ANSI_E;
-        case KBDKEY_F;                  return kVK_ANSI_F;
-        case KBDKEY_G;                  return kVK_ANSI_G;
-        case KBDKEY_H;                  return kVK_ANSI_H;
-        case KBDKEY_I;                  return kVK_ANSI_I;
-        case KBDKEY_J;                  return kVK_ANSI_J;
-        case KBDKEY_K;                  return kVK_ANSI_K;
-        case KBDKEY_L;                  return kVK_ANSI_L;
-        case KBDKEY_M;                  return kVK_ANSI_M;
-        case KBDKEY_N;                  return kVK_ANSI_N;
-        case KBDKEY_O;                  return kVK_ANSI_O;
-        case KBDKEY_P;                  return kVK_ANSI_P;
-        case KBDKEY_Q;                  return kVK_ANSI_Q;
-        case KBDKEY_R;                  return kVK_ANSI_R;
-        case KBDKEY_S;                  return kVK_ANSI_S;
-        case KBDKEY_T;                  return kVK_ANSI_T;
-        case KBDKEY_U;                  return kVK_ANSI_U;
-        case KBDKEY_V;                  return kVK_ANSI_V;
-        case KBDKEY_W;                  return kVK_ANSI_W;
-        case KBDKEY_X;                  return kVK_ANSI_X;
-        case KBDKEY_Y;                  return kVK_ANSI_Y;
-        case KBDKEY_Z;                  return kVK_ANSI_Z;
+        case KBDKEY_A:                  return kVK_ANSI_A;
+        case KBDKEY_B:                  return kVK_ANSI_B;
+        case KBDKEY_C:                  return kVK_ANSI_C;
+        case KBDKEY_D:                  return kVK_ANSI_D;
+        case KBDKEY_E:                  return kVK_ANSI_E;
+        case KBDKEY_F:                  return kVK_ANSI_F;
+        case KBDKEY_G:                  return kVK_ANSI_G;
+        case KBDKEY_H:                  return kVK_ANSI_H;
+        case KBDKEY_I:                  return kVK_ANSI_I;
+        case KBDKEY_J:                  return kVK_ANSI_J;
+        case KBDKEY_K:                  return kVK_ANSI_K;
+        case KBDKEY_L:                  return kVK_ANSI_L;
+        case KBDKEY_M:                  return kVK_ANSI_M;
+        case KBDKEY_N:                  return kVK_ANSI_N;
+        case KBDKEY_O:                  return kVK_ANSI_O;
+        case KBDKEY_P:                  return kVK_ANSI_P;
+        case KBDKEY_Q:                  return kVK_ANSI_Q;
+        case KBDKEY_R:                  return kVK_ANSI_R;
+        case KBDKEY_S:                  return kVK_ANSI_S;
+        case KBDKEY_T:                  return kVK_ANSI_T;
+        case KBDKEY_U:                  return kVK_ANSI_U;
+        case KBDKEY_V:                  return kVK_ANSI_V;
+        case KBDKEY_W:                  return kVK_ANSI_W;
+        case KBDKEY_X:                  return kVK_ANSI_X;
+        case KBDKEY_Y:                  return kVK_ANSI_Y;
+        case KBDKEY_Z:                  return kVK_ANSI_Z;
 
         // Whitespace keys
-        case KBDKEY_TAB;                return kVK_Tab;
-        case KBDKEY_SPACE;              return kVK_Space;
-        case KBDKEY_ENTER;              return kVK_Return;
+        case KBDKEY_TAB:                return kVK_Tab;
+        case KBDKEY_SPACE:              return kVK_Space;
+        case KBDKEY_ENTER:              return kVK_Return;
 
         // Navigation keys
-        case KBDKEY_HOME;               return kVK_Home;
-        case KBDKEY_END;                return kVK_End;
-        case KBDKEY_PAGE_UP;            return kVK_PageUp;
-        case KBDKEY_PAGE_DOWN;          return kVK_PageDown;
-        case KBDKEY_LEFT;               return kVK_LeftArrow;
-        case KBDKEY_UP;                 return kVK_UpArrow;
-        case KBDKEY_RIGHT;              return kVK_RightArrow;
-        case KBDKEY_DOWN;               return kVK_DownArrow;
+        case KBDKEY_HOME:               return kVK_Home;
+        case KBDKEY_END:                return kVK_End;
+        case KBDKEY_PAGE_UP:            return kVK_PageUp;
+        case KBDKEY_PAGE_DOWN:          return kVK_PageDown;
+        case KBDKEY_LEFT:               return kVK_LeftArrow;
+        case KBDKEY_UP:                 return kVK_UpArrow;
+        case KBDKEY_RIGHT:              return kVK_RightArrow;
+        case KBDKEY_DOWN:               return kVK_DownArrow;
 
         // Editing keys
-        case KBDKEY_BACKSPACE;          return kVK_Delete;
-        case KBDKEY_INSERT;             return 0;   // Not supported
-        case KBDKEY_DELETE;             return kVK_ForwardDelete;
-        case KBDKEY_CLEAR;              return kVK_ANSI_KeypadClear;
+        case KBDKEY_BACKSPACE:          return kVK_Delete;
+        case KBDKEY_INSERT:             return 0;   // Not supported
+        case KBDKEY_DELETE:             return kVK_ForwardDelete;
+        case KBDKEY_CLEAR:              return kVK_ANSI_KeypadClear;
 
         // Function keys
-        case KBDKEY_F1;                 return kVK_F1;
-        case KBDKEY_F2;                 return kVK_F2;
-        case KBDKEY_F3;                 return kVK_F3;
-        case KBDKEY_F4;                 return kVK_F4;
-        case KBDKEY_F5;                 return kVK_F5;
-        case KBDKEY_F6;                 return kVK_F6;
-        case KBDKEY_F7;                 return kVK_F7;
-        case KBDKEY_F8;                 return kVK_F8;
-        case KBDKEY_F9;                 return kVK_F9;
-        case KBDKEY_F10;                return kVK_F10;
-        case KBDKEY_F11;                return kVK_F11;
-        case KBDKEY_F12;                return kVK_F12;
-        case KBDKEY_F13;                return kVK_F13;
-        case KBDKEY_F14;                return kVK_F14;
-        case KBDKEY_F15;                return kVK_F15;
-        case KBDKEY_F16;                return kVK_F16;
-        case KBDKEY_F17;                return kVK_F17;
-        case KBDKEY_F18;                return kVK_F18;
-        case KBDKEY_F19;                return kVK_F19;
-        case KBDKEY_F20;                return kVK_F20;
+        case KBDKEY_F1:                 return kVK_F1;
+        case KBDKEY_F2:                 return kVK_F2;
+        case KBDKEY_F3:                 return kVK_F3;
+        case KBDKEY_F4:                 return kVK_F4;
+        case KBDKEY_F5:                 return kVK_F5;
+        case KBDKEY_F6:                 return kVK_F6;
+        case KBDKEY_F7:                 return kVK_F7;
+        case KBDKEY_F8:                 return kVK_F8;
+        case KBDKEY_F9:                 return kVK_F9;
+        case KBDKEY_F10:                return kVK_F10;
+        case KBDKEY_F11:                return kVK_F11;
+        case KBDKEY_F12:                return kVK_F12;
+        case KBDKEY_F13:                return kVK_F13;
+        case KBDKEY_F14:                return kVK_F14;
+        case KBDKEY_F15:                return kVK_F15;
+        case KBDKEY_F16:                return kVK_F16;
+        case KBDKEY_F17:                return kVK_F17;
+        case KBDKEY_F18:                return kVK_F18;
+        case KBDKEY_F19:                return kVK_F19;
+        case KBDKEY_F20:                return kVK_F20;
 
         // Numpad number keys
-        case KBDKEY_NUMPAD_0;           return kVK_ANSI_Keypad0;
-        case KBDKEY_NUMPAD_1;           return kVK_ANSI_Keypad1;
-        case KBDKEY_NUMPAD_2;           return kVK_ANSI_Keypad2;
-        case KBDKEY_NUMPAD_3;           return kVK_ANSI_Keypad3;
-        case KBDKEY_NUMPAD_4;           return kVK_ANSI_Keypad4;
-        case KBDKEY_NUMPAD_5;           return kVK_ANSI_Keypad5;
-        case KBDKEY_NUMPAD_6;           return kVK_ANSI_Keypad6;
-        case KBDKEY_NUMPAD_7;           return kVK_ANSI_Keypad7;
-        case KBDKEY_NUMPAD_8;           return kVK_ANSI_Keypad8;
-        case KBDKEY_NUMPAD_9;           return kVK_ANSI_Keypad9;
+        case KBDKEY_NUMPAD_0:           return kVK_ANSI_Keypad0;
+        case KBDKEY_NUMPAD_1:           return kVK_ANSI_Keypad1;
+        case KBDKEY_NUMPAD_2:           return kVK_ANSI_Keypad2;
+        case KBDKEY_NUMPAD_3:           return kVK_ANSI_Keypad3;
+        case KBDKEY_NUMPAD_4:           return kVK_ANSI_Keypad4;
+        case KBDKEY_NUMPAD_5:           return kVK_ANSI_Keypad5;
+        case KBDKEY_NUMPAD_6:           return kVK_ANSI_Keypad6;
+        case KBDKEY_NUMPAD_7:           return kVK_ANSI_Keypad7;
+        case KBDKEY_NUMPAD_8:           return kVK_ANSI_Keypad8;
+        case KBDKEY_NUMPAD_9:           return kVK_ANSI_Keypad9;
 
         // Numpad operator keys
-        case KBDKEY_NUMPAD_ADD;         return kVK_ANSI_KeypadPlus;
-        case KBDKEY_NUMPAD_SUBTRACT;    return kVK_ANSI_KeypadMinus;
-        case KBDKEY_NUMPAD_MULTIPLY;    return kVK_ANSI_KeypadMultiply;
-        case KBDKEY_NUMPAD_DIVIDE;      return kVK_ANSI_KeypadDivide;
-        case KBDKEY_NUMPAD_DECIMAL;     return kVK_ANSI_KeypadDecimal;
-        case KBDKEY_NUMPAD_SEPARATOR;   return 0;   // Not supported
-        case KBDKEY_NUMPAD_EQUAL;       return kVK_ANSI_KeypadEquals;
-        case KBDKEY_NUMPAD_ENTER;       return kVK_ANSI_KeypadEnter;
+        case KBDKEY_NUMPAD_ADD:         return kVK_ANSI_KeypadPlus;
+        case KBDKEY_NUMPAD_SUBTRACT:    return kVK_ANSI_KeypadMinus;
+        case KBDKEY_NUMPAD_MULTIPLY:    return kVK_ANSI_KeypadMultiply;
+        case KBDKEY_NUMPAD_DIVIDE:      return kVK_ANSI_KeypadDivide;
+        case KBDKEY_NUMPAD_DECIMAL:     return kVK_ANSI_KeypadDecimal;
+        case KBDKEY_NUMPAD_SEPARATOR:   return 0;   // Not supported
+        case KBDKEY_NUMPAD_EQUAL:       return kVK_ANSI_KeypadEquals;
+        case KBDKEY_NUMPAD_ENTER:       return kVK_ANSI_KeypadEnter;
 
         // Application keys
-        case KBDKEY_ESCAPE;             return kVK_Escape;
-        case KBDKEY_HELP;               return kVK_Help;
+        case KBDKEY_ESCAPE:             return kVK_Escape;
+        case KBDKEY_HELP:               return kVK_Help;
 
         // Media keys
         // Not supported
 
         // Volume keys
-        case KBDKEY_VOLUME_UP;          return kVK_VolumeUp;
-        case KBDKEY_VOLUME_DOWN;        return kVK_VolumeDown;
-        case KBDKEY_VOLUME_MUTE;        return kVK_Mute;
+        case KBDKEY_VOLUME_UP:          return kVK_VolumeUp;
+        case KBDKEY_VOLUME_DOWN:        return kVK_VolumeDown;
+        case KBDKEY_VOLUME_MUTE:        return kVK_Mute;
 
         // Lock keys
-        case KBDKEY_CAPS_LOCK;          return kVK_CapsLock;
+        case KBDKEY_CAPS_LOCK:          return kVK_CapsLock;
 
         // OEM (Original Equipment Manufacturer) keys
         // The specific values of the following keys may vary on different devices.
         // All of the following uses the standard keyboard layout of the United States.
-        case KBDKEY_LEFT_QUOTE;         return kVK_ANSI_Grave;
-        case KBDKEY_MINUS;              return kVK_ANSI_Minus;
-        case KBDKEY_EQUAL;              return kVK_ANSI_Equal;
-        case KBDKEY_LEFT_BRACKET;       return kVK_ANSI_LeftBracket;
-        case KBDKEY_RIGHT_BRACKET;      return kVK_ANSI_RightBracket;
-        case KBDKEY_SEMICOLON;          return kVK_ANSI_Semicolon;
-        case KBDKEY_APOSTROPHE;         return kVK_ANSI_Quote;
-        case KBDKEY_COMMA;              return kVK_ANSI_Comma;
-        case KBDKEY_PERIOD;             return kVK_ANSI_Period;
-        case KBDKEY_SLASH;              return kVK_ANSI_Slash;
-        case KBDKEY_BACKSLASH;          return kVK_ANSI_Backslash;
-        case KBDKEY_ANGLE_BRACKET;      return 0;   // Not supported
+        case KBDKEY_LEFT_QUOTE:         return kVK_ANSI_Grave;
+        case KBDKEY_MINUS:              return kVK_ANSI_Minus;
+        case KBDKEY_EQUAL:              return kVK_ANSI_Equal;
+        case KBDKEY_LEFT_BRACKET:       return kVK_ANSI_LeftBracket;
+        case KBDKEY_RIGHT_BRACKET:      return kVK_ANSI_RightBracket;
+        case KBDKEY_SEMICOLON:          return kVK_ANSI_Semicolon;
+        case KBDKEY_APOSTROPHE:         return kVK_ANSI_Quote;
+        case KBDKEY_COMMA:              return kVK_ANSI_Comma;
+        case KBDKEY_PERIOD:             return kVK_ANSI_Period;
+        case KBDKEY_SLASH:              return kVK_ANSI_Slash;
+        case KBDKEY_BACKSLASH:          return kVK_ANSI_Backslash;
+        case KBDKEY_ANGLE_BRACKET:      return 0;   // Not supported
 
         // Modifiers keys
-        case KBDKEY_META;               return kVK_Command;
-        case KBDKEY_META_LEFT;          return 0;   // Not supported
-        case KBDKEY_META_RIGHT;         return kVK_RightCommand;
-        case KBDKEY_CTRL;               return kVK_Control;
-        case KBDKEY_CTRL_LEFT;          return 0;   // Not supported
-        case KBDKEY_CTRL_RIGHT;         return kVK_RightControl;
-        case KBDKEY_ALT;                return kVK_Option;
-        case KBDKEY_ALT_LEFT;           return 0;   // Not supported
-        case KBDKEY_ALT_RIGHT;          return kVK_RightOption;
-        case KBDKEY_SHIFT;              return kVK_Shift;
-        case KBDKEY_SHIFT_LEFT;         return 0;   // Not supported
-        case KBDKEY_SHIFT_RIGHT;        return kVK_RightShift;
+        case KBDKEY_META:               return kVK_Command;
+        case KBDKEY_META_LEFT:          return 0;  // Not supported
+        case KBDKEY_META_RIGHT:         return kVK_RightCommand;
+        case KBDKEY_CTRL:               return kVK_Control;
+        case KBDKEY_CTRL_LEFT:          return 0;   // Not supported
+        case KBDKEY_CTRL_RIGHT:         return kVK_RightControl;
+        case KBDKEY_ALT:                return kVK_Option;
+        case KBDKEY_ALT_LEFT:           return 0;   // Not supported
+        case KBDKEY_ALT_RIGHT:          return kVK_RightOption;
+        case KBDKEY_SHIFT:              return kVK_Shift;
+        case KBDKEY_SHIFT_LEFT:         return 0;   // Not supported
+        case KBDKEY_SHIFT_RIGHT:        return kVK_RightShift;
 
         default:                        return 0;
     }

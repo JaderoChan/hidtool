@@ -1,8 +1,8 @@
 #ifndef HIDTOOL_MOUSE_EVENT_CONVERTER_HPP
 #define HIDTOOL_MOUSE_EVENT_CONVERTER_HPP
 
-#include <CoreGraphics/CGEvent.h>
-#include <CoreFoundation/CoreFoundation.h>
+#include <CoreGraphics/CGEvent.h>           // CG*
+#include <CoreFoundation/CoreFoundation.h>  // CF*
 
 #include <hidtool/mouse/mouse_event.hpp>
 
@@ -14,7 +14,7 @@ enum ButtonState : uint8_t
     BS_DOWN,
     BS_UP,
     BS_DRAGGED
-}
+};
 
 inline CGPoint getCurrentLocation()
 {
@@ -61,11 +61,12 @@ inline bool mouseButtonToCGMouseButton(
                 default: return false;
             }
 
-            switch (state)
+            switch (button)
             {
                 case MSBTN_MIDDLE: cgButton = kCGMouseButtonCenter; break;
-                case MSBTN_BACK: cgButton = 3; break;       // 3 is back button.
-                case MSBTN_FORWARD: cgButton = 4; break;    // 4 is forward button.
+                // MacOS下，未来可能弃用前进和后退侧键，因为他们在不同的设备厂商上可能具有不一致的值。
+                case MSBTN_BACK: cgButton = static_cast<CGMouseButton>(3); break;       // 3 is back button.
+                case MSBTN_FORWARD: cgButton = static_cast<CGMouseButton>(4); break;    // 4 is forward button.
                 default: return false;
             }
 
@@ -74,7 +75,7 @@ inline bool mouseButtonToCGMouseButton(
             return false;
     }
 
-    return true
+    return true;
 }
 
 inline bool mouseEventToCGEvent(const MouseEvent& event, CGEventRef& cgEvent)
@@ -90,8 +91,8 @@ inline bool mouseEventToCGEvent(const MouseEvent& event, CGEventRef& cgEvent)
         case MouseEvent::ET_REL_MOVE:
         {
             CGPoint pt = getCurrentLocation();
-            pt.x += event.relPos.x;
-            pt.y += event.relPos.y;
+            pt.x += event.relPos.dx;
+            pt.y += event.relPos.dy;
             cgEvent = CGEventCreateMouseEvent(nullptr, kCGEventMouseMoved, pt, kCGMouseButtonLeft);
             break;
         }
@@ -107,7 +108,7 @@ inline bool mouseEventToCGEvent(const MouseEvent& event, CGEventRef& cgEvent)
             CGEventType cgEventType;
             CGMouseButton cgButton;
 
-            ButtonState state = (event.type == ET_PRESS ? BS_DOWN : BS_UP);
+            ButtonState state = (event.type == MouseEvent::ET_PRESS ? BS_DOWN : BS_UP);
             if (!mouseButtonToCGMouseButton(event.button, state, cgEventType, cgButton))
                 return false;
             cgEvent = CGEventCreateMouseEvent(nullptr, cgEventType, pt, cgButton);
