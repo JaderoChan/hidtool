@@ -39,14 +39,14 @@ void HookerPrivate::stop()
     if (!isRunning_.load())
         return;
 
-    // TODO：是否线程安全？
-    CFRunLoopStop(runLoop_.load());
+    CFRunLoopStop(runLoop_);
+    CFRunLoopWakeUp(runLoop_);
 
     if (workerThread_.joinable())
         workerThread_.join();
 
     // 重置相关字段。
-    runLoop_.store(nullptr);
+    runLoop_ = nullptr;
     isRunning_.store(false);
 }
 
@@ -64,7 +64,7 @@ void HookerPrivate::work(std::promise<bool>& runningResult)
         return;
     }
 
-    runLoop_.store(currentLoop);
+    runLoop_ = currentLoop;
 
     CFMachPortRef eventTap = CGEventTapCreate(
         kCGHIDEventTap,
@@ -76,7 +76,7 @@ void HookerPrivate::work(std::promise<bool>& runningResult)
 
     if (!eventTap)
     {
-        runLoop_.store(nullptr);
+        runLoop_ = nullptr;
         runningResult.set_value_at_thread_exit(false);
         return;
     }
@@ -86,7 +86,7 @@ void HookerPrivate::work(std::promise<bool>& runningResult)
     if (!runLoopSource)
     {
         CFRelease(eventTap);
-        runLoop_.store(nullptr);
+        runLoop_ = nullptr;
         runningResult.set_value_at_thread_exit(false);
         return;
     }

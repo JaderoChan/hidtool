@@ -47,7 +47,7 @@ private:
     std::atomic<bool> isRunning_{false};
     std::thread workerThread_;
 
-    std::atomic<CFRunLoopRef> runLoop_{nullptr};
+    CFRunLoopRef runLoop_ = nullptr;
 
 };
 
