@@ -164,6 +164,7 @@ enum KeyboardKey : uint32_t
     KBDKEY_ANGLE_BRACKET,       // '<>' or '\|' on RT 102-key keyboard
 
     // Modifier keys
+    KBDKEY_FUNCTION,
     KBDKEY_META,
     KBDKEY_META_LEFT,
     KBDKEY_META_RIGHT,
@@ -186,6 +187,7 @@ enum KeyboardKey : uint32_t
     KBDKEY_STANDBY              = KBDKEY_SLEEP,
     KBDKEY_GRAVE                = KBDKEY_LEFT_QUOTE,
 
+    KBDKEY_FN                   = KBDKEY_FUNCTION,
     KBDKEY_OPTION               = KBDKEY_ALT,
     KBDKEY_OPTION_LEFT          = KBDKEY_ALT_LEFT,
     KBDKEY_OPTION_RIGHT         = KBDKEY_ALT_RIGHT

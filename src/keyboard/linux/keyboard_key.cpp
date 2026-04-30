@@ -163,6 +163,7 @@ uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept
         case KBDKEY_ANGLE_BRACKET:      return KEY_102ND;   // Need to check
 
         // Modifier keys
+        case KBDKEY_FUNCTION:           return 0;   // Not supported
         case KBDKEY_META:               return 0;   // Not supported
         case KBDKEY_META_LEFT:          return KEY_LEFTMETA;
         case KBDKEY_META_RIGHT:         return KEY_RIGHTMETA;

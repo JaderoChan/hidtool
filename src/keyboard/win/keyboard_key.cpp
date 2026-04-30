@@ -128,6 +128,7 @@ uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept
         case KBDKEY_ANGLE_BRACKET:      return VK_OEM_102;
 
         // Modifier keys
+        case KBDKEY_FUNCTION:           return 0;   // Not supported
         case KBDKEY_META:               return 0;   // Not supported
         case KBDKEY_META_LEFT:          return VK_LWIN;
         case KBDKEY_META_RIGHT:         return VK_RWIN;
