@@ -198,7 +198,16 @@ mouseEventFromCGEvent(MouseEvent& event, CGEventType cgEventType, const CGEventR
 
             break;
         }
-        // TODO: 处理Dragged事件？
+        // TODO：可能在未来更改
+        case kCGEventLeftMouseDragged:  // Fallthrough
+        case kCGEventRightMouseDragged: // Fallthrough
+        case kCGEventOtherMouseDragged:
+        {
+            event.type = MouseEvent::ET_ABS_MOVE;
+            CGPoint pt = CGEventGetLocation(cgEvent);
+            event.absPos = {static_cast<int32_t>(pt.x), static_cast<int32_t>(pt.y)};
+            break;
+        }
         default:
             return false;
     }

@@ -20,15 +20,17 @@ bool MouseHookerPrivate::setEventHandler(const MouseEventHandler& eventHandler)
 
 CGEventMask MouseHookerPrivate::getCGEventMask() const
 {
-    // TODO：处理Dragged事件？
     return CGEventMaskBit(kCGEventMouseMoved) |
         CGEventMaskBit(kCGEventScrollWheel) |
         CGEventMaskBit(kCGEventLeftMouseDown) |
         CGEventMaskBit(kCGEventLeftMouseUp) |
+        CGEventMaskBit(kCGEventLeftMouseDragged) |
         CGEventMaskBit(kCGEventRightMouseDown) |
         CGEventMaskBit(kCGEventRightMouseUp) |
+        CGEventMaskBit(kCGEventRightMouseDragged) |
         CGEventMaskBit(kCGEventOtherMouseDown) |
-        CGEventMaskBit(kCGEventOtherMouseUp);
+        CGEventMaskBit(kCGEventOtherMouseUp) |
+        CGEventMaskBit(kCGEventOtherMouseDragged);
 }
 
 CGEventTapCallBack MouseHookerPrivate::getCGEventTapCallback() const
