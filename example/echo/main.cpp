@@ -32,19 +32,30 @@ static const char* getMouseButtonString(MouseButton button)
 static bool keyboardEventHandler(const KeyboardEvent& event)
 {
     auto key = keyboardKeyFromNativeKey(event.nativeKey);
+
     switch (event.type)
     {
         case KeyboardEvent::ET_PRESS:
-            printf("Key Pressed: %d.\n", key);
+            // Fallback to print the native keycode.
+            if (key == KBDKEY_NONE)
+                printf("Native key pressed: %d.\n", event.nativeKey);
+            else
+                printf("Key Pressed: %d.\n", key);
+
             if (key == KBDKEY_ESC)
             {
                 std::lock_guard<std::mutex> locker(shouldCloseMtx);
                 shouldClose = true;
                 shouldCloseCv.notify_one();
             }
+
             break;
         case KeyboardEvent::ET_RELEASE:
-            printf("Key Released: %d.\n", key);
+            if (key == KBDKEY_NONE)
+                printf("Native key pressed: %d.\n", event.nativeKey);
+            else
+                printf("Key Released: %d.\n", key);
+
             break;
         default:
             break;
