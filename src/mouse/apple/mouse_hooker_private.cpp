@@ -29,7 +29,6 @@ CGEventMask MouseHookerPrivate::getCGEventMask() const
         CGEventMaskBit(kCGEventRightMouseUp) |
         CGEventMaskBit(kCGEventOtherMouseDown) |
         CGEventMaskBit(kCGEventOtherMouseUp);
-
 }
 
 CGEventTapCallBack MouseHookerPrivate::getCGEventTapCallback() const

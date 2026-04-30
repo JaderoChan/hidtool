@@ -26,16 +26,16 @@ inline CGPoint getCurrentLocation()
 
 [[nodiscard]] inline bool mouseButtonToCGMouseButton(
     MouseButton button, ButtonState state,
-    CGEventType& cgEt, CGMouseButton& cgButton)
+    CGEventType& cgEventType, CGMouseButton& cgButton)
 {
     switch (button)
     {
         case MSBTN_LEFT:
             switch (state)
             {
-                case BS_DOWN: cgEt = kCGEventLeftMouseDown; break;
-                case BS_UP: cgEt = kCGEventLeftMouseUp; break;
-                case BS_DRAGGED: cgEt = kCGEventLeftMouseDragged; break;
+                case BS_DOWN: cgEventType = kCGEventLeftMouseDown; break;
+                case BS_UP: cgEventType = kCGEventLeftMouseUp; break;
+                case BS_DRAGGED: cgEventType = kCGEventLeftMouseDragged; break;
                 default: return false;
             }
             cgButton = kCGMouseButtonLeft;
@@ -43,9 +43,9 @@ inline CGPoint getCurrentLocation()
         case MSBTN_RIGHT:
             switch (state)
             {
-                case BS_DOWN: cgEt = kCGEventRightMouseDown; break;
-                case BS_UP: cgEt = kCGEventRightMouseUp; break;
-                case BS_DRAGGED: cgEt = kCGEventRightMouseDragged; break;
+                case BS_DOWN: cgEventType = kCGEventRightMouseDown; break;
+                case BS_UP: cgEventType = kCGEventRightMouseUp; break;
+                case BS_DRAGGED: cgEventType = kCGEventRightMouseDragged; break;
                 default: return false;
             }
             cgButton = kCGMouseButtonRight;
@@ -55,9 +55,9 @@ inline CGPoint getCurrentLocation()
         case MSBTN_FORWARD:
             switch (state)
             {
-                case BS_DOWN: cgEt = kCGEventOtherMouseDown; break;
-                case BS_UP: cgEt = kCGEventOtherMouseUp; break;
-                case BS_DRAGGED: cgEt = kCGEventOtherMouseDragged; break;
+                case BS_DOWN: cgEventType = kCGEventOtherMouseDown; break;
+                case BS_UP: cgEventType = kCGEventOtherMouseUp; break;
+                case BS_DRAGGED: cgEventType = kCGEventOtherMouseDragged; break;
                 default: return false;
             }
 
@@ -84,15 +84,15 @@ inline CGPoint getCurrentLocation()
     {
         case MouseEvent::ET_ABS_MOVE:
         {
-            CGPoint pt = CGPointMake(event.absPos.x, event.absPos.y);
+            CGPoint pt = CGPointMake(static_cast<CGFloat>(event.absPos.x), static_cast<CGFloat>(event.absPos.y));
             cgEvent = CGEventCreateMouseEvent(nullptr, kCGEventMouseMoved, pt, kCGMouseButtonLeft);
             break;
         }
         case MouseEvent::ET_REL_MOVE:
         {
             CGPoint pt = getCurrentLocation();
-            pt.x += event.relPos.dx;
-            pt.y += event.relPos.dy;
+            pt.x += static_cast<CGFloat>(event.relPos.dx);
+            pt.y += static_cast<CGFloat>(event.relPos.dy);
             cgEvent = CGEventCreateMouseEvent(nullptr, kCGEventMouseMoved, pt, kCGMouseButtonLeft);
             break;
         }
@@ -131,7 +131,7 @@ mouseEventFromCGEvent(MouseEvent& event, CGEventType cgEventType, const CGEventR
         {
             event.type = MouseEvent::ET_ABS_MOVE;
             CGPoint pt = CGEventGetLocation(cgEvent);
-            event.absPos = {pt.x, pt.y};
+            event.absPos = {static_cast<int32_t>(pt.x), static_cast<int32_t>(pt.y)};
             break;
         }
         case kCGEventScrollWheel:
@@ -177,7 +177,7 @@ mouseEventFromCGEvent(MouseEvent& event, CGEventType cgEventType, const CGEventR
                 // TODO: MacOS下，未来可能弃用前进和后退侧键，因为他们在不同的设备厂商上可能具有不一致的值。
                 case 3: event.button = MSBTN_BACK; break;       // 3 is back button.
                 case 4: event.button = MSBTN_FORWARD; break;    // 4 is forward button.
-                default: return false;;
+                default: return false;
             }
 
             break;
@@ -193,7 +193,7 @@ mouseEventFromCGEvent(MouseEvent& event, CGEventType cgEventType, const CGEventR
                 // TODO: MacOS下，未来可能弃用前进和后退侧键，因为他们在不同的设备厂商上可能具有不一致的值。
                 case 3: event.button = MSBTN_BACK; break;       // 3 is back button.
                 case 4: event.button = MSBTN_FORWARD; break;    // 4 is forward button.
-                default: return false;;
+                default: return false;
             }
 
             break;
