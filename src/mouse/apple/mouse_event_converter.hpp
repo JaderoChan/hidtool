@@ -24,7 +24,7 @@ inline CGPoint getCurrentLocation()
     return pt;
 }
 
-inline bool mouseButtonToCGMouseButton(
+[[nodiscard]] inline bool mouseButtonToCGMouseButton(
     MouseButton button, ButtonState state,
     CGEventType& cgEt, CGMouseButton& cgButton)
 {
@@ -64,7 +64,7 @@ inline bool mouseButtonToCGMouseButton(
             switch (button)
             {
                 case MSBTN_MIDDLE: cgButton = kCGMouseButtonCenter; break;
-                // MacOS下，未来可能弃用前进和后退侧键，因为他们在不同的设备厂商上可能具有不一致的值。
+                // TODO: MacOS下，未来可能弃用前进和后退侧键，因为他们在不同的设备厂商上可能具有不一致的值。
                 case MSBTN_BACK: cgButton = static_cast<CGMouseButton>(3); break;       // 3 is back button.
                 case MSBTN_FORWARD: cgButton = static_cast<CGMouseButton>(4); break;    // 4 is forward button.
                 default: return false;
@@ -78,7 +78,7 @@ inline bool mouseButtonToCGMouseButton(
     return true;
 }
 
-inline bool mouseEventToCGEvent(const MouseEvent& event, CGEventRef& cgEvent)
+[[nodiscard]] inline bool mouseEventToCGEvent(const MouseEvent& event, CGEventRef& cgEvent)
 {
     switch (event.type)
     {
@@ -122,9 +122,88 @@ inline bool mouseEventToCGEvent(const MouseEvent& event, CGEventRef& cgEvent)
     return cgEvent != nullptr;
 }
 
-inline bool mouseEventFromCGEvent(MouseEvent& event, CGEventType cgEventType, const CGEventRef& cgEvent)
+[[nodiscard]] inline bool
+mouseEventFromCGEvent(MouseEvent& event, CGEventType cgEventType, const CGEventRef& cgEvent)
 {
+    switch (cgEventType)
+    {
+        case kCGEventMouseMoved:
+        {
+            event.type = MouseEvent::ET_ABS_MOVE;
+            CGPoint pt = CGEventGetLocation(cgEvent);
+            event.absPos = {pt.x, pt.y};
+            break;
+        }
+        case kCGEventScrollWheel:
+        {
+            event.type = MouseEvent::ET_WHEEL;
+            int64_t wheelDelta = CGEventGetIntegerValueField(cgEvent, kCGScrollWheelEventDeltaAxis1);
+            // 滚轮变化单位量为 120。
+            event.wheelDelta = static_cast<int32_t>(wheelDelta * 120);
+            break;
+        }
+        case kCGEventLeftMouseDown:
+        {
+            event.type = MouseEvent::ET_PRESS;
+            event.button = MSBTN_LEFT;
+            break;
+        }
+        case kCGEventLeftMouseUp:
+        {
+            event.type = MouseEvent::ET_RELEASE;
+            event.button = MSBTN_LEFT;
+            break;
+        }
+        case kCGEventRightMouseDown:
+        {
+            event.type = MouseEvent::ET_PRESS;
+            event.button = MSBTN_RIGHT;
+            break;
+        }
+        case kCGEventRightMouseUp:
+        {
+            event.type = MouseEvent::ET_RELEASE;
+            event.button = MSBTN_RIGHT;
+            break;
+        }
+        case kCGEventOtherMouseDown:
+        {
+            event.type = MouseEvent::ET_PRESS;
 
+            int64_t button = CGEventGetIntegerValueField(cgEvent, kCGMouseEventButtonNumber);
+            switch (button)
+            {
+                case kCGMouseButtonCenter: event.button = MSBTN_MIDDLE; break;
+                // TODO: MacOS下，未来可能弃用前进和后退侧键，因为他们在不同的设备厂商上可能具有不一致的值。
+                case 3: event.button = MSBTN_BACK; break;       // 3 is back button.
+                case 4: event.button = MSBTN_FORWARD; break;    // 4 is forward button.
+                default: return false;;
+            }
+
+            break;
+        }
+        case kCGEventOtherMouseUp:
+        {
+            event.type = MouseEvent::ET_RELEASE;
+
+            int64_t button = CGEventGetIntegerValueField(cgEvent, kCGMouseEventButtonNumber);
+            switch (button)
+            {
+                case kCGMouseButtonCenter: event.button = MSBTN_MIDDLE; break;
+                // TODO: MacOS下，未来可能弃用前进和后退侧键，因为他们在不同的设备厂商上可能具有不一致的值。
+                case 3: event.button = MSBTN_BACK; break;       // 3 is back button.
+                case 4: event.button = MSBTN_FORWARD; break;    // 4 is forward button.
+                default: return false;;
+            }
+
+            break;
+        }
+        // TODO: 处理Dragged事件？
+        default:
+            return false;
+    }
+
+    return true;
 }
 
 } // namespace hidtool

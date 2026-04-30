@@ -91,12 +91,15 @@ void HookerPrivate::work(std::promise<bool>& runningResult)
         return;
     }
 
-    CFRunLoopAddSource(runLoop_.load(), runLoopSource, kCFRunLoopDefaultMode);
+    CFRunLoopAddSource(currentLoop, runLoopSource, kCFRunLoopDefaultMode);
     CGEventTapEnable(eventTap, true);
 
     runningResult.set_value(true);
 
     CFRunLoopRun();
+
+    CFRelease(runLoopSource);
+    CFRelease(eventTap);
 }
 
 } // namespace hidtool

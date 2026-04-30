@@ -23,7 +23,8 @@ private:
     CGEventMask getCGEventMask() const override;
     CGEventTapCallBack getCGEventTapCallback() const override;
 
-    static CGEventRef keyboardTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void* data);
+    static CGEventRef keyboardTapCallback(
+        CGEventTapProxy proxy, CGEventType cgEventType, CGEventRef cgEvent, void* data);
 };
 
 } // namespace hidtool

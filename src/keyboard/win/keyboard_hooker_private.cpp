@@ -31,7 +31,7 @@ LRESULT WINAPI KeyboardHookerPrivate::LowLevelKeyboardProc(int nCode, WPARAM wPa
         KeyboardEvent event;
         if (keyboardEventFromParam(event, wParam, lParam))
         {
-            // 调用事件处理程序。
+            // 取得事件处理程序。
             auto eventHandler = hooker.getEventHandler<KeyboardEventHandler>();
             // 如果事件处理程序返回 `false`，返回 `1` 以阻断事件传播。
             if (eventHandler && !eventHandler(event))

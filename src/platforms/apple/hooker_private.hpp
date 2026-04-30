@@ -28,7 +28,7 @@ protected:
     {
         std::lock_guard<std::mutex> locker(operateMtx_);
 
-        operateMtx_.store(reinterpret_cast<intptr_t>(eventHandler));
+        eventHandler_.store(reinterpret_cast<intptr_t>(eventHandler));
         return true;
     }
 

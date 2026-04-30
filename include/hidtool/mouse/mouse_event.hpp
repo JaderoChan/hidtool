@@ -64,6 +64,7 @@ struct MouseEvent
     }
 
     EventType type = ET_NONE;
+    // TODO：考虑是否分离absPos？
     union
     {
         /**

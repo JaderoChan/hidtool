@@ -56,7 +56,7 @@ inline CGEventFlags keycodeToModifierMask(CGKeyCode keyCode)
 [[nodiscard]] inline bool
 keyboardEventFromCGEvent(KeyboardEvent& event, CGEventType cgEventType, const CGEventRef& cgEvent)
 {
-    CGKeyCode keycode = CGEventGetIntegerValueField(cgEvent, kCGKeyboardEventKeycode);
+    int64_t keycode = CGEventGetIntegerValueField(cgEvent, kCGKeyboardEventKeycode);
 
     switch (cgEventType)
     {
@@ -68,7 +68,7 @@ keyboardEventFromCGEvent(KeyboardEvent& event, CGEventType cgEventType, const CG
             break;
         case kCGEventFlagsChanged:
         {
-            CGEventFlags mask = keycodeToModifierMask(keycode);
+            CGEventFlags mask = keycodeToModifierMask(static_cast<CGKeyCode>(keycode));
             if (mask != 0)
             {
                 CGEventFlags flags = CGEventGetFlags(cgEvent);
