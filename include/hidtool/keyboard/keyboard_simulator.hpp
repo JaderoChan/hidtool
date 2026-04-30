@@ -33,7 +33,7 @@ public:
 
     /**
      * @name clickKey 函数
-     * @brief 等同于 `pressKey()` 与 `releaseKey()` 的组合。
+     * @brief 等同于 \ref `pressKey()` 与 \ref `releaseKey()` 的组合。
      * @{
      */
     bool clickKey(uint32_t nativeKey);

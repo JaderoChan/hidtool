@@ -12,8 +12,13 @@ struct MouseEvent
     enum EventType : uint8_t
     {
         ET_NONE,
-        ET_ABS_MOVE,    ///< Absolute move event.
-        ET_REL_MOVE,    ///< Relative move event.
+        /**
+         * Absolute move event.
+         * @attention 当前在 **MacOS** 平台下，鼠标拖拽事件也被归类至此类型。（未来可能修改）
+         * @sa mouse_drag_fns
+         */
+        ET_ABS_MOVE,
+        ET_REL_MOVE,
         ET_WHEEL,
         ET_PRESS,
         ET_RELEASE
@@ -25,7 +30,7 @@ struct MouseEvent
     constexpr explicit MouseEvent(EventType type) noexcept
         : type(type), absPos() {}
 
-    /** @sa `absPos` */
+    /** @sa \ref `absPos` */
     static MouseEvent createAbsMoveEvent(int32_t x, int32_t y) noexcept
     {
         MouseEvent result(ET_ABS_MOVE);
@@ -41,7 +46,7 @@ struct MouseEvent
         return result;
     }
 
-    /** @sa `relPos` */
+    /** @sa \ref `relPos` */
     static MouseEvent createRelMoveEvent(int32_t dx, int32_t dy) noexcept
     {
         MouseEvent result(ET_REL_MOVE);
@@ -57,7 +62,7 @@ struct MouseEvent
         return result;
     }
 
-    /** @sa `wheelDelta` `MouseSimulator::wheel()` */
+    /** @sa \ref `wheelDelta`, \ref `MouseSimulator::wheel()` */
     static MouseEvent createWheelEvent(int32_t wheelDelta)
     {
         MouseEvent result(ET_WHEEL);
@@ -87,7 +92,7 @@ struct MouseEvent
          * 在 **Windows** 和 **MacOS** 平台下，无论是 `MouseHooker` 事件处理函数中获得的绝对移动事件还是
          * 通过 `MouseSimulator` 发送的绝对移动事件，此坐标始终以虚拟屏幕空间范围为基准。
          * 在 **Linux** 平台下，通过 `MouseSimulator` 发送的绝对移动事件，此坐标在 X 和 Y 轴上始终限定为 `[0, 65535]`。
-         * @sa `getAbsolutePosRange()'
+         * @sa \ref `getAbsolutePosRange()'
          */
         AbsolutePos absPos;
         /**

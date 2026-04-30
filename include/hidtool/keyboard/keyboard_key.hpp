@@ -197,9 +197,9 @@ enum KeyboardKey : uint32_t
  * @brief 返回给定 `KeyboardKey` 对应的平台相关的原生键值。
  * @return 如果给定 `KeyboardKey` 不存在对应的原生键值返回 `0`，否则返回其对应的原生键值。
  * @note
- * 在 `Windows` 平台下，其返回的原生键值是 `VK_*`；
- * 在 `MacOS` 平台下，其返回的原生键值是 `kVK_*`；
- * 在 `Linux` 平台下，其返回的原生键值是 `KEY_*`。
+ * 在 **Windows** 平台下，其返回的原生键值是 `VK_*`；
+ * 在 **MacOS** 平台下，其返回的原生键值是 `kVK_*`；
+ * 在 **Linux** 平台下，其返回的原生键值是 `KEY_*`。
  */
 HIDTOOL_API uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept;
 
