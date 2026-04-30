@@ -33,11 +33,27 @@ struct MouseEvent
         return result;
     }
 
+    /** @overload */
+    static MouseEvent createAbsMoveEvent(const AbsolutePos& absPos) noexcept
+    {
+        MouseEvent result(ET_ABS_MOVE);
+        result.absPos = absPos;
+        return result;
+    }
+
     /** @sa `relPos` */
     static MouseEvent createRelMoveEvent(int32_t dx, int32_t dy) noexcept
     {
         MouseEvent result(ET_REL_MOVE);
         result.relPos = {dx, dy};
+        return result;
+    }
+
+    /** @overload */
+    static MouseEvent createRelMoveEvent(const RelativePos& relPos) noexcept
+    {
+        MouseEvent result(ET_REL_MOVE);
+        result.relPos = relPos;
         return result;
     }
 
