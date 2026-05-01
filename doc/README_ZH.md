@@ -1,6 +1,6 @@
 # HID Tool
 
-[**简体中文** | [**Endlish**](doc/README_EN.md)]
+[**简体中文** | [**Endlish**](README_EN.md)]
 
 跨平台的 HID 设备事件监听与模拟库。
 
