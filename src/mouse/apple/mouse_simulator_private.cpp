@@ -70,7 +70,7 @@ size_t MouseSimulatorPrivate::sendEvent(const MouseEvent* events, size_t count)
     return sent;
 }
 
-// TODO：下列函数，考虑是否同一通过sendEvent函数对其进行简化？
+// TODO：下列函数，考虑是否统一通过sendEvent函数对其进行简化？
 
 bool MouseSimulatorPrivate::moveTo(const AbsolutePos& absPos)
 {
