@@ -11,10 +11,10 @@ struct VirtualScreenInfo
     static VirtualScreenInfo getLatest();
     static void update(VirtualScreenInfo& vsi);
 
-    int32_t x = 0;
-    int32_t y = 0;
-    int32_t width = 0;
-    int32_t height = 0;
+    int16_t x = 0;
+    int16_t y = 0;
+    int16_t width = 0;
+    int16_t height = 0;
 };
 
 } // namespace hidtool

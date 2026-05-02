@@ -10,10 +10,10 @@ AbsolutePosRange getAbsolutePosRange()
     AbsolutePosRange result;
     VirtualScreenInfo vsi = VirtualScreenInfo::getLatest();
 
-    result.minX = vsi.x;
-    result.minY = vsi.y;
-    result.maxX = vsi.x + vsi.width;
-    result.maxY = vsi.y + vsi.height;
+    result.minX = static_cast<int32_t>(vsi.x);
+    result.minY = static_cast<int32_t>(vsi.y);
+    result.maxX = static_cast<int32_t>(vsi.x) + static_cast<int32_t>(vsi.width);
+    result.maxY = static_cast<int32_t>(vsi.y) + static_cast<int32_t>(vsi.height);
 
     return result;
 }

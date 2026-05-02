@@ -139,11 +139,6 @@ target_include_directories(
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
 )
 
-# Configure dependencies related to platform.
-if(WIN32)
-    target_link_libraries(${PROJECT_NAME} PRIVATE atomic)   # For 16 bytes atomic.
-endif()
-
 if(APPLE)
     find_library(COREFOUNDATION_LIBRARY CoreFoundation)
     if(COREFOUNDATION_LIBRARY)

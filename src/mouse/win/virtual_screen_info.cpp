@@ -16,10 +16,10 @@ void VirtualScreenInfo::update(VirtualScreenInfo& vsi)
 {
     DPI_AWARENESS_CONTEXT prevCtx = SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT_UNAWARE);
 
-    vsi.x = GetSystemMetrics(SM_XVIRTUALSCREEN);
-    vsi.y = GetSystemMetrics(SM_YVIRTUALSCREEN);
-    vsi.width = GetSystemMetrics(SM_CXVIRTUALSCREEN);
-    vsi.height = GetSystemMetrics(SM_CYVIRTUALSCREEN);
+    vsi.x = static_cast<int16_t>(GetSystemMetrics(SM_XVIRTUALSCREEN));
+    vsi.y = static_cast<int16_t>(GetSystemMetrics(SM_YVIRTUALSCREEN));
+    vsi.width = static_cast<int16_t>(GetSystemMetrics(SM_CXVIRTUALSCREEN));
+    vsi.height = static_cast<int16_t>(GetSystemMetrics(SM_CYVIRTUALSCREEN));
 
     SetThreadDpiAwarenessContext(prevCtx);
 }
