@@ -22,7 +22,7 @@ namespace hidtool
             break;
         case WM_MOUSEWHEEL:
             event.type = MouseEvent::ET_WHEEL;
-            event.wheelDelta = static_cast<int32_t>(HIWORD(msllh->mouseData));
+            event.wheelDelta = static_cast<int32_t>(static_cast<int16_t>(HIWORD(msllh->mouseData)));
             break;
         case WM_LBUTTONDOWN:
             event.type = MouseEvent::ET_PRESS;
