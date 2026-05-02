@@ -61,7 +61,7 @@ bool HidHooker::isSupportBlockEventPropagation() noexcept
         result &= KeyboardHooker::isSupportBlockEventPropagation();
     #endif
     #ifdef HIDTOOL_HAS_MOUSE
-        result &=  MouseHooker::isSupportBlockEventPropagation();
+        result &= MouseHooker::isSupportBlockEventPropagation();
     #endif
 
     return result;
