@@ -71,9 +71,17 @@ bool HidSimulator::sendEvent(const HidEvent& event)
     switch (event.hidType)
     {
         case HIDTYPE_KEYBOARD:
+        #ifdef HIDTOOL_HAS_KEYBOARD
             return kbdSimulator_.sendEvent(event.keyboardEvent);
+        #else
+            return false;
+        #endif
         case HIDTYPE_MOUSE:
+        #ifdef HIDTOOL_HAS_MOUSE
             return msSimulator_.sendEvent(event.mouseEvent);
+        #else
+            return false;
+        #endif
         default:
             return false;
     }
