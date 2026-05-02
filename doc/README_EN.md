@@ -20,8 +20,8 @@ A cross-platform C++ HID (Human Interface Device) input simulation and event lis
 
 | Platform | Status | Notes |
 | -------- | ------ | ----- |
-| Windows | ✅ | Requires Windows 10+ (mouse module) |
-| macOS | ✅ | Requires Accessibility permissions (simulation features) |
+| Windows | ✅ | Requires Windows 10+ (mouse simulation feature) |
+| macOS | ✅ | Requires Accessibility permissions (event listening and simulation features) |
 | Linux | ✅ | Requires administrator privileges (access to input & uinput character devices) |
 
 > **macOS Note**: Due to macOS API design, all simulation functions cannot determine whether execution was successful. Even if `true` is returned, the action may have no effect. You typically need to grant **Accessibility** permissions to the application.
