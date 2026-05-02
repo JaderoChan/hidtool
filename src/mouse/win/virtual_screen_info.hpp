@@ -9,7 +9,8 @@ namespace hidtool
 struct VirtualScreenInfo
 {
     static VirtualScreenInfo getLatest();
-    static void update(VirtualScreenInfo& vsi);
+
+    void update();
 
     int16_t x = 0;
     int16_t y = 0;
