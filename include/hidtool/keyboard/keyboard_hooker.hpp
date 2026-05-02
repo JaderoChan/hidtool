@@ -13,6 +13,7 @@ using KeyboardEventHandler = bool (*)(const KeyboardEvent&);
 class KeyboardHookerPrivate;
 
 /**
+ * @ingroup Hooker
  * @note 若未特别说明，此类的所有成员函数都是线程安全的。
  * @attention 不要在工作线程中（即事件处理回调中）调用成员函数。
  */
