@@ -3,7 +3,7 @@
 
 #include "defines.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 enum HidType : uint8_t
@@ -15,6 +15,6 @@ enum HidType : uint8_t
 /** @brief 检查当前环境是否支持指定 HID 类型的子模块。 */
 HIDTOOL_API bool isHidTypeSupported(HidType hidType) noexcept;
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_HIDTYPE_HPP

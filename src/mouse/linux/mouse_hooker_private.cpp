@@ -7,7 +7,7 @@
 
 #include <linux/input-event-codes.h>    // EV_*, ABS_*, REL_*, BTN_*
 
-namespace hidtool
+namespace hidt
 {
 
 MouseHookerPrivate::~MouseHookerPrivate() { stop(); }
@@ -214,4 +214,4 @@ void MouseHookerPrivate::handleInputEvent(int fd)
     }
 }
 
-} // namespace hidtool
+} // namespace hidt

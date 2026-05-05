@@ -10,7 +10,7 @@
     #error "Unspported platform"
 #endif // HIDTOOL_WIN
 
-namespace hidtool
+namespace hidt
 {
 
 MouseHooker::MouseHooker(MouseHookerPrivate& pri)
@@ -47,4 +47,4 @@ bool MouseHooker::isRunning() const
 bool MouseHooker::setEventHandler(const MouseEventHandler& eventHandler)
 { return pri_.setEventHandler(eventHandler); }
 
-} // namespace hidtool
+} // namespace hidt

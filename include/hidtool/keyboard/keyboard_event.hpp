@@ -3,7 +3,7 @@
 
 #include "keyboard_key.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 struct KeyboardEvent
@@ -27,6 +27,6 @@ struct KeyboardEvent
     uint32_t nativeKey = 0;
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_KEYBOARD_EVENT_HPP

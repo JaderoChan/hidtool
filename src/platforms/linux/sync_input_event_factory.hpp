@@ -3,7 +3,7 @@
 
 #include <linux/input.h>
 
-namespace hidtool
+namespace hidt
 {
 
 inline void setSyncReportEvent(struct input_event& ie)
@@ -15,6 +15,6 @@ inline void setSyncReportEvent(struct input_event& ie)
     ie.time.tv_usec = 0;
 }
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_SYNC_INPUT_EVENT_FACTORY_HPP

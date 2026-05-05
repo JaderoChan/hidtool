@@ -1,6 +1,6 @@
 #include "hooker_private.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 HookerPrivate::~HookerPrivate()
@@ -102,4 +102,4 @@ void HookerPrivate::work(std::promise<bool>& runningResult)
     CFRelease(eventTap);
 }
 
-} // namespace hidtool
+} // namespace hidt

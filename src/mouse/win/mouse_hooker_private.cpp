@@ -2,7 +2,7 @@
 
 #include "mouse_event_factory.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 MouseHookerPrivate& MouseHookerPrivate::getInstance()
@@ -42,4 +42,4 @@ LRESULT WINAPI MouseHookerPrivate::LowLevelMouseProc(int nCode, WPARAM wParam, L
     return CallNextHookEx(nullptr, nCode, wParam, lParam);
 }
 
-} // namespace hidtool
+} // namespace hidt

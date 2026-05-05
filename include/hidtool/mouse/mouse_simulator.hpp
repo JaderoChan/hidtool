@@ -4,7 +4,7 @@
 #include <hidtool/defines.hpp>
 #include "mouse_event.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 class MouseSimulatorPrivate;
@@ -102,6 +102,6 @@ private:
     MouseSimulatorPrivate& pri_;
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_MOUSE_SIMULATOR_HPP

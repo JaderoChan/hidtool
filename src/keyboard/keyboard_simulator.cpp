@@ -10,7 +10,7 @@
     #error "Unspported platform"
 #endif // HIDTOOL_WIN
 
-namespace hidtool
+namespace hidt
 {
 
 KeyboardSimulator::KeyboardSimulator(KeyboardSimulatorPrivate& pri)
@@ -55,4 +55,4 @@ bool KeyboardSimulator::clickKey(uint32_t nativeKey)
 bool KeyboardSimulator::clickKey(KeyboardKey key)
 { return pri_.clickKey(keyboardKeyToNativeKey(key)); }
 
-} // namespace hidtool
+} // namespace hidt

@@ -2,7 +2,7 @@
 
 #include "keyboard_event_converter.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 KeyboardHookerPrivate& KeyboardHookerPrivate::getInstance()
@@ -42,4 +42,4 @@ LRESULT WINAPI KeyboardHookerPrivate::LowLevelKeyboardProc(int nCode, WPARAM wPa
     return CallNextHookEx(nullptr, nCode, wParam, lParam);
 }
 
-} // namespace hidtool
+} // namespace hidt

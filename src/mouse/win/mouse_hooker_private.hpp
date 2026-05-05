@@ -4,7 +4,7 @@
 #include <platforms/win/hooker_private.hpp>
 #include <hidtool/mouse/mouse_hooker.hpp>
 
-namespace hidtool
+namespace hidt
 {
 
 class MouseHookerPrivate : public HookerPrivate
@@ -25,6 +25,6 @@ private:
     static LRESULT WINAPI LowLevelMouseProc(int nCode, WPARAM wParam, LPARAM lParam);
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_MOUSE_HOOKER_PRIVATE_HPP

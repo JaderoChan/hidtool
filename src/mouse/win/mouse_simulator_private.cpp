@@ -7,7 +7,7 @@
 
 #include "input_factory.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 MouseSimulatorPrivate::~MouseSimulatorPrivate() { destroy(); }
@@ -321,4 +321,4 @@ void MouseSimulatorPrivate::handleDisplayChanged()
     }
 }
 
-} // namespace hidtool
+} // namespace hidt

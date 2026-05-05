@@ -3,7 +3,7 @@
 
 #include <cstdint>  // int32_t
 
-namespace hidtool
+namespace hidt
 {
 
 // 使用 int16_t 作为成员变量类型，能够使得结构体总大小为8字节，以便其能在最少依赖的情况下保证可原子化。
@@ -22,6 +22,6 @@ struct VirtualScreenInfo
     int16_t height = 0;
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_VIRTUAL_SCREEN_INFO_HPP

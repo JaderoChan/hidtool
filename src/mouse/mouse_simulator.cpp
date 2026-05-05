@@ -10,7 +10,7 @@
     #error "Unspported platform"
 #endif // HIDTOOL_WIN
 
-namespace hidtool
+namespace hidt
 {
 
 MouseSimulator::MouseSimulator(MouseSimulatorPrivate& pri)
@@ -73,4 +73,4 @@ bool MouseSimulator::drag(const AbsolutePos& endPos, MouseButton button)
 bool MouseSimulator::drag(const AbsolutePos& startPos, const AbsolutePos& endPos, MouseButton button)
 { return pri_.drag(startPos, endPos, button); }
 
-} // namespace hidtool
+} // namespace hidt

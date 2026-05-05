@@ -10,7 +10,7 @@
 #include <hidtool/mouse/mouse_simulator.hpp>
 #include "virtual_screen_info.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 class MouseSimulatorPrivate
@@ -59,6 +59,6 @@ private:
     DWORD displayChangedHandlerThreadId_ = 0;
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_MOUSE_SIMULATOR_PRIVATE_HPP

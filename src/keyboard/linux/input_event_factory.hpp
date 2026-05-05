@@ -5,7 +5,7 @@
 
 #include <linux/input.h>
 
-namespace hidtool
+namespace hidt
 {
 
 inline void setPressKeyInputEvent(struct input_event& ie, uint32_t nativeKey)
@@ -22,6 +22,6 @@ inline void setReleaseKeyInputEvent(struct input_event& ie, uint32_t nativeKey)
     ie.code = static_cast<__s32>(nativeKey);
 }
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_INPUT_EVENT_FACTORY_HPP

@@ -74,14 +74,14 @@ cmake --install build --prefix /your/install/path
 
 ```cmake
 find_package(hidtool REQUIRED)
-target_link_libraries(your_target PRIVATE hidtool::hidtool)
+target_link_libraries(your_target PRIVATE hidtool)
 ```
 
 ### CMake — add_subdirectory
 
 ```cmake
 add_subdirectory(hidtool)
-target_link_libraries(your_target PRIVATE hidtool::hidtool)
+target_link_libraries(your_target PRIVATE hidtool)
 ```
 
 ## API 文档
@@ -107,7 +107,7 @@ target_link_libraries(your_target PRIVATE hidtool::hidtool)
 
 ```cpp
 // 检查当前环境是否支持指定 HID 类型的子模块
-bool hidtool::isHidTypeSupported(HidType hidType) noexcept;
+bool isHidTypeSupported(HidType hidType) noexcept;
 ```
 
 ---
@@ -117,12 +117,12 @@ bool hidtool::isHidTypeSupported(HidType hidType) noexcept;
 #### `KeyboardHooker` — 键盘事件监听
 
 ```cpp
-using hidtool::KeyboardHooker;
+using KeyboardHooker;
 
 // 事件处理回调类型
 // 返回 true：正常传播事件；返回 false：阻止事件向其他程序传播
 // using KeyboardEventHandler = bool (*)(const KeyboardEvent&);
-using hidtool::KeyboardEventHandler;
+using KeyboardEventHandler;
 
 KeyboardHooker& hooker = KeyboardHooker::getInstance();
 
@@ -130,9 +130,9 @@ KeyboardHooker& hooker = KeyboardHooker::getInstance();
 bool supported = KeyboardHooker::isSupportBlockEventPropagation();
 
 // 设置事件处理回调
-hooker.setEventHandler([](const hidtool::KeyboardEvent& event) -> bool
+hooker.setEventHandler([](const KeyboardEvent& event) -> bool
 {
-    if (event.type == hidtool::KeyboardEvent::ET_PRESS)
+    if (event.type == KeyboardEvent::ET_PRESS)
     {
         // 处理按键按下事件
     }
@@ -149,8 +149,8 @@ hooker.isRunning();
 #### `KeyboardSimulator` — 键盘输入模拟
 
 ```cpp
-using hidtool::KeyboardSimulator;
-using hidtool::KeyboardKey;
+using KeyboardSimulator;
+using KeyboardKey;
 
 KeyboardSimulator& sim = KeyboardSimulator::getInstance();
 sim.initialize();
@@ -169,10 +169,10 @@ sim.clickKey(KeyboardKey::KBDKEY_C);
 sim.releaseKey(KeyboardKey::KBDKEY_CTRL);
 
 // 批量发送事件
-hidtool::KeyboardEvent events[] =
+KeyboardEvent events[] =
 {
-    hidtool::KeyboardEvent(hidtool::KeyboardEvent::ET_PRESS, KeyboardKey::KBDKEY_A),
-    hidtool::KeyboardEvent(hidtool::KeyboardEvent::ET_RELEASE, KeyboardKey::KBDKEY_A),
+    KeyboardEvent(KeyboardEvent::ET_PRESS, KeyboardKey::KBDKEY_A),
+    KeyboardEvent(KeyboardEvent::ET_RELEASE, KeyboardKey::KBDKEY_A),
 };
 sim.sendEvent(events, 2);
 
@@ -185,10 +185,10 @@ sim.destroy();
 
 ```cpp
 // KeyboardKey -> 平台原生键值（Win: VK_*, macOS: kVK_*, Linux: KEY_*）
-uint32_t nativeKey = hidtool::keyboardKeyToNativeKey(KeyboardKey::KBDKEY_A);
+uint32_t nativeKey = keyboardKeyToNativeKey(KeyboardKey::KBDKEY_A);
 
 // 平台原生键值 -> KeyboardKey
-hidtool::KeyboardKey key = hidtool::keyboardKeyFromNativeKey(0x41u);
+KeyboardKey key = keyboardKeyFromNativeKey(0x41u);
 ```
 
 常用键值：
@@ -217,25 +217,25 @@ hidtool::KeyboardKey key = hidtool::keyboardKeyFromNativeKey(0x41u);
 #### `MouseHooker` — 鼠标事件监听
 
 ```cpp
-using hidtool::MouseHooker;
+using MouseHooker;
 
 MouseHooker& hooker = MouseHooker::getInstance();
 
 // 检查当前平台是否支持阻断事件传播
 bool supported = MouseHooker::isSupportBlockEventPropagation();
 
-hooker.setEventHandler([](const hidtool::MouseEvent& event) -> bool
+hooker.setEventHandler([](const MouseEvent& event) -> bool
 {
     switch (event.type)
     {
-        case hidtool::MouseEvent::ET_ABS_MOVE:
+        case MouseEvent::ET_ABS_MOVE:
             // event.absPos.x, event.absPos.y
             break;
-        case hidtool::MouseEvent::ET_WHEEL:
+        case MouseEvent::ET_WHEEL:
             // event.wheelDelta（单位量 120，正值远离用户，负值靠近用户）
             break;
-        case hidtool::MouseEvent::ET_PRESS:
-        case hidtool::MouseEvent::ET_RELEASE:
+        case MouseEvent::ET_PRESS:
+        case MouseEvent::ET_RELEASE:
             // event.button
             break;
     }
@@ -251,10 +251,10 @@ hooker.stop();
 #### `MouseSimulator` — 鼠标输入模拟
 
 ```cpp
-using hidtool::MouseSimulator;
-using hidtool::AbsolutePos;
-using hidtool::RelativePos;
-using hidtool::MouseButton;
+using MouseSimulator;
+using AbsolutePos;
+using RelativePos;
+using MouseButton;
 
 MouseSimulator& sim = MouseSimulator::getInstance();
 sim.initialize();
@@ -302,7 +302,7 @@ sim.destroy();
 
 ```cpp
 // 获取当前平台绝对坐标范围
-hidtool::AbsolutePosRange range = hidtool::getAbsolutePosRange();
+AbsolutePosRange range = getAbsolutePosRange();
 // Windows/macOS：虚拟屏幕空间范围
 // Linux：始终为 {0, 65535, 0, 65535}
 ```
@@ -318,18 +318,18 @@ hidtool::AbsolutePosRange range = hidtool::getAbsolutePosRange();
 
 int main()
 {
-    auto& kbdHooker = hidtool::KeyboardHooker::getInstance();
+    auto& kbdHooker = KeyboardHooker::getInstance();
 
     mouseSimulator.initialize();
 
-    kbdHooker.setEventHandler([](const hidtool::KeyboardEvent& event) -> bool
+    kbdHooker.setEventHandler([](const KeyboardEvent& event) -> bool
     {
         // 按下 F1 时，在 (500, 300) 处左键单击
-        if (event.type == hidtool::KeyboardEvent::ET_PRESS &&
-            event.nativeKey == hidtool::keyboardKeyToNativeKey(hidtool::KBDKEY_F1))
+        if (event.type == KeyboardEvent::ET_PRESS &&
+            event.nativeKey == keyboardKeyToNativeKey(KBDKEY_F1))
         {
-            hidtool::MouseSimulator::getInstance()
-                .clickButton(hidtool::AbsolutePos(500, 300), hidtool::MSBTN_LEFT);
+            MouseSimulator::getInstance()
+                .clickButton(AbsolutePos(500, 300), MSBTN_LEFT);
         }
         return true;
     });

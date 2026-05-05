@@ -4,7 +4,7 @@
 #include <hidtool/defines.hpp>
 #include "mouse_event.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 /** @note 返回值为 `true` 时正常传播接收到的事件，返回值为 `false` 时将阻止事件向其他程序传播。 */
@@ -40,6 +40,6 @@ private:
     MouseHookerPrivate& pri_;
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_MOUSE_HOOKER_HPP

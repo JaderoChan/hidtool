@@ -4,7 +4,7 @@
 #include "mouse_button.hpp"
 #include "mouse_pos.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 struct MouseEvent
@@ -106,6 +106,6 @@ struct MouseEvent
     };
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_MOUSE_EVENT_HPP

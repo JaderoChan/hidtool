@@ -8,7 +8,7 @@
 
 #include <linux/input.h>    // input_event
 
-namespace hidtool
+namespace hidt
 {
 
 class UInput
@@ -34,6 +34,6 @@ private:
     mutable std::mutex uinputFdMtx_;
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_UINPUT_HPP

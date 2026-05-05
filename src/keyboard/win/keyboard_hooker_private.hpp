@@ -4,7 +4,7 @@
 #include <platforms/win/hooker_private.hpp>
 #include <hidtool/keyboard/keyboard_hooker.hpp>
 
-namespace hidtool
+namespace hidt
 {
 
 class KeyboardHookerPrivate : public HookerPrivate
@@ -25,6 +25,6 @@ private:
     static LRESULT WINAPI LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_KEYBOARD_HOOKER_PRIVATE_HPP

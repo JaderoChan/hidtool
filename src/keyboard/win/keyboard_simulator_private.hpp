@@ -5,7 +5,7 @@
 
 #include <hidtool/keyboard/keyboard_simulator.hpp>
 
-namespace hidtool
+namespace hidt
 {
 
 class KeyboardSimulatorPrivate
@@ -33,6 +33,6 @@ private:
     std::atomic<bool> isInitialized_{false};
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_KEYBOARD_SIMULATOR_PRIVATE_HPP

@@ -2,7 +2,7 @@
 
 #include <linux/input-event-codes.h>    // KEY_*
 
-namespace hidtool
+namespace hidt
 {
 
 uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept
@@ -351,4 +351,4 @@ KeyboardKey keyboardKeyFromNativeKey(uint32_t nativeKey) noexcept
     }
 }
 
-} // namespace hidtool
+} // namespace hidt

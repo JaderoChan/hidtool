@@ -6,7 +6,7 @@
 
 #include <hidtool/mouse/mouse_event.hpp>
 
-namespace hidtool
+namespace hidt
 {
 
 enum ButtonState : uint8_t
@@ -215,6 +215,6 @@ mouseEventFromCGEvent(MouseEvent& event, CGEventType cgEventType, const CGEventR
     return true;
 }
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_MOUSE_EVENT_CONVERTER_HPP

@@ -1,6 +1,6 @@
 #include <hidtool/hid_hooker.hpp>
 
-namespace hidtool
+namespace hidt
 {
 
 std::atomic<HidEventHandler> HidHooker::hidEventHandler_{nullptr};
@@ -117,4 +117,4 @@ bool HidHooker::setEventHandler(const HidEventHandler& eventHandler)
     return true;
 }
 
-} // namespace hidtool
+} // namespace hidt

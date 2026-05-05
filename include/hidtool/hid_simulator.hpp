@@ -18,7 +18,7 @@
  * 你需要给你的应用程序获得 **辅助功能** 相关权限才能正常执行。
  */
 
-namespace hidtool
+namespace hidt
 {
 
 /**
@@ -52,6 +52,6 @@ private:
 #endif // HIDTOOL_HAS_MOUSE
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_HID_SIMULATOR_HPP

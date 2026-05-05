@@ -1,6 +1,6 @@
 #include <hidtool/hid_simulator.hpp>
 
-namespace hidtool
+namespace hidt
 {
 
 HidSimulator::HidSimulator()
@@ -97,4 +97,4 @@ size_t HidSimulator::sendEvent(const HidEvent* events, size_t count)
     return sent;
 }
 
-} // namespace hidtool
+} // namespace hidt

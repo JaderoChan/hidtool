@@ -5,7 +5,7 @@
 
 #include <hidtool/mouse/mouse_event.hpp>
 
-namespace hidtool
+namespace hidt
 {
 
 [[nodiscard]] inline bool mouseEventFromParam(MouseEvent& event, WPARAM wParam, LPARAM lParam)
@@ -70,6 +70,6 @@ namespace hidtool
     return true;
 }
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_MOUSE_EVENT_FACTORY_HPP

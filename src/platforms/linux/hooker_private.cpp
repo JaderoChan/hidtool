@@ -10,7 +10,7 @@
 #include <sys/inotify.h>    // inotify
 #include <sys/stat.h>       // stat
 
-namespace hidtool
+namespace hidt
 {
 
 // 输入设备文件夹
@@ -364,4 +364,4 @@ bool HookerPrivate::isCharacterDevice(const std::string& filepath)
     return S_ISCHR(st.st_mode);
 }
 
-} // namespace hidtool
+} // namespace hidt

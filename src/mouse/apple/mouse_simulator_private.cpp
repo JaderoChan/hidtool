@@ -4,7 +4,7 @@
 
 #include "mouse_event_converter.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 MouseSimulatorPrivate::~MouseSimulatorPrivate() { destroy(); }
@@ -297,4 +297,4 @@ bool MouseSimulatorPrivate::drag(const AbsolutePos& startPos, const AbsolutePos&
     return sent == 3;
 }
 
-} // namespace hidtool
+} // namespace hidt

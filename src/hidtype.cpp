@@ -1,6 +1,6 @@
 #include <hidtool/hidtype.hpp>
 
-namespace hidtool
+namespace hidt
 {
 
 bool isHidTypeSupported(HidType hidType) noexcept
@@ -26,4 +26,4 @@ bool isHidTypeSupported(HidType hidType) noexcept
     }
 }
 
-} // namespace hidtool
+} // namespace hidt

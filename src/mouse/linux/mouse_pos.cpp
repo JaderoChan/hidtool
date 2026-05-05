@@ -2,7 +2,7 @@
 
 #include "mouse_uinput.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 AbsolutePosRange getAbsolutePosRange()
@@ -17,4 +17,4 @@ AbsolutePosRange getAbsolutePosRange()
     return result;
 }
 
-} // namespace hidtool
+} // namespace hidt

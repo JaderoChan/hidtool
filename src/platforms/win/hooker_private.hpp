@@ -8,7 +8,7 @@
 
 #include <windows.h>    // WM_USER, DWORD, HHOOK, GetCurrentThreadId(), Message... Hook...
 
-namespace hidtool
+namespace hidt
 {
 
 constexpr UINT WM_SET_EVENT_HANDLER = (WM_USER + 1);
@@ -64,6 +64,6 @@ private:
     DWORD workerThreadId_ = 0;
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_HOOKER_PRIVATE_HPP

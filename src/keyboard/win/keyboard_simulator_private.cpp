@@ -6,7 +6,7 @@
 
 #include "keyboard_event_converter.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 KeyboardSimulatorPrivate::~KeyboardSimulatorPrivate() { destroy(); }
@@ -108,4 +108,4 @@ bool KeyboardSimulatorPrivate::clickKey(uint32_t nativeKey)
     return SendInput(2, inputs, sizeof(INPUT)) == 2;
 }
 
-} // namespace hidtool
+} // namespace hidt

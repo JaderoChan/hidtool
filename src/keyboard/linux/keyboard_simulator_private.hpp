@@ -6,7 +6,7 @@
 #include <hidtool/keyboard/keyboard_simulator.hpp>
 #include "keyboard_uinput.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 class KeyboardSimulatorPrivate
@@ -35,6 +35,6 @@ private:
     KeyboardUInput kbdUInput_;
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_KEYBOARD_SIMULATOR_PRIVATE_HPP

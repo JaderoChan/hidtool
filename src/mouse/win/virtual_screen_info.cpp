@@ -2,7 +2,7 @@
 
 #include <windows.h>
 
-namespace hidtool
+namespace hidt
 {
 
 VirtualScreenInfo VirtualScreenInfo::getLatest()
@@ -24,4 +24,4 @@ void VirtualScreenInfo::update()
     SetThreadDpiAwarenessContext(prevCtx);
 }
 
-} // namespace hidtool
+} // namespace hidt

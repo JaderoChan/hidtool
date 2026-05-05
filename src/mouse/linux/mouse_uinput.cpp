@@ -5,7 +5,7 @@
 #include <linux/uinput.h>               // uinput...
 #include <linux/input-event-codes.h>    // EV_*, ABS_*, REL_*, BTN_*
 
-namespace hidtool
+namespace hidt
 {
 
 bool MouseUInput::setupUInputFd(int fd)
@@ -58,4 +58,4 @@ bool MouseUInput::setupUInputFd(int fd)
     return true;
 }
 
-} // namespace hidtool
+} // namespace hidt

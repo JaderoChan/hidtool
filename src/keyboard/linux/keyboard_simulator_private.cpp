@@ -3,7 +3,7 @@
 #include <platforms/linux/sync_input_event_factory.hpp>
 #include "input_event_factory.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 KeyboardSimulatorPrivate::~KeyboardSimulatorPrivate() { destroy(); }
@@ -141,4 +141,4 @@ bool KeyboardSimulatorPrivate::clickKey(uint32_t nativeKey)
     return kbdUInput_.sendEvent(ies, 4);
 }
 
-} // namespace hidtool
+} // namespace hidt

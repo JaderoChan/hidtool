@@ -2,7 +2,7 @@
 
 #include "virtual_screen_info.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 AbsolutePosRange getAbsolutePosRange()
@@ -18,4 +18,4 @@ AbsolutePosRange getAbsolutePosRange()
     return result;
 }
 
-} // namespace hidtool
+} // namespace hidt

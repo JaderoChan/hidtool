@@ -3,7 +3,7 @@
 
 #include <platforms/linux/uinput.hpp>
 
-namespace hidtool
+namespace hidt
 {
 
 constexpr int32_t ABS_MIN_X = 0;
@@ -17,6 +17,6 @@ protected:
     bool setupUInputFd(int fd) override;
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_MOUSE_UINPUT_HPP

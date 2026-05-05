@@ -4,7 +4,7 @@
 
 #include <hidtool/hidtool.hpp>
 
-using namespace hidtool;
+using namespace hidt;
 
 int main(int argc, char* argv[])
 {

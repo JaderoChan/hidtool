@@ -74,14 +74,14 @@ cmake --install build --prefix /your/install/path
 
 ```cmake
 find_package(hidtool REQUIRED)
-target_link_libraries(your_target PRIVATE hidtool::hidtool)
+target_link_libraries(your_target PRIVATE hidtool)
 ```
 
 ### CMake — add_subdirectory
 
 ```cmake
 add_subdirectory(hidtool)
-target_link_libraries(your_target PRIVATE hidtool::hidtool)
+target_link_libraries(your_target PRIVATE hidtool)
 ```
 
 ## API Documentation
@@ -107,7 +107,7 @@ Individual module headers can also be included separately:
 
 ```cpp
 // Check whether the current environment supports submodules for the specified HID type
-bool hidtool::isHidTypeSupported(HidType hidType) noexcept;
+bool isHidTypeSupported(HidType hidType) noexcept;
 ```
 
 ---
@@ -117,12 +117,12 @@ bool hidtool::isHidTypeSupported(HidType hidType) noexcept;
 #### `KeyboardHooker` — Keyboard Event Listening
 
 ```cpp
-using hidtool::KeyboardHooker;
+using KeyboardHooker;
 
 // Event handler callback type
 // Return true: propagate event normally; Return false: block event propagation to other programs
 // using KeyboardEventHandler = bool (*)(const KeyboardEvent&);
-using hidtool::KeyboardEventHandler;
+using KeyboardEventHandler;
 
 KeyboardHooker& hooker = KeyboardHooker::getInstance();
 
@@ -130,9 +130,9 @@ KeyboardHooker& hooker = KeyboardHooker::getInstance();
 bool supported = KeyboardHooker::isSupportBlockEventPropagation();
 
 // Set event handler callback
-hooker.setEventHandler([](const hidtool::KeyboardEvent& event) -> bool
+hooker.setEventHandler([](const KeyboardEvent& event) -> bool
 {
-    if (event.type == hidtool::KeyboardEvent::ET_PRESS)
+    if (event.type == KeyboardEvent::ET_PRESS)
     {
         // Handle key press event
     }
@@ -149,8 +149,8 @@ hooker.isRunning();
 #### `KeyboardSimulator` — Keyboard Input Simulation
 
 ```cpp
-using hidtool::KeyboardSimulator;
-using hidtool::KeyboardKey;
+using KeyboardSimulator;
+using KeyboardKey;
 
 KeyboardSimulator& sim = KeyboardSimulator::getInstance();
 sim.initialize();
@@ -169,10 +169,10 @@ sim.clickKey(KeyboardKey::KBDKEY_C);
 sim.releaseKey(KeyboardKey::KBDKEY_CTRL);
 
 // Batch send events
-hidtool::KeyboardEvent events[] =
+KeyboardEvent events[] =
 {
-    hidtool::KeyboardEvent(hidtool::KeyboardEvent::ET_PRESS, KeyboardKey::KBDKEY_A),
-    hidtool::KeyboardEvent(hidtool::KeyboardEvent::ET_RELEASE, KeyboardKey::KBDKEY_A),
+    KeyboardEvent(KeyboardEvent::ET_PRESS, KeyboardKey::KBDKEY_A),
+    KeyboardEvent(KeyboardEvent::ET_RELEASE, KeyboardKey::KBDKEY_A),
 };
 sim.sendEvent(events, 2);
 
@@ -185,10 +185,10 @@ The library defines a cross-platform key value enum `KeyboardKey` that can be co
 
 ```cpp
 // KeyboardKey -> platform native key value (Win: VK_*, macOS: kVK_*, Linux: KEY_*)
-uint32_t nativeKey = hidtool::keyboardKeyToNativeKey(KeyboardKey::KBDKEY_A);
+uint32_t nativeKey = keyboardKeyToNativeKey(KeyboardKey::KBDKEY_A);
 
 // Platform native key value -> KeyboardKey
-hidtool::KeyboardKey key = hidtool::keyboardKeyFromNativeKey(0x41u);
+KeyboardKey key = keyboardKeyFromNativeKey(0x41u);
 ```
 
 Common key values:
@@ -217,25 +217,25 @@ Common key values:
 #### `MouseHooker` — Mouse Event Listening
 
 ```cpp
-using hidtool::MouseHooker;
+using MouseHooker;
 
 MouseHooker& hooker = MouseHooker::getInstance();
 
 // Check whether the current platform supports blocking event propagation
 bool supported = MouseHooker::isSupportBlockEventPropagation();
 
-hooker.setEventHandler([](const hidtool::MouseEvent& event) -> bool
+hooker.setEventHandler([](const MouseEvent& event) -> bool
 {
     switch (event.type)
     {
-        case hidtool::MouseEvent::ET_ABS_MOVE:
+        case MouseEvent::ET_ABS_MOVE:
             // event.absPos.x, event.absPos.y
             break;
-        case hidtool::MouseEvent::ET_WHEEL:
+        case MouseEvent::ET_WHEEL:
             // event.wheelDelta (unit 120, positive = away from user, negative = toward user)
             break;
-        case hidtool::MouseEvent::ET_PRESS:
-        case hidtool::MouseEvent::ET_RELEASE:
+        case MouseEvent::ET_PRESS:
+        case MouseEvent::ET_RELEASE:
             // event.button
             break;
     }
@@ -251,10 +251,10 @@ hooker.stop();
 #### `MouseSimulator` — Mouse Input Simulation
 
 ```cpp
-using hidtool::MouseSimulator;
-using hidtool::AbsolutePos;
-using hidtool::RelativePos;
-using hidtool::MouseButton;
+using MouseSimulator;
+using AbsolutePos;
+using RelativePos;
+using MouseButton;
 
 MouseSimulator& sim = MouseSimulator::getInstance();
 sim.initialize();
@@ -302,7 +302,7 @@ sim.destroy();
 
 ```cpp
 // Get the absolute coordinate range for the current platform
-hidtool::AbsolutePosRange range = hidtool::getAbsolutePosRange();
+AbsolutePosRange range = getAbsolutePosRange();
 // Windows/macOS: virtual screen space range
 // Linux: always {0, 65535, 0, 65535}
 ```
@@ -318,18 +318,18 @@ hidtool::AbsolutePosRange range = hidtool::getAbsolutePosRange();
 
 int main()
 {
-    auto& kbdHooker = hidtool::KeyboardHooker::getInstance();
+    auto& kbdHooker = KeyboardHooker::getInstance();
 
     mouseSimulator.initialize();
 
-    kbdHooker.setEventHandler([](const hidtool::KeyboardEvent& event) -> bool
+    kbdHooker.setEventHandler([](const KeyboardEvent& event) -> bool
     {
         // When F1 is pressed, left-click at (500, 300)
-        if (event.type == hidtool::KeyboardEvent::ET_PRESS &&
-            event.nativeKey == hidtool::keyboardKeyToNativeKey(hidtool::KBDKEY_F1))
+        if (event.type == KeyboardEvent::ET_PRESS &&
+            event.nativeKey == keyboardKeyToNativeKey(KBDKEY_F1))
         {
-            hidtool::MouseSimulator::getInstance()
-                .clickButton(hidtool::AbsolutePos(500, 300), hidtool::MSBTN_LEFT);
+            MouseSimulator::getInstance()
+                .clickButton(AbsolutePos(500, 300), MSBTN_LEFT);
         }
         return true;
     });

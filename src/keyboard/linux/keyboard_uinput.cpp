@@ -5,7 +5,7 @@
 #include <linux/uinput.h>               // uinput...
 #include <linux/input-event-codes.h>    // EV_*, KEY_*
 
-namespace hidtool
+namespace hidt
 {
 
 bool KeyboardUInput::setupUInputFd(int fd)
@@ -25,4 +25,4 @@ bool KeyboardUInput::setupUInputFd(int fd)
     return true;
 }
 
-} // namespace hidtool
+} // namespace hidt

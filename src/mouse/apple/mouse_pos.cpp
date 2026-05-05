@@ -4,7 +4,7 @@
 
 #include <CoreGraphics/CoreGraphics.h>  // kCG*, CG*
 
-namespace hidtool
+namespace hidt
 {
 
 AbsolutePosRange getAbsolutePosRange()
@@ -33,4 +33,4 @@ AbsolutePosRange getAbsolutePosRange()
     return result;
 }
 
-} // namespace hidtool
+} // namespace hidt

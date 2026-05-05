@@ -5,7 +5,7 @@
 
 #include <hidtool/keyboard/keyboard_event.hpp>
 
-namespace hidtool
+namespace hidt
 {
 
 [[nodiscard]] inline bool keyboardEventToInput(const KeyboardEvent& event, INPUT& input)
@@ -53,6 +53,6 @@ namespace hidtool
     return true;
 }
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_KEYBOARD_EVENT_CONVERTER_HPP

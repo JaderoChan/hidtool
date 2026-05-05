@@ -6,7 +6,7 @@
 #include <hidtool/mouse/mouse_simulator.hpp>
 #include "mouse_uinput.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 class MouseSimulatorPrivate
@@ -48,6 +48,6 @@ private:
     MouseUInput mouseUInput_;
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_MOUSE_SIMULATOR_PRIVATE_HPP

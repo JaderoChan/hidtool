@@ -2,7 +2,7 @@
 
 #include "keyboard_event_converter.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 KeyboardHookerPrivate::~KeyboardHookerPrivate() { stop(); }
@@ -48,4 +48,4 @@ CGEventRef KeyboardHookerPrivate::keyboardTapCallback(
     return cgEvent;
 }
 
-} // namespace hidtool
+} // namespace hidt

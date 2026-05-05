@@ -3,7 +3,7 @@
 #include <platforms/linux/sync_input_event_factory.hpp>
 #include "input_event_factory.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 MouseSimulatorPrivate::~MouseSimulatorPrivate() { destroy(); }
@@ -322,4 +322,4 @@ bool MouseSimulatorPrivate::drag(const AbsolutePos& startPos, const AbsolutePos&
     return mouseUInput_.sendEvent(ies, 10);
 }
 
-} // namespace hidtool
+} // namespace hidt

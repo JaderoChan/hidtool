@@ -9,7 +9,7 @@
 #include <hidtool/mouse/mouse_pos.hpp>
 #include "virtual_screen_info.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 constexpr DWORD MOUSEEVENTF_ABS_MOVE = (MOUSEEVENTF_MOVE | MOUSEEVENTF_VIRTUALDESK | MOUSEEVENTF_ABSOLUTE);
@@ -105,6 +105,6 @@ inline void setWheelInput(INPUT& input, int32_t wheelDelta)
     return true;
 }
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_MOUSE_EVENT_CONVERTER_HPP

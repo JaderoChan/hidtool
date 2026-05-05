@@ -6,7 +6,7 @@
 #include <hidtool/mouse/mouse_button.hpp>
 #include <hidtool/mouse/mouse_pos.hpp>
 
-namespace hidtool
+namespace hidt
 {
 
 inline void setAbsoluteMoveInputEvent(struct input_event& ieX, struct input_event& ieY, const AbsolutePos& absPos)
@@ -84,6 +84,6 @@ inline void setWheelInputEvent(struct input_event& ie, int32_t wheelDelta)
     return setInputEventButton(ie, button);
 }
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_INPUT_EVENT_FACTORY_HPP

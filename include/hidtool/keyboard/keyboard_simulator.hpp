@@ -4,7 +4,7 @@
 #include <hidtool/defines.hpp>
 #include "keyboard_event.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 class KeyboardSimulatorPrivate;
@@ -49,6 +49,6 @@ private:
     KeyboardSimulatorPrivate& pri_;
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_KEYBOARD_SIMULATOR_HPP

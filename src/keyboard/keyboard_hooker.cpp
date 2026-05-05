@@ -10,7 +10,7 @@
     #error "Unspported platform"
 #endif // HIDTOOL_WIN
 
-namespace hidtool
+namespace hidt
 {
 
 KeyboardHooker::KeyboardHooker(KeyboardHookerPrivate& pri)
@@ -47,4 +47,4 @@ bool KeyboardHooker::isRunning() const
 bool KeyboardHooker::setEventHandler(const KeyboardEventHandler& eventHandler)
 { return pri_.setEventHandler(eventHandler); }
 
-} // namespace hidtool
+} // namespace hidt

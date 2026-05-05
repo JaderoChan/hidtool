@@ -3,7 +3,7 @@
 
 #include <hidtool/defines.hpp>
 
-namespace hidtool
+namespace hidt
 {
 
 struct AbsolutePos
@@ -98,6 +98,6 @@ inline AbsolutePos clampAbsolutePos(const AbsolutePos& absPos, const AbsolutePos
  */
 AbsolutePosRange getAbsolutePosRange();
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_MOUSE_POS_HPP

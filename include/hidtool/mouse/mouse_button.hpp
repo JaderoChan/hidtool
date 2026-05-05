@@ -3,7 +3,7 @@
 
 #include <hidtool/defines.hpp>
 
-namespace hidtool
+namespace hidt
 {
 
 enum MouseButton : uint8_t
@@ -16,6 +16,6 @@ enum MouseButton : uint8_t
     MSBTN_FORWARD
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_MOUSE_BUTTON_HPP

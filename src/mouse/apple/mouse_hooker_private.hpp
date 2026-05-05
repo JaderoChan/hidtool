@@ -4,7 +4,7 @@
 #include <platforms/apple/hooker_private.hpp>
 #include <hidtool/mouse/mouse_hooker.hpp>
 
-namespace hidtool
+namespace hidt
 {
 
 class MouseHookerPrivate : public HookerPrivate
@@ -27,6 +27,6 @@ private:
         CGEventTapProxy proxy, CGEventType cgEventType, CGEventRef cgEvent, void* data);
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_KEYBOARD_HOOKER_PRIVATE_HPP

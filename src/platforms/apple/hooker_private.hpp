@@ -9,7 +9,7 @@
 #include <CoreGraphics/CoreGraphics.h>
 #include <CoreFoundation/CoreFoundation.h>
 
-namespace hidtool
+namespace hidt
 {
 
 class HookerPrivate
@@ -51,6 +51,6 @@ private:
 
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_HOOKER_PRIVATE_HPP

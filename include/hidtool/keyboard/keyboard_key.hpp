@@ -3,7 +3,7 @@
 
 #include <hidtool/defines.hpp>
 
-namespace hidtool
+namespace hidt
 {
 
 enum KeyboardKey : uint32_t
@@ -209,6 +209,6 @@ HIDTOOL_API uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept;
  */
 HIDTOOL_API KeyboardKey keyboardKeyFromNativeKey(uint32_t nativeKey) noexcept;
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_KEYBOARD_KEY_HPP

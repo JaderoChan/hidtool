@@ -17,7 +17,7 @@
  * @defgroup Hookers HID 事件监听器
  */
 
-namespace hidtool
+namespace hidt
 {
 
 using HidEventHandler = bool (*)(const HidEvent&);
@@ -62,6 +62,6 @@ private:
 #endif // HIDTOOL_HAS_MOUSE
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_HID_HOOKER_HPP

@@ -9,7 +9,7 @@
 
 #include <linux/uinput.h>   // uinput...
 
-namespace hidtool
+namespace hidt
 {
 
 UInput::~UInput() { cleanup(); }
@@ -104,4 +104,4 @@ bool UInput::sendEvent(const struct input_event* ies, size_t count)
     return written == total;
 }
 
-} // namespace hidtool
+} // namespace hidt

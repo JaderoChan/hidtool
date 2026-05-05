@@ -4,7 +4,7 @@
 #include <platforms/linux/hooker_private.hpp>
 #include <hidtool/mouse/mouse_hooker.hpp>
 
-namespace hidtool
+namespace hidt
 {
 
 class MouseHookerPrivate : public HookerPrivate
@@ -24,6 +24,6 @@ private:
     void handleInputEvent(int fd) override;
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_MOUSE_HOOKER_PRIVATE_HPP

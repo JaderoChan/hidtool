@@ -12,7 +12,7 @@
     #include <hidtool/mouse/mouse_event.hpp>
 #endif // HIDTOOL_HAS_MOUSE
 
-namespace hidtool
+namespace hidt
 {
 
 struct HidEvent
@@ -29,6 +29,6 @@ struct HidEvent
     };
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_HIDEVENT_HPP

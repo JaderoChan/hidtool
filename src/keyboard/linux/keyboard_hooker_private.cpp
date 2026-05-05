@@ -5,7 +5,7 @@
 
 #include <linux/input-event-codes.h>    // EV_*, KEY_*
 
-namespace hidtool
+namespace hidt
 {
 
 KeyboardHookerPrivate::~KeyboardHookerPrivate() { stop(); }
@@ -86,4 +86,4 @@ void KeyboardHookerPrivate::handleInputEvent(int fd)
     }
 }
 
-} // namespace hidtool
+} // namespace hidt

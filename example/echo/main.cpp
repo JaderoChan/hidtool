@@ -4,7 +4,7 @@
 
 #include <hidtool/hidtool.hpp>
 
-using namespace hidtool;
+using namespace hidt;
 
 bool shouldClose = false;
 std::mutex shouldCloseMtx;

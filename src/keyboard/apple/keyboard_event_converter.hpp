@@ -6,7 +6,7 @@
 
 #include <hidtool/keyboard/keyboard_event.hpp>
 
-namespace hidtool
+namespace hidt
 {
 
 inline CGEventFlags keycodeToModifierMask(CGKeyCode keyCode)
@@ -85,6 +85,6 @@ keyboardEventFromCGEvent(KeyboardEvent& event, CGEventType cgEventType, const CG
     return true;
 }
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_KEYBOARD_EVENT_CONVERTER_HPP

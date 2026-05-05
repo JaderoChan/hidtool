@@ -12,7 +12,7 @@
 #include <poll.h>           // pollfd
 #include <linux/input.h>    // input_event
 
-namespace hidtool
+namespace hidt
 {
 
 class HookerPrivate
@@ -114,6 +114,6 @@ private:
     std::vector<std::string> evdevNames_;
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_HOOKER_PRIVATE_HPP

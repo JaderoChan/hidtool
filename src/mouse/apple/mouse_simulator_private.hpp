@@ -5,7 +5,7 @@
 
 #include <hidtool/mouse/mouse_simulator.hpp>
 
-namespace hidtool
+namespace hidt
 {
 
 class MouseSimulatorPrivate
@@ -46,6 +46,6 @@ private:
     std::atomic<bool> isInitialized_{false};
 };
 
-} // namespace hidtool
+} // namespace hidt
 
 #endif // !HIDTOOL_MOUSE_SIMULATOR_PRIVATE_HPP

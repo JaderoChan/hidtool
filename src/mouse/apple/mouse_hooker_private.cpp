@@ -2,7 +2,7 @@
 
 #include "mouse_event_converter.hpp"
 
-namespace hidtool
+namespace hidt
 {
 
 MouseHookerPrivate::~MouseHookerPrivate() { stop(); }
@@ -56,4 +56,4 @@ CGEventRef MouseHookerPrivate::mouseTapCallback(
     return cgEvent;
 }
 
-} // namespace hidtool
+} // namespace hidt
