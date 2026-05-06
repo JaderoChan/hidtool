@@ -292,7 +292,7 @@ void HookerPrivate::handleWorkEvent(int fd, bool& shouldClose)
 
 void HookerPrivate::handleEvdevChanged(int fd)
 {
-    alignas(struct inotify_event) char buf[4096];
+    alignas(struct inotify_event) char buf[1024];
 
     while (true)
     {
