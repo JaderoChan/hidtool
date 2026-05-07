@@ -42,7 +42,7 @@ if(NOT HIDTOOL_BUILD_WITH_KEYBOARD AND NOT HIDTOOL_BUILD_WITH_MOUSE)
 endif()
 
 if(WIN32)
-    option(HIDTOOL_FORCE_IN_PIXEL "Force operation of mouse pointer range and position related APIs in physical pixels" ON)
+    option(HIDTOOL_FORCE_IN_PIXEL "Force APIs related to mouse pointer position to be operated in physical pixel units" ON)
 endif()
 
 option(HIDTOOL_BUILD_SHARED "Build shared library" OFF)
