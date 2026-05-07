@@ -12,14 +12,16 @@ struct MouseEvent
     enum EventType : uint8_t
     {
         ET_NONE,
-        /**
-         * Absolute move event.
-         * @attention 当前在 **MacOS** 平台下，鼠标拖拽事件也被归类至此类型。（未来可能修改）
-         * @sa mouse_drag_fns
-         */
         ET_ABS_MOVE,
         ET_REL_MOVE,
         ET_WHEEL,
+        /**
+         * 此类型的数据字段为 `absPos`。
+         * @details 在 **Windows** 和 **Linux** 平台下，此事件永远不会被 `MouseHooker` 的事件处理程序接收到。
+         * 当在上述两个平台下发送此类型的事件时，其等同于绝对移动事件与鼠标按键事件的组合。在 **MacOS** 平台下，
+         * 无论是 `MouseHooker` 还是 `MouseSimulator`，都原生支持此类型事件。
+         */
+        ET_DRAG,
         ET_PRESS,
         ET_RELEASE
     };
@@ -67,6 +69,13 @@ struct MouseEvent
     {
         MouseEvent result(ET_WHEEL);
         result.wheelDelta = wheelDelta;
+        return result;
+    }
+
+    static MouseEvent createDragEvent(const AbsolutePos& absPos) noexcept
+    {
+        MouseEvent result(ET_DRAG);
+        result.absPos = absPos;
         return result;
     }
 

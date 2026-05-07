@@ -73,24 +73,28 @@ public:
     /** @} */
 
     /**
-     * @anchor mouse_drag_fns
+     * @anchor mouse_drag
      * @name 鼠标拖拽函数。
-     * @brief 从起始位置拖拽鼠标至终点位置。
-     * @attention 在 **MacOS** 平台下，无法通过 \ref `pressButton()` + \ref `moveTo()` + \ref `releaseButton()`
-     * 等函数的组合来实现拖拽。只能调用此函数。（后续版本可能通过增加事件类型进行修改）
-     * @details
-     * 在 **Windows** 和 **Linux** 平台下，等同于 \ref `pressButton()` + \ref `moveTo()` + \ref `releaseButton()` 的组合。
-     * 在 **MacOS** 平台下，其原生支持。
-     * @sa \ref `MouseEvent::ET_ABS_MOVE`
+     * @details 在 **Windows** 和 **Linux** 平台下，等同于鼠标绝对移动或相对移动。在 **MacOS** 平台下，其原生支持。
+     *
      * @{
      */
+    bool dragTo(const AbsolutePos& absPos);
+    bool dragBy(const RelativePos& relPos);
+    /** @} */
 
-    /** @brief 从鼠标当前位置拖拽鼠标至指定位置。 */
-    bool drag(const AbsolutePos& endPos,
+    /**
+     * @anchor mouse_drag_combo
+     * @name 鼠标拖拽函数组合。
+     * @brief 从指定起始位置拖拽鼠标至指定终点位置。
+     * @details 等同于 \ref `pressButton()` + \ref `dragTo()` + \ref `releaseButton()` 的组合。
+     *
+     * @{
+     */
+    bool dragCombo(const AbsolutePos& endPos,
         MouseButton button = MSBTN_LEFT);
-    bool drag(const AbsolutePos& startPos, const AbsolutePos& endPos,
+    bool dragCombo(const AbsolutePos& startPos, const AbsolutePos& endPos,
         MouseButton button = MSBTN_LEFT);
-
     /** @} */
 
 private:
