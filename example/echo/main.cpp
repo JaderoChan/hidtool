@@ -63,6 +63,7 @@ static bool keyboardEventHandler(const KeyboardEvent& event)
 
     return true;
 }
+
 static bool mouseEventHandler(const MouseEvent& event)
 {
     switch (event.type)
