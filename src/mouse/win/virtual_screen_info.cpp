@@ -14,7 +14,7 @@ VirtualScreenInfo VirtualScreenInfo::getLatest()
 
 void VirtualScreenInfo::update()
 {
-    DPI_AWARENESS_CONTEXT prevCtx = SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT_UNAWARE);
+    DPI_AWARENESS_CONTEXT prevCtx = SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
 
     x = static_cast<int16_t>(GetSystemMetrics(SM_XVIRTUALSCREEN));
     y = static_cast<int16_t>(GetSystemMetrics(SM_YVIRTUALSCREEN));

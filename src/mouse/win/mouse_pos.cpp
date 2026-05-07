@@ -16,6 +16,7 @@ AbsolutePos getCursorPos()
     if (inpHDesk)
     {
         SetThreadDesktop(inpHDesk);
+        DPI_AWARENESS_CONTEXT prevCtx = SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
 
         POINT pt = {0};
         if (GetCursorPos(&pt))
@@ -24,6 +25,7 @@ AbsolutePos getCursorPos()
             result.y = pt.y;
         }
 
+        SetThreadDpiAwarenessContext(prevCtx);
         SetThreadDesktop(curHDesk);
         CloseDesktop(inpHDesk);
     }
