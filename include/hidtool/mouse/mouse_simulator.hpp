@@ -50,6 +50,7 @@ public:
      * @name 鼠标按键函数
      * @brief 在鼠标当前位置执行按键函数。
      * @details 在 **MacOS** 平台下需要额外进行获取鼠标当前位置的操作。
+     *
      * @{
      */
     bool pressButton(MouseButton button);
@@ -64,6 +65,7 @@ public:
      * @details
      * 在 **Windows** 和 **Linux** 平台下，等同于 \ref `moveTo()` + 对应函数的组合。
      * 在 **MacOS** 下，其原生支持。
+     *
      * @{
      */
     bool wheel(const AbsolutePos& absPos, int32_t wheelDelta);
