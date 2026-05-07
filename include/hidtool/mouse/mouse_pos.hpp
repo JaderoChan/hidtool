@@ -102,6 +102,7 @@ AbsolutePos getCursorPos();
  * @details
  * 在 **Windows** 和 **MacOS** 平台下，其等同于虚拟屏幕空间的范围。
  * 在 **Linux** 平台下，其始终等同于 {0, 65535, 0, 65535}。
+ * @todo **Linux** 下的替代方案。（**Linux** 下的范围 {0, 65535, 0, 65535} 并非硬性规定）
  */
 AbsolutePosRange getAbsolutePosRange();
 
