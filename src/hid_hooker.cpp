@@ -10,6 +10,7 @@ KeyboardEventHandler HidHooker::kbdEventHandler_ = [](const KeyboardEvent& event
 {
     HidEvent hidEvent{HIDTYPE_KEYBOARD};
     hidEvent.keyboardEvent = event;
+
     auto hidEventHandler = hidEventHandler_.load();
     if (hidEventHandler)
         return hidEventHandler(hidEvent);
@@ -22,6 +23,7 @@ MouseEventHandler HidHooker::msEventHandler_ = [](const MouseEvent& event) -> bo
 {
     HidEvent hidEvent{HIDTYPE_MOUSE};
     hidEvent.mouseEvent = event;
+
     auto hidEventHandler = hidEventHandler_.load();
     if (hidEventHandler)
         return hidEventHandler(hidEvent);
