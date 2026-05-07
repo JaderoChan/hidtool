@@ -75,14 +75,12 @@ public:
     /** @} */
 
     /**
-     * @anchor mouse_drag
-     * @name 鼠标拖拽函数。
-     * @details 在 **Windows** 和 **Linux** 平台下，等同于鼠标绝对移动或相对移动。在 **MacOS** 平台下，其原生支持。
-     *
-     * @{
+     * @brief 拖拽鼠标。
+     * @attention 不包含鼠标按键函数。
+     * @details 在 **Windows** 和 **Linux** 平台下，等同于 \ref `moveTo()`。在 **MacOS** 平台下，其原生支持。
+     * @sa \ref mouse_drag_combo
      */
     bool dragTo(const AbsolutePos& absPos);
-    bool dragBy(const RelativePos& relPos);
     /** @} */
 
     /**
