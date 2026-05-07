@@ -101,7 +101,7 @@ inline CGPoint getCurrentLocation()
             cgEvent = CGEventCreateScrollWheelEvent(nullptr, kCGScrollEventUnitLine, 1, event.wheelDelta / 120);
             break;
         }
-        case MouseEvent::DRAG:  // Fallthrough
+        case MouseEvent::ET_DRAG:   // Fallthrough
         case MouseEvent::ET_PRESS:
         case MouseEvent::ET_RELEASE:
         {

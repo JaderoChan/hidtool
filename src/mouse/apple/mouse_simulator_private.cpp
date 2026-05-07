@@ -135,13 +135,13 @@ bool MouseSimulatorPrivate::dragTo(const AbsolutePos& absPos, MouseButton button
         return false;
 
     CGEventType cgEventType;
-    CGMouseButton cgMouseButton;
-    if (!mouseButtonToCGMouseButton(button, BS_DRAG, cgEventType, cgMouseButton))
+    CGMouseButton cgButton;
+    if (!mouseButtonToCGMouseButton(button, BS_DRAGGED, cgEventType, cgButton))
         return false;
 
-    CGPoint pt = CGPointMake(static_cast<CGFloat>(event.absPos.x), static_cast<CGFloat>(event.absPos.y));
+    CGPoint pt = CGPointMake(static_cast<CGFloat>(absPos.x), static_cast<CGFloat>(absPos.y));
     CGEventRef cgEvent = CGEventCreateMouseEvent(nullptr, cgEventType, pt, cgButton);
-    if (CGEvent)
+    if (cgEvent)
     {
         CGEventPost(kCGHIDEventTap, cgEvent);
         CFRelease(cgEvent);
@@ -267,7 +267,7 @@ bool MouseSimulatorPrivate::dragCombo(const AbsolutePos& endPos, MouseButton but
 {
     CGPoint startPt = getCurrentLocation();
     AbsolutePos startPos = {static_cast<int32_t>(startPt.x), static_cast<int32_t>(startPt.y)};
-    return drag(startPos, endPos, button);
+    return dragCombo(startPos, endPos, button);
 }
 
 bool MouseSimulatorPrivate::dragCombo(const AbsolutePos& startPos, const AbsolutePos& endPos, MouseButton button)

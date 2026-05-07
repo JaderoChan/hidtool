@@ -8,7 +8,8 @@ std::atomic<HidEventHandler> HidHooker::hidEventHandler_{nullptr};
 #ifdef HIDTOOL_HAS_KEYBOARD
 KeyboardEventHandler HidHooker::kbdEventHandler_ = [](const KeyboardEvent& event) -> bool
 {
-    HidEvent hidEvent{HIDTYPE_KEYBOARD, .keyboardEvent = event};
+    HidEvent hidEvent{HIDTYPE_KEYBOARD};
+    hidEvent.keyboardEvent = event;
     auto hidEventHandler = hidEventHandler_.load();
     if (hidEventHandler)
         return hidEventHandler(hidEvent);
@@ -19,7 +20,8 @@ KeyboardEventHandler HidHooker::kbdEventHandler_ = [](const KeyboardEvent& event
 #ifdef HIDTOOL_HAS_MOUSE
 MouseEventHandler HidHooker::msEventHandler_ = [](const MouseEvent& event) -> bool
 {
-    HidEvent hidEvent{HIDTYPE_MOUSE, .mouseEvent = event};
+    HidEvent hidEvent{HIDTYPE_MOUSE};
+    hidEvent.mouseEvent = event;
     auto hidEventHandler = hidEventHandler_.load();
     if (hidEventHandler)
         return hidEventHandler(hidEvent);
