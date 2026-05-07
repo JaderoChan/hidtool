@@ -231,8 +231,14 @@ hooker.setEventHandler([](const MouseEvent& event) -> bool
         case MouseEvent::ET_ABS_MOVE:
             // event.absPos.x, event.absPos.y
             break;
+        case MouseEvent::ET_REL_MOVE:
+            // event.relPos.x, event.relPos.y
+            break;
         case MouseEvent::ET_WHEEL:
             // event.wheelDelta（单位量 120，正值远离用户，负值靠近用户）
+            break;
+        case MouseEvent::ET_DRAG:
+            // event.absPos.x, event.absPos.y
             break;
         case MouseEvent::ET_PRESS:
         case MouseEvent::ET_RELEASE:
@@ -279,14 +285,14 @@ sim.clickButton(AbsolutePos(500, 300), MouseButton::MSBTN_LEFT);
 sim.wheel(AbsolutePos(500, 300), 120);
 
 // 拖拽（从当前位置拖拽到目标位置）
-sim.drag(AbsolutePos(800, 400));
+sim.dragCombo(AbsolutePos(800, 400));
 // 拖拽（指定起始和终止位置）
-sim.drag(AbsolutePos(100, 100), AbsolutePos(800, 400), MouseButton::MSBTN_LEFT);
+sim.dragCombo(AbsolutePos(100, 100), AbsolutePos(800, 400), MouseButton::MSBTN_LEFT);
 
 sim.destroy();
 ```
 
-> **macOS 注意**：拖拽操作必须使用 `drag()` 函数，通过 `pressButton()` + `moveTo()` + `releaseButton()` 的组合无法实现拖拽。
+> **macOS 注意**：拖拽操作必须使用 `drag()` 函数或发送拖拽类型的事件，通过 `pressButton()` + `moveTo()` + `releaseButton()` 的组合无法实现拖拽。
 
 #### `MouseButton` — 鼠标按键枚举
 

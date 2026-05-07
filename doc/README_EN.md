@@ -231,8 +231,14 @@ hooker.setEventHandler([](const MouseEvent& event) -> bool
         case MouseEvent::ET_ABS_MOVE:
             // event.absPos.x, event.absPos.y
             break;
+        case MouseEvent::ET_REL_MOVE:
+            // event.relPos.x, event.relPos.y
+            break;
         case MouseEvent::ET_WHEEL:
             // event.wheelDelta (unit 120, positive = away from user, negative = toward user)
+            break;
+        case MouseEvent::ET_DRAG:
+            // event.absPos.x, event.absPos.y
             break;
         case MouseEvent::ET_PRESS:
         case MouseEvent::ET_RELEASE:
@@ -279,14 +285,14 @@ sim.clickButton(AbsolutePos(500, 300), MouseButton::MSBTN_LEFT);
 sim.wheel(AbsolutePos(500, 300), 120);
 
 // Drag (from current position to target position)
-sim.drag(AbsolutePos(800, 400));
+sim.dragCombo(AbsolutePos(800, 400));
 // Drag (specify start and end positions)
-sim.drag(AbsolutePos(100, 100), AbsolutePos(800, 400), MouseButton::MSBTN_LEFT);
+sim.dragCombo(AbsolutePos(100, 100), AbsolutePos(800, 400), MouseButton::MSBTN_LEFT);
 
 sim.destroy();
 ```
 
-> **macOS Note**: Drag operations must use the `drag()` function. The combination of `pressButton()` + `moveTo()` + `releaseButton()` cannot achieve dragging.
+> **macOS Note**: Drag operations must use the `drag()` function or send mouse event of drag type. The combination of `pressButton()` + `moveTo()` + `releaseButton()` cannot achieve dragging.
 
 #### `MouseButton` — Mouse Button Enum
 
