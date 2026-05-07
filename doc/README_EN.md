@@ -44,12 +44,13 @@ cmake --build build
 
 ### CMake Options
 
-| Option | Default | Description |
-| ------ | ------- | ----------- |
-| `HIDTOOL_BUILD_WITH_KEYBOARD` | `ON` | Build keyboard module |
-| `HIDTOOL_BUILD_WITH_MOUSE` | `ON` | Build mouse module |
-| `HIDTOOL_BUILD_SHARED` | `OFF` | Build as shared library |
-| `HIDTOOL_BUILD_EXAMPLE` | `ON` (top-level) | Build example programs |
+| Option | Default | Description | Notes |
+| ------ | ------- | ----------- | ----- |
+| `HIDTOOL_BUILD_WITH_KEYBOARD` | `ON` | Build keyboard module | - |
+| `HIDTOOL_BUILD_WITH_MOUSE` | `ON` | Build mouse module | - |
+| `HIDTOOL_BUILD_SHARED` | `OFF` | Build as shared library | - |
+| `HIDTOOL_BUILD_EXAMPLE` | `ON` (top-level) | Build example programs | - |
+| `HIDTOOL_FORCE_IN_PIXEL` | `ON` | Force APIs related to mouse pointer position to be operated in physical pixel units | Winodws only |
 
 ```bash
 # Default static library build

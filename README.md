@@ -44,12 +44,13 @@ cmake --build build
 
 ### CMake 选项
 
-| 选项 | 默认值 | 说明 |
-| ---- | ------ | ---- |
-| `HIDTOOL_BUILD_WITH_KEYBOARD` | `ON` | 构建键盘模块 |
-| `HIDTOOL_BUILD_WITH_MOUSE` | `ON` | 构建鼠标模块 |
-| `HIDTOOL_BUILD_SHARED` | `OFF` | 构建为动态库 |
-| `HIDTOOL_BUILD_EXAMPLE` | `ON`（主项目） | 构建示例程序 |
+| 选项 | 默认值 | 说明 | 备注 |
+| ---- | ------ | ---- | --- |
+| `HIDTOOL_BUILD_WITH_KEYBOARD` | `ON` | 构建键盘模块 | - |
+| `HIDTOOL_BUILD_WITH_MOUSE` | `ON` | 构建鼠标模块 | - |
+| `HIDTOOL_BUILD_SHARED` | `OFF` | 构建为动态库 | - |
+| `HIDTOOL_BUILD_EXAMPLE` | `ON`（主项目） | 构建示例程序 | - |
+| `HIDTOOL_FORCE_IN_PIXEL` | `ON` | 强制以物理像素为单位操作鼠标指针位置相关 API | 仅限 Windows |
 
 ```bash
 # 默认静态库构建
