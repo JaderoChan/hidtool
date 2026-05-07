@@ -80,7 +80,7 @@ public:
      * @details 在 **Windows** 和 **Linux** 平台下，等同于 \ref `moveTo()`。在 **MacOS** 平台下，其原生支持。
      * @sa \ref mouse_drag_combo
      */
-    bool dragTo(const AbsolutePos& absPos);
+    bool dragTo(const AbsolutePos& absPos, MouseButton button = MSBTN_LEFT);
     /** @} */
 
     /**
