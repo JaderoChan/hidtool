@@ -97,6 +97,7 @@ inline AbsolutePos clampAbsolutePos(const AbsolutePos& absPos, const AbsolutePos
 
 /**
  * @brief 获得当前鼠标指针位置。
+ * @attention **Linux** 平台下无效。
  * @ingroup dpi_affected
  * @todo **Linux** 平台实现。
  * @sa \ref `getAbsolutePosRange()`
