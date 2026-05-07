@@ -17,7 +17,7 @@ struct MouseEvent
         ET_WHEEL,
         /**
          * @details 在 **Windows** 和 **Linux** 平台下，此事件永远不会被 `MouseHooker` 的事件处理程序接收到。
-         * 当在上述两个平台下发送此类型的事件时，其等同于绝对移动事件与鼠标按键事件的组合，字段 `dragButton` 将被丢弃。
+         * 当在上述两个平台下发送此类型的事件时，其等同于绝对移动事件与鼠标按键事件的组合，字段 `drag.button` 将被丢弃。
          * 在 **MacOS** 平台下，无论是 `MouseHooker` 还是 `MouseSimulator`，都原生支持此类型事件。
          */
         ET_DRAG,
@@ -112,9 +112,9 @@ struct MouseEvent
         int32_t wheelDelta;
         struct
         {
-            AbsolutePos dragPos;
-            MouseButton dragButton;
-        };
+            AbsolutePos pos;
+            MouseButton button;
+        } drag;
         MouseButton button;
     };
 };

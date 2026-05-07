@@ -78,7 +78,7 @@ static bool mouseEventHandler(const MouseEvent& event)
             break;
         case MouseEvent::ET_DRAG:
             printf("Mouse drag: %s [%d, %d].\n",
-                getMouseButtonString(event.dragButton), event.dragPos.x, event.dragPos.y);
+                getMouseButtonString(event.drag.button), event.drag.pos.x, event.drag.pos.y);
             break;
         case MouseEvent::ET_PRESS:
             printf("Mouse button pressed: %s.\n", getMouseButtonString(event.button));

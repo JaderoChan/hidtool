@@ -113,7 +113,7 @@ inline CGPoint getCurrentLocation()
             ButtonState state;
             switch (event.type)
             {
-                case MouseEvent::ET_DRAG: button = event.dragButton; state = BS_DRAGGED; break;
+                case MouseEvent::ET_DRAG: button = event.drag.button; state = BS_DRAGGED; break;
                 case MouseEvent::ET_PRESS: button = event.button; state = BS_DOWN; break;
                 case MouseEvent::ET_RELEASE: button = event.button; state = BS_UP; break;
                 default: return false;
@@ -216,12 +216,12 @@ mouseEventFromCGEvent(MouseEvent& event, CGEventType cgEventType, const CGEventR
             event.type = MouseEvent::ET_DRAG;
 
             CGPoint pt = CGEventGetLocation(cgEvent);
-            event.dragPos = {static_cast<int32_t>(pt.x), static_cast<int32_t>(pt.y)};
+            event.drag.pos = {static_cast<int32_t>(pt.x), static_cast<int32_t>(pt.y)};
 
             switch (cgEventType)
             {
-                case kCGEventLeftMouseDragged: event.dragButton = MSBTN_LEFT; break;
-                case kCGEventRightMouseDragged: event.dragButton = MSBTN_RIGHT; break;
+                case kCGEventLeftMouseDragged: event.drag.button = MSBTN_LEFT; break;
+                case kCGEventRightMouseDragged: event.drag.button = MSBTN_RIGHT; break;
                 case kCGEventOtherMouseDragged:
                 {
                     int64_t button = CGEventGetIntegerValueField(cgEvent, kCGMouseEventButtonNumber);
