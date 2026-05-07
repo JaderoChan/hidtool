@@ -76,10 +76,11 @@ struct MouseEvent
         return result;
     }
 
-    static MouseEvent createDragEvent(const AbsolutePos& absPos) noexcept
+    static MouseEvent createDragEvent(const AbsolutePos& absPos, MouseButton button) noexcept
     {
         MouseEvent result(ET_DRAG);
-        result.absPos = absPos;
+        result.drag.pos = absPos;
+        result.drag.button = button;
         return result;
     }
 
