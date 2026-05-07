@@ -1,9 +1,35 @@
 #include <hidtool/mouse/mouse_pos.hpp>
 
+#include <windows.h>
+
 #include "virtual_screen_info.hpp"
 
 namespace hidt
 {
+
+AbsolutePos getCursorPos()
+{
+    AbsolutePos result;
+
+    HDESK curHDesk = GetThreadDesktop(GetCurrentThreadId());
+    HDESK inpHDesk = OpenInputDesktop(0, true, 0);
+    if (inpHDesk)
+    {
+        SetThreadDesktop(inpHDesk);
+
+        POINT pt = {0};
+        if (GetCursorPos(&pt))
+        {
+            result.x = pt.x;
+            result.y = pt.y;
+        }
+
+        SetThreadDesktop(curHDesk);
+        CloseDesktop(inpHDesk);
+    }
+
+    return result;
+}
 
 AbsolutePosRange getAbsolutePosRange()
 {

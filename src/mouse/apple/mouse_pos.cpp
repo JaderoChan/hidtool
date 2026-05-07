@@ -7,6 +7,15 @@
 namespace hidt
 {
 
+AbsolutePos getCursorPos()
+{
+    CGEventRef cur = CGEventCreate(nullptr);
+    CGPoint pt = CGEventGetLocation(cur);
+    CFRelease(cur);
+
+    return AbsolutePos(static_cast<int32_t>(pt.x), static_cast<int32_t>(pt.y));
+}
+
 AbsolutePosRange getAbsolutePosRange()
 {
     uint32_t displayCount = 0;

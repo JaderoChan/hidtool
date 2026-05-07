@@ -5,6 +5,12 @@
 namespace hidt
 {
 
+AbsolutePos getCursorPos()
+{
+    // TODO
+    return AbsolutePos();
+}
+
 AbsolutePosRange getAbsolutePosRange()
 {
     AbsolutePosRange result;

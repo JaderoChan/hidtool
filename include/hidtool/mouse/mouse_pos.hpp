@@ -90,6 +90,13 @@ inline AbsolutePos clampAbsolutePos(const AbsolutePos& absPos, const AbsolutePos
 }
 
 /**
+ * @brief 获得当前鼠标指针位置。
+ * @todo **Linux** 平台实现。
+ * @sa \ref `getAbsolutePosRange()`
+ */
+AbsolutePos getCursorPos();
+
+/**
  * @brief 获得当前环境下的绝对移动事件的坐标范围。
  * @note 在 **Windows** 和 **MacOS** 平台下，当屏幕设备发生变动时，此前获得的值可能会过时。
  * @details
