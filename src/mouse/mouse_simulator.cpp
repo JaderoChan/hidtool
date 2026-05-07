@@ -67,10 +67,13 @@ bool MouseSimulator::releaseButton(const AbsolutePos& absPos, MouseButton button
 bool MouseSimulator::clickButton(const AbsolutePos& absPos, MouseButton button)
 { return pri_.clickButton(absPos, button); }
 
-bool MouseSimulator::drag(const AbsolutePos& endPos, MouseButton button)
-{ return pri_.drag(endPos, button); }
+bool MouseSimulator::dragTo(const AbsolutePos& absPos, MouseButton button)
+{ return pri_.dragTo(absPos, button); }
 
-bool MouseSimulator::drag(const AbsolutePos& startPos, const AbsolutePos& endPos, MouseButton button)
-{ return pri_.drag(startPos, endPos, button); }
+bool MouseSimulator::dragCombo(const AbsolutePos& endPos, MouseButton button)
+{ return pri_.dragCombo(endPos, button); }
+
+bool MouseSimulator::dragCombo(const AbsolutePos& startPos, const AbsolutePos& endPos, MouseButton button)
+{ return pri_.dragCombo(startPos, endPos, button); }
 
 } // namespace hidt

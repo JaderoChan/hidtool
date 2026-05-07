@@ -53,7 +53,8 @@ bool MouseSimulatorPrivate::sendEvent(const MouseEvent& event)
     struct input_event ies[3] = {0};
     switch (event.type)
     {
-        case MouseEvent::ET_ABS_MOVE:
+        case MouseEvent::ET_ABS_MOVE:   // Fallthrough
+        case MouseEvent::ET_DRAG:
             setAbsoluteMoveInputEvent(ies[0], ies[1], event.absPos);
             setSyncReportEvent(ies[2]);
             return mouseUInput_.sendEvent(ies, 3);
@@ -93,7 +94,8 @@ size_t MouseSimulatorPrivate::sendEvent(const MouseEvent* events, size_t count)
         const auto& event = events[i];
         switch (event.type)
         {
-            case MouseEvent::ET_ABS_MOVE:
+            case MouseEvent::ET_ABS_MOVE:   // Fallthrough
+            case MouseEvent::ET_DRAG:
                 setAbsoluteMoveInputEvent(ies[0], ies[1], event.absPos);
                 setSyncReportEvent(ies[2]);
                 sent += mouseUInput_.sendEvent(ies, 3);
@@ -162,6 +164,11 @@ bool MouseSimulatorPrivate::wheel(int32_t wheelDelta)
     setSyncReportEvent(ies[1]);
 
     return mouseUInput_.sendEvent(ies, 2);
+}
+
+bool MouseSimulatorPrivate::dragTo(const AbsolutePos& absPos, MouseButton button)
+{
+    return moveTo(absPos);
 }
 
 bool MouseSimulatorPrivate::pressButton(MouseButton button)
@@ -277,7 +284,7 @@ bool MouseSimulatorPrivate::clickButton(const AbsolutePos& absPos, MouseButton b
     return mouseUInput_.sendEvent(ies, 7);
 }
 
-bool MouseSimulatorPrivate::drag(const AbsolutePos& endPos, MouseButton button)
+bool MouseSimulatorPrivate::dragCombo(const AbsolutePos& endPos, MouseButton button)
 {
     if (!isInitialized_.load())
         return false;
@@ -298,7 +305,7 @@ bool MouseSimulatorPrivate::drag(const AbsolutePos& endPos, MouseButton button)
     return mouseUInput_.sendEvent(ies, 7);
 }
 
-bool MouseSimulatorPrivate::drag(const AbsolutePos& startPos, const AbsolutePos& endPos, MouseButton button)
+bool MouseSimulatorPrivate::dragCombo(const AbsolutePos& startPos, const AbsolutePos& endPos, MouseButton button)
 {
     if (!isInitialized_.load())
         return false;

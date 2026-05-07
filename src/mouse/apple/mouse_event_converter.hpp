@@ -101,15 +101,25 @@ inline CGPoint getCurrentLocation()
             cgEvent = CGEventCreateScrollWheelEvent(nullptr, kCGScrollEventUnitLine, 1, event.wheelDelta / 120);
             break;
         }
-        case MouseEvent::ET_PRESS:  // Fallthrough
+        case MouseEvent::DRAG:  // Fallthrough
+        case MouseEvent::ET_PRESS:
         case MouseEvent::ET_RELEASE:
         {
             CGPoint pt = getCurrentLocation();
             CGEventType cgEventType;
             CGMouseButton cgButton;
 
-            ButtonState state = (event.type == MouseEvent::ET_PRESS ? BS_DOWN : BS_UP);
-            if (!mouseButtonToCGMouseButton(event.button, state, cgEventType, cgButton))
+            MouseButton button;
+            ButtonState state;
+            switch (event.type)
+            {
+                case MouseEvent::ET_DRAG: button = event.dragButton; state = BS_DRAGGED; break;
+                case MouseEvent::ET_PRESS: button = event.button; state = BS_DOWN; break;
+                case MouseEvent::ET_RELEASE: button = event.button; state = BS_UP; break;
+                default: return false;
+            }
+
+            if (!mouseButtonToCGMouseButton(button, state, cgEventType, cgButton))
                 return false;
             cgEvent = CGEventCreateMouseEvent(nullptr, cgEventType, pt, cgButton);
 
@@ -203,9 +213,30 @@ mouseEventFromCGEvent(MouseEvent& event, CGEventType cgEventType, const CGEventR
         case kCGEventRightMouseDragged: // Fallthrough
         case kCGEventOtherMouseDragged:
         {
-            event.type = MouseEvent::ET_ABS_MOVE;
+            event.type = MouseEvent::ET_DRAG;
+
             CGPoint pt = CGEventGetLocation(cgEvent);
-            event.absPos = {static_cast<int32_t>(pt.x), static_cast<int32_t>(pt.y)};
+            event.dragPos = {static_cast<int32_t>(pt.x), static_cast<int32_t>(pt.y)};
+
+            switch (cgEventType)
+            {
+                case kCGEventLeftMouseDragged: event.dragButton = MSBTN_LEFT; break;
+                case kCGEventRightMouseDragged: event.dragButton = MSBTN_RIGHT; break;
+                case kCGEventOtherMouseDragged:
+                {
+                    int64_t button = CGEventGetIntegerValueField(cgEvent, kCGMouseEventButtonNumber);
+                    switch (button)
+                    {
+                        case kCGMouseButtonCenter: event.button = MSBTN_MIDDLE; break;
+                        // TODO: MacOS下，未来可能弃用前进和后退侧键，因为他们在不同的设备厂商上可能具有不一致的值。
+                        case 3: event.button = MSBTN_BACK; break;       // 3 is back button.
+                        case 4: event.button = MSBTN_FORWARD; break;    // 4 is forward button.
+                        default: return false;
+                    }
+                }
+                default: return false;
+            }
+
             break;
         }
         default:

@@ -78,7 +78,8 @@ bool MouseSimulatorPrivate::sendEvent(const MouseEvent& event)
     INPUT input = {0};
     switch (event.type)
     {
-        case MouseEvent::ET_ABS_MOVE:
+        case MouseEvent::ET_ABS_MOVE:   // Fallthrough
+        case MouseEvent::ET_DRAG:
             setAbsoluteMoveInput(input, event.absPos, virtualScreenInfo_.load());
             break;
         case MouseEvent::ET_REL_MOVE:
@@ -117,7 +118,8 @@ size_t MouseSimulatorPrivate::sendEvent(const MouseEvent* events, size_t count)
 
         switch (event.type)
         {
-            case MouseEvent::ET_ABS_MOVE:
+            case MouseEvent::ET_ABS_MOVE:   // Fallthrough
+            case MouseEvent::ET_DRAG:
                 setAbsoluteMoveInput(input, event.absPos, virtualScreenInfo_.load());
                 break;
             case MouseEvent::ET_REL_MOVE:
@@ -175,6 +177,11 @@ bool MouseSimulatorPrivate::wheel(int32_t wheelDelta)
     setWheelInput(input, wheelDelta);
 
     return SendInput(1, &input, sizeof(INPUT)) == 1;
+}
+
+bool MouseSimulatorPrivate::dragTo(const AbsolutePos& absPos, MouseButton button)
+{
+    return moveTo(absPos);
 }
 
 bool MouseSimulatorPrivate::pressButton(MouseButton button)
@@ -268,7 +275,7 @@ bool MouseSimulatorPrivate::clickButton(const AbsolutePos& absPos, MouseButton b
     return SendInput(3, inputs, sizeof(INPUT)) == 3;
 }
 
-bool MouseSimulatorPrivate::drag(const AbsolutePos& endPos, MouseButton button)
+bool MouseSimulatorPrivate::dragCombo(const AbsolutePos& endPos, MouseButton button)
 {
     if (!isInitialized_.load())
         return false;
@@ -283,7 +290,7 @@ bool MouseSimulatorPrivate::drag(const AbsolutePos& endPos, MouseButton button)
     return SendInput(3, inputs, sizeof(INPUT)) == 3;
 }
 
-bool MouseSimulatorPrivate::drag(const AbsolutePos& startPos, const AbsolutePos& endPos, MouseButton button)
+bool MouseSimulatorPrivate::dragCombo(const AbsolutePos& startPos, const AbsolutePos& endPos, MouseButton button)
 {
     if (!isInitialized_.load())
         return false;

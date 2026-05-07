@@ -34,8 +34,10 @@ public:
     bool releaseButton(const AbsolutePos& absPos, MouseButton button);
     bool clickButton(const AbsolutePos& absPos, MouseButton button);
 
-    bool drag(const AbsolutePos& endPos, MouseButton button);
-    bool drag(const AbsolutePos& startPos, const AbsolutePos& endPos, MouseButton button);
+    bool dragTo(const AbsolutePos& absPos, MouseButton button);
+
+    bool dragCombo(const AbsolutePos& endPos, MouseButton button);
+    bool dragCombo(const AbsolutePos& startPos, const AbsolutePos& endPos, MouseButton button);
 
 private:
     MouseSimulatorPrivate() = default;
