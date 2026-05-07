@@ -41,6 +41,10 @@ if(NOT HIDTOOL_BUILD_WITH_KEYBOARD AND NOT HIDTOOL_BUILD_WITH_MOUSE)
     message(FATAL_ERROR "${MSG_PREFIX} No any modules were built.")
 endif()
 
+if(WIN32)
+    option(HIDTOOL_FORCE_IN_PIXEL "Force operation of mouse pointer range and position related APIs in physical pixels" OFF)
+endif()
+
 option(HIDTOOL_BUILD_SHARED "Build shared library" OFF)
 set(HIDTOOL_SHARED ${HIDTOOL_BUILD_SHARED})
 
@@ -115,13 +119,16 @@ if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /utf-8)
 endif()
 
-# Windows 10 for API `SetThreadDpiAwarenessContext()`.
-if(WIN32 AND HIDTOOL_BUILD_WITH_MOUSE)
-    target_compile_definitions(
-        ${PROJECT_NAME} PRIVATE
-        WINVER=0x0A00
-        _WIN32_WINNT=0x0A00
-    )
+if(HIDTOOL_FORCE_IN_PIXEL)
+    # Windows 10 for API `SetThreadDpiAwarenessContext()`.
+    if(WIN32 AND HIDTOOL_BUILD_WITH_MOUSE)
+        target_compile_definitions(
+            ${PROJECT_NAME} PRIVATE
+            WINVER=0x0A00
+            _WIN32_WINNT=0x0A00
+            HIDTOOL_FORCE_IN_PIXEL
+        )
+    endif()
 endif()
 
 ##########################

@@ -16,7 +16,9 @@ AbsolutePos getCursorPos()
     if (inpHDesk)
     {
         SetThreadDesktop(inpHDesk);
+    #ifdef HIDTOOL_FORCE_IN_PIXEL
         DPI_AWARENESS_CONTEXT prevCtx = SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+    #endif // HIDTOOL_FORCE_IN_PIXEL
 
         POINT pt = {0};
         if (GetCursorPos(&pt))
@@ -25,7 +27,9 @@ AbsolutePos getCursorPos()
             result.y = pt.y;
         }
 
+    #ifdef HIDTOOL_FORCE_IN_PIXEL
         SetThreadDpiAwarenessContext(prevCtx);
+    #endif // HIDTOOL_FORCE_IN_PIXEL
         SetThreadDesktop(curHDesk);
         CloseDesktop(inpHDesk);
     }
