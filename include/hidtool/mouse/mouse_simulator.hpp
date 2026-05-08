@@ -37,6 +37,17 @@ public:
     size_t sendEvent(const MouseEvent* events, size_t count);
 
     /**
+     * @defgroup mouse_simulator_convenient 鼠标模拟便利函数
+     * @brief 等效于 `sendEvent()` 相应的事件或事件组。
+     */
+
+    /**
+     * @ingroup mouse_simulator_convenient
+     *
+     * @{
+     */
+
+    /**
      * @brief 绝对移动。
      * @note 当发送超过坐标范围的绝对移动事件时，会将其钳制在合法范围内。
      * @sa \ref `MouseEvent::absPos`
@@ -52,26 +63,25 @@ public:
     /**
      * @param wheelDelta 单位量为 `120`。值为正时，滚轮朝远离用户的方向滚动；值为负时，滚轮朝靠近用户的方向滚动。
      * @note 在各平台下，其行为均为低分辨率纵向滚轮。
-     * @attention 若指定滚动量绝对值小于 `120`，可能不会有效果。
+     * @sa \ref `MouseEvent::wheelDelta`
      */
     bool wheel(int32_t wheelDelta);
 
     /**
      * @name 鼠标按键函数
-     * @brief 在鼠标当前位置执行按键函数。
+     * @brief 在当前鼠标指针位置执行按键函数。
      *
      * @{
      */
     bool pressButton(MouseButton button);
     bool releaseButton(MouseButton button);
-    /** @note 等同于 \ref `pressButton()` 和 \ref `releaseButton()` 的组合。 */
     bool clickButton(MouseButton button);
     /** @} */
 
     /**
      * @name 带坐标的鼠标函数
      * @brief 在指定位置执行函数。
-     * @note 等同于 \ref `moveTo()` + 对应函数的组合。
+     * @note 等效于绝对移动事件与其他事件的组合。
      *
      * @{
      */
@@ -83,8 +93,7 @@ public:
 
     /**
      * @brief 拖拽鼠标。
-     * @attention 不包含鼠标按键函数。
-     * @details 在 **Windows** 和 **Linux** 平台下，等同于 \ref `moveTo()`，参数 `button` 将被丢弃。
+     * @note 在 **Windows** 和 **Linux** 平台下，等同于绝对移动事件，参数 `button` 将被丢弃。
      * 在 **MacOS** 平台下，其原生支持。
      * @sa \ref mouse_drag_combo
      */
@@ -92,9 +101,9 @@ public:
 
     /**
      * @anchor mouse_drag_combo
-     * @name 鼠标拖拽函数组合。
+     * @name 鼠标拖拽组合
      * @brief 从指定起始位置拖拽鼠标至指定终点位置。
-     * @details 等同于 \ref `pressButton()` + \ref `dragTo()` + \ref `releaseButton()` 的组合。
+     * @details 等同于鼠标按键按压事件、拖拽事件与鼠标按键释放事件的组合。
      *
      * @{
      */
@@ -102,6 +111,8 @@ public:
         MouseButton button = MSBTN_LEFT);
     bool dragCombo(const AbsolutePos& startPos, const AbsolutePos& endPos,
         MouseButton button = MSBTN_LEFT);
+    /** @} */
+
     /** @} */
 
 private:

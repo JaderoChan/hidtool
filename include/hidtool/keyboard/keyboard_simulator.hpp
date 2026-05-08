@@ -25,20 +25,26 @@ public:
     bool sendEvent(const KeyboardEvent& event);
     size_t sendEvent(const KeyboardEvent* events, size_t count);
 
+    /**
+     * @defgroup keyboard_simulator_convenient 键盘模拟便利函数
+     * @brief 等效于 `sendEvent()` 相应的事件或事件组。
+     */
+
+    /**
+     * @ingroup keyboard_simulator_convenient
+     *
+     * @{
+     */
+
     bool pressKey(uint32_t nativeKey);
     bool pressKey(KeyboardKey key);
 
     bool releaseKey(uint32_t nativeKey);
     bool releaseKey(KeyboardKey key);
 
-    /**
-     * @name clickKey 函数
-     * @brief 等同于 \ref `pressKey()` 与 \ref `releaseKey()` 的组合。
-     *
-     * @{
-     */
     bool clickKey(uint32_t nativeKey);
     bool clickKey(KeyboardKey key);
+
     /** @} */
 
 private:

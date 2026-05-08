@@ -43,6 +43,7 @@ struct MouseEvent
 
     /**
      * @ingroup mouse_event_factory
+     *
      * @{
      */
 
@@ -130,7 +131,10 @@ struct MouseEvent
          * 所以在实现中将通过计算后的绝对移动坐标模拟相对移动。
          */
         RelativePos relPos;
-        /** @note 单位量为 `120`。值为正时，滚轮朝远离用户的方向滚动；值为负时，滚轮朝靠近用户的方向滚动。 */
+        /**
+         * @note 单位量为 `120`。值为正时，滚轮朝远离用户的方向滚动；值为负时，滚轮朝靠近用户的方向滚动。
+         * @attention 若发送事件的滚动量绝对值小于 `120`，可能不会有效果。
+         */
         int32_t wheelDelta;
         struct
         {
