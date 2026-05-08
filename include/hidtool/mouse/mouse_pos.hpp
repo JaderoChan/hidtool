@@ -89,14 +89,6 @@ inline AbsolutePos clampAbsolutePos(const AbsolutePos& absPos, const AbsolutePos
     return result;
 }
 
-/**
- * @brief 获得当前鼠标指针位置。
- * @attention **Linux** 平台下无效。
- * @todo **Linux** 平台实现。
- * @sa \ref `getAbsolutePosRange()`
- */
-AbsolutePos getCursorPos();
-
 } // namespace hidt
 
 #endif // !HIDTOOL_MOUSE_POS_HPP
