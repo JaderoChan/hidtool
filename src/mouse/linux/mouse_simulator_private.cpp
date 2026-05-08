@@ -65,12 +65,6 @@ bool MouseSimulatorPrivate::sendEvent(const MouseEvent& event)
     if (!isInitialized_.load())
         return 0;
 
-    if (event.type == KeyboardEvent::ET_SLEEP)
-    {
-        std::this_thread::sleep_for(std::chrono::milliseconds(event.sleepMs));
-        return true;
-    }
-
     struct input_event ies[3] = {0};
     switch (event.type)
     {
@@ -97,6 +91,9 @@ bool MouseSimulatorPrivate::sendEvent(const MouseEvent& event)
                 return false;
             setSyncReportEvent(ies[1]);
             return mouseUInput_.sendEvent(ies, 2);
+        case MouseEvent::ET_SLEEP:
+            std::this_thread::sleep_for(std::chrono::milliseconds(event.sleepMs));
+            return true;
         default:
             return false;
     }
