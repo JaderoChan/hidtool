@@ -72,9 +72,8 @@ public:
     /**
      * @name 带坐标的鼠标函数
      * @brief 在指定位置执行函数。
-     * @details
-     * 在 **Windows** 和 **Linux** 平台下，等同于 \ref `moveTo()` + 对应函数的组合。
-     * 在 **MacOS** 下，其原生支持。
+     * @details 在 **Windows** 和 **Linux** 平台下，等同于 \ref `moveTo()` + 对应函数的组合。
+     * 在 **MacOS** 平台下，其原生支持。
      *
      * @{
      */

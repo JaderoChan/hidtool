@@ -122,7 +122,7 @@ struct MouseEvent
          * 通过 \ref `MouseSimulator` 发送的绝对移动事件，此坐标始终以虚拟屏幕空间范围为基准。
          * 在 **Linux** 平台下，通过 \ref `MouseHooker` 获得的绝对移动事件坐标范围依赖于设备厂商，
          * 通过 \ref `MouseSimulator` 发送的绝对移动事件，此坐标在 X 和 Y 轴上始终限定为 `[0, 65535]`。
-         * @sa \ref `MouseSimulator::getAbsolutePosRange()'
+         * @sa \ref `MouseSimulator::getAbsoluteMoveRange()'
          */
         AbsolutePos absPos;
         /**
