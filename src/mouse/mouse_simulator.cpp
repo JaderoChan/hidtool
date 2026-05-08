@@ -65,6 +65,18 @@ bool MouseSimulator::clickButton(MouseButton button)
     return pri_.sendEvent(events, 2) == 2;
 }
 
+bool MouseSimulator::doubleClickButton(MouseButton button)
+{
+    MouseEvent events[4] = {
+        MouseEvent::createPressButtonEvent(button),
+        MouseEvent::createReleaseButtonEvent(button),
+        MouseEvent::createPressButtonEvent(button),
+        MouseEvent::createReleaseButtonEvent(button)
+    };
+
+    return pri_.sendEvent(events, 4) == 4;
+}
+
 bool MouseSimulator::wheel(const AbsolutePos& absPos, int32_t wheelDelta)
 {
     MouseEvent events[2] = {
@@ -104,6 +116,19 @@ bool MouseSimulator::clickButton(const AbsolutePos& absPos, MouseButton button)
     };
 
     return pri_.sendEvent(events, 3) == 3;
+}
+
+bool MouseSimulator::doubleClickButton(const AbsolutePos& absPos, MouseButton button)
+{
+    MouseEvent events[5] = {
+        MouseEvent::createAbsMoveEvent(absPos),
+        MouseEvent::createPressButtonEvent(button),
+        MouseEvent::createReleaseButtonEvent(button),
+        MouseEvent::createPressButtonEvent(button),
+        MouseEvent::createReleaseButtonEvent(button)
+    };
+
+    return pri_.sendEvent(events, 5) == 5;
 }
 
 bool MouseSimulator::dragTo(const AbsolutePos& absPos, MouseButton button)

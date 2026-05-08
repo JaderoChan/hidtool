@@ -76,6 +76,7 @@ public:
     bool pressButton(MouseButton button);
     bool releaseButton(MouseButton button);
     bool clickButton(MouseButton button);
+    bool doubleClickButton(MouseButton button);
     /** @} */
 
     /**
@@ -89,6 +90,7 @@ public:
     bool pressButton(const AbsolutePos& absPos, MouseButton button);
     bool releaseButton(const AbsolutePos& absPos, MouseButton button);
     bool clickButton(const AbsolutePos& absPos, MouseButton button);
+    bool doubleClickButton(const AbsolutePos& absPos, MouseButton button);
     /** @} */
 
     /**
