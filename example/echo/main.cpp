@@ -123,6 +123,9 @@ int main(int argc, char* argv[])
     printf("Successfully run the keyboard hooker and mouse hooker.\n");
     printf("Please press 'ESC' to exit program.\n");
 
+    printf("Current platform %s block event propagation.\n",
+        (HidHooker::isSupportBlockEventPropagation() ? "support" : "unspport"));
+
     {
         std::unique_lock<std::mutex> locker(shouldCloseMtx);
         shouldCloseCv.wait(locker, [&]() { return shouldClose; });
