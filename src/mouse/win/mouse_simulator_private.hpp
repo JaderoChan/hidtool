@@ -18,6 +18,8 @@ class MouseSimulatorPrivate
 public:
     static MouseSimulatorPrivate& getInstance();
 
+    static AbsolutePosRange getAbsoluteMoveRange();
+
     bool initialize();
     void destroy();
     bool isInitialized() const;

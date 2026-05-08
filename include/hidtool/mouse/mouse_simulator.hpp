@@ -19,6 +19,16 @@ class HIDTOOL_API MouseSimulator
 public:
     static MouseSimulator& getInstance();
 
+    /**
+     * @brief 获得当前环境下发送的绝对移动事件的坐标范围。
+     * @note 当发送的绝对移动事件的坐标超出此范围时将会被钳制。
+     * @note 此 API 会受环境 DPI 策略的影响。
+     * 在 **Windows** 平台下可通过启用 `HIDTOOL_FORCE_IN_PIXEL` 编译选项强制以物理像素为单位。
+     * @details 在 **Windows** 和 **MacOS** 平台下，其等同于虚拟屏幕空间的范围。
+     * 在 **Linux** 平台下，其始终等同于 {0, 65535, 0, 65535}。
+     */
+    static AbsolutePosRange getAbsoluteMoveRange();
+
     bool initialize();
     void destroy();
     bool isInitialized() const;

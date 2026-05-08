@@ -15,6 +15,32 @@ MouseSimulatorPrivate& MouseSimulatorPrivate::getInstance()
     return instance;
 }
 
+AbsolutePosRange MouseSimulatorPrivate::getAbsoluteMoveRange()
+{
+    uint32_t displayCount = 0;
+    CGError err = CGGetActiveDisplayList(0, nullptr, &displayCount);
+    if (err != kCGErrorSuccess || displayCount == 0)
+        return AbsolutePosRange();
+
+    std::vector<CGDirectDisplayID> displays(displayCount);
+    err = CGGetActiveDisplayList(displayCount, displays.data(), &displayCount);
+    if (err != kCGErrorSuccess)
+        return AbsolutePosRange();
+
+    CGRect unionRect = CGDisplayBounds(displays[0]);
+    for (const auto& id : displays)
+        unionRect = CGRectUnion(unionRect, CGDisplayBounds(id));
+
+    AbsolutePosRange result;
+
+    result.minX = unionRect.origin.x;
+    result.minY = unionRect.origin.y;
+    result.maxX = unionRect.origin.x + unionRect.size.width;
+    result.maxY = unionRect.origin.y + unionRect.size.height;
+
+    return result;
+}
+
 bool MouseSimulatorPrivate::initialize()
 {
     // 无实际作用，仅与其他子模块保持一致性。`destroy()` 同理。

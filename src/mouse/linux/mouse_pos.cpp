@@ -11,16 +11,4 @@ AbsolutePos getCursorPos()
     return AbsolutePos();
 }
 
-AbsolutePosRange getAbsolutePosRange()
-{
-    AbsolutePosRange result;
-
-    result.minX = ABS_MIN_X;
-    result.maxX = ABS_MAX_X;
-    result.minY = ABS_MIN_Y;
-    result.maxY = ABS_MAX_Y;
-
-    return result;
-}
-
 } // namespace hidt

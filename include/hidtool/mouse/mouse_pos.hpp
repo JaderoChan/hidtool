@@ -90,34 +90,12 @@ inline AbsolutePos clampAbsolutePos(const AbsolutePos& absPos, const AbsolutePos
 }
 
 /**
- * @defgroup dpi_affected 受 DPI 策略影响
- * @attention 此组内的 API 会受平台相关的 DPI 策略影响。
- * **Windows** 平台可通过 `HIDTOOL_FORCE_IN_PIXEL` 编译选项强制以物理像素为单位。
- */
-
-/**
- * @ingroup dpi_affected
- * @{
- */
-
-/**
  * @brief 获得当前鼠标指针位置。
  * @attention **Linux** 平台下无效。
  * @todo **Linux** 平台实现。
  * @sa \ref `getAbsolutePosRange()`
  */
 AbsolutePos getCursorPos();
-
-/**
- * @brief 获得当前环境下通过 `MouseSimulator` 发送的的绝对移动事件的坐标范围。
- * @note 在 **Windows** 和 **MacOS** 平台下，当屏幕设备发生变动时，此前获得的值可能会过时。
- * @details
- * 在 **Windows** 和 **MacOS** 平台下，其等同于虚拟屏幕空间的范围。
- * 在 **Linux** 平台下，其始终等同于 {0, 65535, 0, 65535}。
- */
-AbsolutePosRange getAbsolutePosRange();
-
-/** @} */
 
 } // namespace hidt
 
