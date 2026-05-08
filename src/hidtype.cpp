@@ -21,6 +21,9 @@ bool isHidTypeSupported(HidType hidType) noexcept
             return false;
         #endif // HIDTOOL_HAS_MOUSE
 
+        case HIDTYPE_SLEEP:
+            return true;
+
         default:
             return false;
     }

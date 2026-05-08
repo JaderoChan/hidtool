@@ -1,5 +1,8 @@
 #include <hidtool/hid_simulator.hpp>
 
+#include <chrono>   // chrono
+#include <thread>   // this_thread
+
 namespace hidt
 {
 
@@ -82,6 +85,9 @@ bool HidSimulator::sendEvent(const HidEvent& event)
         #else
             return false;
         #endif
+        case HIDTYPE_SLEEP:
+            std::this_thread::sleep_for(std::chrono::milliseconds(event.sleepMs));
+            return true;
         default:
             return false;
     }
@@ -92,7 +98,29 @@ size_t HidSimulator::sendEvent(const HidEvent* events, size_t count)
     size_t sent = 0;
 
     for (size_t i = 0; i < count; ++i)
-        sent += sendEvent(events[i]);
+    {
+        const auto& event = events[i];
+
+        switch (event.hidType)
+        {
+            case HIDTYPE_KEYBOARD:
+            #ifdef HIDTOOL_HAS_KEYBOARD
+                sent += kbdSimulator_.sendEvent(event.keyboardEvent);
+            #endif
+                break;
+            case HIDTYPE_MOUSE:
+            #ifdef HIDTOOL_HAS_MOUSE
+                sent += msSimulator_.sendEvent(event.mouseEvent);
+            #endif
+                break;
+            case HIDTYPE_SLEEP:
+                std::this_thread::sleep_for(std::chrono::milliseconds(event.sleepMs));
+                sent++;
+                break;
+            default:
+                break;
+        }
+    }
 
     return sent;
 }

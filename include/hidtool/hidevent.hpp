@@ -17,9 +17,15 @@ namespace hidt
 
 struct HidEvent
 {
-    HidType hidType;
+    constexpr HidEvent() noexcept
+        : sleepMs(0) {}
+    constexpr HidEvent(HidType hidType) noexcept
+        : hidType(hidType), sleepMs(0) {}
+
+    HidType hidType = HIDTYPE_NONE;
     union
     {
+        uint32_t sleepMs;
     #ifdef HIDTOOL_HAS_KEYBOARD
         KeyboardEvent keyboardEvent;
     #endif // HIDTOOL_HAS_KEYBOARD
