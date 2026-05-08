@@ -7,3 +7,4 @@
 - [ ] 考虑增加代码的复用性，简化代码，移除冗余部分。（见 “考虑点” 相关注释）
 - [x] 完成 HID Event 和通用API
 - [ ] 实现 Touchpad 和 Gamepad 子模块。
+- [ ] 增加 MouseSimulator::doubleClick() 接口。
