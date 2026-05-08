@@ -15,7 +15,7 @@ struct MouseEvent
         /**
          * @details 通过 \ref `MouseSimulator` 发送的此类型事件会将数据钳制在合法范围中，
          * 但 \ref `MouseHooker` 并不会尝试钳制其接收到的此类型事件。
-         * @sa \ref `MouseSimulator::getSimulatorAbsMoveRange()`
+         * @sa \ref `MouseSimulator::getAbsoluteMoveRange()`
          */
         ET_ABS_MOVE,
         ET_REL_MOVE,
