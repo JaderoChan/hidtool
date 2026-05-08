@@ -13,7 +13,7 @@ struct MouseEvent
     {
         ET_NONE,
         /**
-         * @details 当前通过 `MouseSimulator` 发送的此类型事件会将数据钳制在合法范围中，
+         * @details 通过 `MouseSimulator` 发送的此类型事件会将数据钳制在合法范围中，
          * 但 `MouseHooker` 并不会尝试钳制其接收到的此类型事件。
          */
         ET_ABS_MOVE,
