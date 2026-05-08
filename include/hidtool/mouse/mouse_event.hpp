@@ -32,7 +32,6 @@ struct MouseEvent
 
     constexpr MouseEvent() noexcept
         : absPos() {}
-
     constexpr explicit MouseEvent(EventType type) noexcept
         : type(type), absPos() {}
 
