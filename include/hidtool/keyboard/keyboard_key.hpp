@@ -6,6 +6,7 @@
 namespace hidt
 {
 
+/** @brief 键盘键枚举。 */
 enum KeyboardKey : uint32_t
 {
     // Null value
@@ -194,8 +195,8 @@ enum KeyboardKey : uint32_t
 };
 
 /**
- * @brief 返回给定 `KeyboardKey` 对应的平台相关的原生键值。
- * @return 如果给定 `KeyboardKey` 不存在对应的原生键值返回 `0`，否则返回其对应的原生键值。
+ * @brief 返回给定 \ref `KeyboardKey` 对应的平台相关的原生键值。
+ * @return 如果给定 \ref `KeyboardKey` 不存在对应的原生键值返回 `0`，否则返回其对应的原生键值。
  * @note
  * 在 **Windows** 平台下，其返回的原生键值是 `VK_*`；
  * 在 **MacOS** 平台下，其返回的原生键值是 `kVK_*`；
@@ -204,8 +205,9 @@ enum KeyboardKey : uint32_t
 HIDTOOL_API uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept;
 
 /**
- * @brief 返回给定平台相关的原生键值对应的 `KeyboardKey`。
- * @return 如果给定的原生键值不存在对应的 `KeyboardKey` 返回 `KeyboardKey::KBDKEY_NONE`，否则返回其对应的 `KeyboardKey`。
+ * @brief 返回给定平台相关的原生键值对应的 \ref `KeyboardKey`。
+ * @return 如果给定的原生键值不存在对应的 \ref `KeyboardKey` 返回 \ref `KeyboardKey::KBDKEY_NONE`，
+ * 否则返回其对应的 \ref `KeyboardKey`。
  */
 HIDTOOL_API KeyboardKey keyboardKeyFromNativeKey(uint32_t nativeKey) noexcept;
 
