@@ -106,9 +106,8 @@ bool MouseSimulatorPrivate::moveTo(const AbsolutePos& absPos)
         return false;
 
     CGPoint pt = CGPointMake(static_cast<CGFloat>(absPos.x), static_cast<CGFloat>(absPos.y));
+    CGEventRef cgEvent = CGEventCreateMouseEvent(nullptr, kCGEventMouseMoved, pt, kCGMouseButtonLeft);
 
-    CGEventRef cgEvent = nullptr;
-    cgEvent = CGEventCreateMouseEvent(nullptr, kCGEventMouseMoved, pt, kCGMouseButtonLeft);
     if (cgEvent)
     {
         CGEventPost(kCGHIDEventTap, cgEvent);
@@ -181,37 +180,6 @@ bool MouseSimulatorPrivate::dragTo(const AbsolutePos& absPos, MouseButton button
 
 bool MouseSimulatorPrivate::pressButton(MouseButton button)
 {
-    CGPoint pt = getCurrentLocation();
-    AbsolutePos pos = {static_cast<int32_t>(pt.x), static_cast<int32_t>(pt.y)};
-    return pressButton(pos, button);
-}
-
-bool MouseSimulatorPrivate::releaseButton(MouseButton button)
-{
-    CGPoint pt = getCurrentLocation();
-    AbsolutePos pos = {static_cast<int32_t>(pt.x), static_cast<int32_t>(pt.y)};
-    return releaseButton(pos, button);
-}
-
-bool MouseSimulatorPrivate::clickButton(MouseButton button)
-{
-    CGPoint pt = getCurrentLocation();
-    AbsolutePos pos = {static_cast<int32_t>(pt.x), static_cast<int32_t>(pt.y)};
-    return clickButton(pos, button);
-}
-
-bool MouseSimulatorPrivate::wheel(const AbsolutePos& absPos, int32_t wheelDelta)
-{
-    size_t sent = 0;
-
-    sent += moveTo(absPos);
-    sent += wheel(wheelDelta);
-
-    return sent == 2;
-}
-
-bool MouseSimulatorPrivate::pressButton(const AbsolutePos& absPos, MouseButton button)
-{
     if (!isInitialized_.load())
         return false;
 
@@ -220,8 +188,9 @@ bool MouseSimulatorPrivate::pressButton(const AbsolutePos& absPos, MouseButton b
     if (!mouseButtonToCGMouseButton(button, BS_DOWN, cgEventType, cgButton))
         return false;
 
-    CGPoint pt = CGPointMake(static_cast<CGFloat>(absPos.x), static_cast<CGFloat>(absPos.y));
+    CGPoint pt = getCurrentLocation();
     CGEventRef cgEvent = CGEventCreateMouseEvent(nullptr, cgEventType, pt, cgButton);
+
     if (cgEvent)
     {
         CGEventPost(kCGHIDEventTap, cgEvent);
@@ -232,7 +201,7 @@ bool MouseSimulatorPrivate::pressButton(const AbsolutePos& absPos, MouseButton b
     return false;
 }
 
-bool MouseSimulatorPrivate::releaseButton(const AbsolutePos& absPos, MouseButton button)
+bool MouseSimulatorPrivate::releaseButton(MouseButton button)
 {
     if (!isInitialized_.load())
         return false;
@@ -242,8 +211,9 @@ bool MouseSimulatorPrivate::releaseButton(const AbsolutePos& absPos, MouseButton
     if (!mouseButtonToCGMouseButton(button, BS_UP, cgEventType, cgButton))
         return false;
 
-    CGPoint pt = CGPointMake(static_cast<CGFloat>(absPos.x), static_cast<CGFloat>(absPos.y));
+    CGPoint pt = getCurrentLocation();
     CGEventRef cgEvent = CGEventCreateMouseEvent(nullptr, cgEventType, pt, cgButton);
+
     if (cgEvent)
     {
         CGEventPost(kCGHIDEventTap, cgEvent);
@@ -254,15 +224,14 @@ bool MouseSimulatorPrivate::releaseButton(const AbsolutePos& absPos, MouseButton
     return false;
 }
 
-bool MouseSimulatorPrivate::clickButton(const AbsolutePos& absPos, MouseButton button)
+bool MouseSimulatorPrivate::clickButton(MouseButton button)
 {
     if (!isInitialized_.load())
         return false;
 
     size_t sent = 0;
 
-    CGPoint pt = CGPointMake(static_cast<CGFloat>(absPos.x), static_cast<CGFloat>(absPos.y));
-
+    CGPoint pt = getCurrentLocation();
     CGEventType cgEventType;
     CGMouseButton cgButton;
 
@@ -289,6 +258,127 @@ bool MouseSimulatorPrivate::clickButton(const AbsolutePos& absPos, MouseButton b
     }
 
     return sent == 2;
+}
+
+bool MouseSimulatorPrivate::wheel(const AbsolutePos& absPos, int32_t wheelDelta)
+{
+    size_t sent = 0;
+
+    sent += moveTo(absPos);
+    sent += wheel(wheelDelta);
+
+    return sent == 2;
+}
+
+bool MouseSimulatorPrivate::pressButton(const AbsolutePos& absPos, MouseButton button)
+{
+    if (!isInitialized_.load())
+        return false;
+
+    size_t sent = 0;
+
+    CGPoint pt = CGPointMake(static_cast<CGFloat>(absPos.x), static_cast<CGFloat>(absPos.y));
+    CGEventRef moveCgEvent = CGEventCreateMouseEvent(nullptr, kCGEventMouseMoved, pt, kCGMouseButtonLeft);
+
+    CGEventType cgEventType;
+    CGMouseButton cgButton;
+    if (!mouseButtonToCGMouseButton(button, BS_DOWN, cgEventType, cgButton))
+        return false;
+    CGEventRef pressCgEvent = CGEventCreateMouseEvent(nullptr, cgEventType, pt, cgButton);
+
+    if (moveCgEvent)
+    {
+        CGEventPost(kCGHIDEventTap, moveCgEvent);
+        CFRelease(moveCgEvent);
+        sent++;
+    }
+
+    if (pressCgEvent)
+    {
+        CGEventPost(kCGHIDEventTap, pressCgEvent);
+        CFRelease(pressCgEvent);
+        sent++;
+    }
+
+    return sent == 2;
+}
+
+bool MouseSimulatorPrivate::releaseButton(const AbsolutePos& absPos, MouseButton button)
+{
+    if (!isInitialized_.load())
+        return false;
+
+    size_t sent = 0;
+
+    CGPoint pt = CGPointMake(static_cast<CGFloat>(absPos.x), static_cast<CGFloat>(absPos.y));
+    CGEventRef moveCgEvent = CGEventCreateMouseEvent(nullptr, kCGEventMouseMoved, pt, kCGMouseButtonLeft);
+
+    CGEventType cgEventType;
+    CGMouseButton cgButton;
+    if (!mouseButtonToCGMouseButton(button, BS_UP, cgEventType, cgButton))
+        return false;
+    CGEventRef releaseCgEvent = CGEventCreateMouseEvent(nullptr, cgEventType, pt, cgButton);
+
+    if (moveCgEvent)
+    {
+        CGEventPost(kCGHIDEventTap, moveCgEvent);
+        CFRelease(moveCgEvent);
+        sent++;
+    }
+
+    if (releaseCgEvent)
+    {
+        CGEventPost(kCGHIDEventTap, releaseCgEvent);
+        CFRelease(releaseCgEvent);
+        sent++;
+    }
+
+    return sent == 2;
+}
+
+bool MouseSimulatorPrivate::clickButton(const AbsolutePos& absPos, MouseButton button)
+{
+    if (!isInitialized_.load())
+        return false;
+
+    size_t sent = 0;
+
+    CGPoint pt = CGPointMake(static_cast<CGFloat>(absPos.x), static_cast<CGFloat>(absPos.y));
+    CGEventRef moveCgEvent = CGEventCreateMouseEvent(nullptr, kCGEventMouseMoved, pt, kCGMouseButtonLeft);
+
+    CGEventType cgEventType;
+    CGMouseButton cgButton;
+
+    if (!mouseButtonToCGMouseButton(button, BS_DOWN, cgEventType, cgButton))
+        return false;
+    CGEventRef pressCgEvent = CGEventCreateMouseEvent(nullptr, cgEventType, pt, cgButton);
+
+    if (!mouseButtonToCGMouseButton(button, BS_UP, cgEventType, cgButton))
+        return false;
+    CGEventRef releaseCgEvent = CGEventCreateMouseEvent(nullptr, cgEventType, pt, cgButton);
+
+    if (moveCgEvent)
+    {
+        CGEventPost(kCGHIDEventTap, moveCgEvent);
+        CFRelease(moveCgEvent);
+        sent++;
+    }
+
+    if (pressCgEvent)
+    {
+        CGEventPost(kCGHIDEventTap, pressCgEvent);
+        CFRelease(pressCgEvent);
+        sent++;
+    }
+
+    if (releaseCgEvent)
+    {
+        CGEventPost(kCGHIDEventTap, releaseCgEvent);
+        CFRelease(releaseCgEvent);
+        sent++;
+    }
+
+    return sent == 3;
 }
 
 bool MouseSimulatorPrivate::dragCombo(const AbsolutePos& endPos, MouseButton button)
