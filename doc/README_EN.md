@@ -169,8 +169,8 @@ sim.releaseKey(KBDKEY_CTRL);
 // Batch send events
 KeyboardEvent events[] =
 {
-    KeyboardEvent(KeyboardEvent::ET_PRESS, KBDKEY_A),
-    KeyboardEvent(KeyboardEvent::ET_RELEASE, KBDKEY_A),
+    KeyboardEvent::createPressEvent(KBDKEY_A),
+    KeyboardEvent::createReleaseEvent(KBDKEY_A)
 };
 sim.sendEvent(events, 2);
 
@@ -239,7 +239,10 @@ hooker.setEventHandler([](const MouseEvent& event) -> bool
         case MouseEvent::ET_RELEASE:
             // event.button
             break;
+        default:
+            break;
     }
+
     return true;
 });
 
@@ -274,6 +277,7 @@ sim.wheel(-120);    // Scroll down one notch
 sim.pressButton(MSBTN_LEFT);
 sim.releaseButton(MSBTN_LEFT);
 sim.clickButton(MSBTN_LEFT);
+sim.doubleClickButton(MSBTN_LEFT);
 
 // Mouse operations at a specified position
 sim.clickButton(AbsolutePos(500, 300), MSBTN_LEFT);
