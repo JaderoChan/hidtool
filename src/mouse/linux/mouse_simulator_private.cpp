@@ -16,7 +16,14 @@ MouseSimulatorPrivate& MouseSimulatorPrivate::getInstance()
 
 AbsolutePosRange MouseSimulatorPrivate::getAbsoluteMoveRange()
 {
-    return AbsolutePosRange{ABS_MIN_X, ABS_MAX_X, ABS_MIN_Y, ABS_MAX_Y};
+    AbsolutePosRange result;
+
+    result.minX = ABS_MIN_X;
+    result.maxX = ABS_MAX_X;
+    result.minY = ABS_MIN_Y;
+    result.maxY = ABS_MAX_Y;
+
+    return result;
 }
 
 bool MouseSimulatorPrivate::initialize()
