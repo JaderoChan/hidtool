@@ -35,7 +35,14 @@ struct MouseEvent
     constexpr explicit MouseEvent(EventType type) noexcept
         : type(type), absPos() {}
 
-    /** @sa \ref `absPos` */
+    /**
+     * @defgroup mouse_event_factory 鼠标事件工厂函数
+     * @brief 便于构造指定类型的鼠标事件。
+     *
+     * @{
+     */
+
+    /** @sa \ref `absPos`, \ref `MouseSimulator::moveTo()` */
     static MouseEvent createAbsMoveEvent(int32_t x, int32_t y) noexcept
     {
         MouseEvent result(ET_ABS_MOVE);
@@ -51,7 +58,7 @@ struct MouseEvent
         return result;
     }
 
-    /** @sa \ref `relPos` */
+    /** @sa \ref `relPos`, \ref `MouseSimulator::moveBy()` */
     static MouseEvent createRelMoveEvent(int32_t dx, int32_t dy) noexcept
     {
         MouseEvent result(ET_REL_MOVE);
@@ -75,6 +82,7 @@ struct MouseEvent
         return result;
     }
 
+    /** @sa \ref `MouseSimulator::drag()` */
     static MouseEvent createDragEvent(const AbsolutePos& absPos, MouseButton button) noexcept
     {
         MouseEvent result(ET_DRAG);
@@ -83,6 +91,7 @@ struct MouseEvent
         return result;
     }
 
+    /** @sa \ref `MouseSimulator::press()` */
     static MouseEvent createPressButtonEvent(MouseButton button)
     {
         MouseEvent result(ET_PRESS);
@@ -90,12 +99,15 @@ struct MouseEvent
         return result;
     }
 
+    /** @sa \ref `MouseSimulator::release()` */
     static MouseEvent createReleaseButtonEvent(MouseButton button)
     {
         MouseEvent result(ET_RELEASE);
         result.button = button;
         return result;
     }
+
+    /** @} */
 
     EventType type = ET_NONE;
     union
@@ -104,13 +116,14 @@ struct MouseEvent
          * @note
          * 在 **Windows** 和 **MacOS** 平台下，无论是 `MouseHooker` 事件处理函数中获得的绝对移动事件还是
          * 通过 `MouseSimulator` 发送的绝对移动事件，此坐标始终以虚拟屏幕空间范围为基准。
-         * 在 **Linux** 平台下，通过 `MouseSimulator` 发送的绝对移动事件，此坐标在 X 和 Y 轴上始终限定为 `[0, 65535]`。
+         * 在 **Linux** 平台下，通过 `MouseHooker` 获得的绝对移动事件坐标范围依赖于设备厂商，
+         * 通过 `MouseSimulator` 发送的绝对移动事件，此坐标在 X 和 Y 轴上始终限定为 `[0, 65535]`。
          * @sa \ref `getAbsolutePosRange()'
          */
         AbsolutePos absPos;
         /**
          * @details 由于 **MacOS** 平台下没有原生支持相对移动的 API，
-         * 所以在实现中将利用鼠标当前位置与相对移动值的和，通过绝对移动模拟相对移动。
+         * 所以在实现中将通过计算后的绝对移动坐标模拟相对移动。
          */
         RelativePos relPos;
         /** @note 单位量为 `120`。值为正时，滚轮朝远离用户的方向滚动；值为负时，滚轮朝靠近用户的方向滚动。 */
