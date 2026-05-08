@@ -59,16 +59,15 @@ HidHooker& HidHooker::getInstance()
 
 bool HidHooker::isSupportBlockEventPropagation() noexcept
 {
-    bool result = true;
-
-    #ifdef HIDTOOL_HAS_KEYBOARD
-        result &= KeyboardHooker::isSupportBlockEventPropagation();
-    #endif
-    #ifdef HIDTOOL_HAS_MOUSE
-        result &= MouseHooker::isSupportBlockEventPropagation();
-    #endif
-
-    return result;
+#if defined(HIDTOOL_WIN)
+    return true;
+#elif defined(HIDTOOL_APPLE)
+    return true;
+#elif defined(HIDTOOL_LINUX)
+    return false;
+#else
+    #error "Unspported platform"
+#endif // HIDTOOL_WIN
 }
 
 bool HidHooker::run()

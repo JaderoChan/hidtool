@@ -22,19 +22,6 @@ KeyboardHooker& KeyboardHooker::getInstance()
     return instance;
 }
 
-bool KeyboardHooker::isSupportBlockEventPropagation() noexcept
-{
-#if defined(HIDTOOL_WIN)
-    return true;
-#elif defined(HIDTOOL_APPLE)
-    return true;
-#elif defined(HIDTOOL_LINUX)
-    return false;
-#else
-    #error "Unspported platform"
-#endif // HIDTOOL_WIN
-}
-
 bool KeyboardHooker::run()
 { return pri_.run(); }
 

@@ -22,9 +22,6 @@ class HIDTOOL_API MouseHooker
 public:
     static MouseHooker& getInstance();
 
-    /** @brief 检查当前环境是否支持阻断事件的传播。 */
-    static bool isSupportBlockEventPropagation() noexcept;
-
     bool run();
     void stop();
     bool isRunning() const;

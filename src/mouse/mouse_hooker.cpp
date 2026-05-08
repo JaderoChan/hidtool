@@ -22,19 +22,6 @@ MouseHooker& MouseHooker::getInstance()
     return instance;
 }
 
-bool MouseHooker::isSupportBlockEventPropagation() noexcept
-{
-#if defined(HIDTOOL_WIN)
-    return true;
-#elif defined(HIDTOOL_APPLE)
-    return true;
-#elif defined(HIDTOOL_LINUX)
-    return false;
-#else
-    #error "Unspported platform"
-#endif // HIDTOOL_WIN
-}
-
 bool MouseHooker::run()
 { return pri_.run(); }
 

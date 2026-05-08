@@ -32,6 +32,7 @@ class HIDTOOL_API HidHooker
 public:
     static HidHooker& getInstance();
 
+    /** @brief 检查当前环境是否支持阻断事件的传播。 */
     static bool isSupportBlockEventPropagation() noexcept;
 
     bool run();
