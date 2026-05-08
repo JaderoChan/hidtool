@@ -9,9 +9,6 @@
 
 using namespace hidt;
 
-constexpr size_t clickCount = 2;
-constexpr size_t clickInterval = 30;    // in ms.
-
 std::atomic<AbsolutePos> currentPoint;
 bool pointSelected;
 std::promise<void> pointSelectedPromise;
@@ -67,13 +64,7 @@ static bool keyboardEventHandler(const KeyboardEvent& event)
                 std::thread th = std::thread([=]()
                 {
                     auto& msSim = MouseSimulator::getInstance();
-                    msSim.moveTo(pos);
-                    std::this_thread::sleep_for(std::chrono::milliseconds(clickInterval));
-                    for (size_t i = 0; i < clickCount; ++i)
-                    {
-                        msSim.clickButton(MSBTN_LEFT);
-                        std::this_thread::sleep_for(std::chrono::milliseconds(clickInterval));
-                    }
+                    msSim.doubleClickButton(pos, MSBTN_LEFT);
                 });
 
                 th.detach();
