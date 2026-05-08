@@ -8,3 +8,4 @@
 - [x] 完成 HID Event 和通用API
 - [ ] 实现 Touchpad 和 Gamepad 子模块。
 - [ ] 增加 MouseSimulator::doubleClick() 接口。
+- [ ] 增加延时事件类型。
