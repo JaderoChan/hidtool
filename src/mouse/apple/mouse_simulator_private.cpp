@@ -95,6 +95,8 @@ size_t MouseSimulatorPrivate::sendEvent(const MouseEvent* events, size_t count)
     CGEventRef cgEvent = nullptr;
     for (size_t i = 0; i < count; ++i)
     {
+        const auto& event = events[i];
+
         if (event.type == MouseEvent::ET_SLEEP)
         {
             std::this_thread::sleep_for(std::chrono::milliseconds(event.sleepMs));
