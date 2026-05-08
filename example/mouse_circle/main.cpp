@@ -11,7 +11,11 @@ int main(int argc, char* argv[])
     constexpr double PI = 3.1415926;
 
     MouseSimulator& msSim = MouseSimulator::getInstance();
-    msSim.initialize();
+    if (!msSim.initialize())
+    {
+        printf("Failed to initialize mouse simulator.\n");
+        return -1;
+    }
 
     auto absMoveRange = MouseSimulator::getAbsoluteMoveRange();
     printf("Absolute move range: (X[%d, %d], Y[%d, %d]).\n",
