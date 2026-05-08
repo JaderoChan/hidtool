@@ -20,7 +20,7 @@
 
 | 平台 | 状态 | 备注 |
 | ---- | ---- | ---- |
-| Windows | ✅ | 需要 Windows 10+（鼠标模拟模块） |
+| Windows | ✅ | - |
 | macOS | ✅ | 需要辅助功能权限（事件监听与模拟功能） |
 | Linux | ✅ | 需要管理员权限（操作 input 与 uinput 字符设备） |
 
@@ -50,7 +50,7 @@ cmake --build build
 | `HIDTOOL_BUILD_WITH_MOUSE` | `ON` | 构建鼠标模块 | - |
 | `HIDTOOL_BUILD_SHARED` | `OFF` | 构建为动态库 | - |
 | `HIDTOOL_BUILD_EXAMPLE` | `ON`（主项目） | 构建示例程序 | - |
-| `HIDTOOL_FORCE_IN_PIXEL` | `ON` | 强制以物理像素为单位操作鼠标指针位置相关 API | 仅限 Windows |
+| `HIDTOOL_FORCE_IN_PIXEL` | `ON` | 强制以物理像素为单位操作鼠标指针位置相关 API | 仅限 Windows 10+ |
 
 ```bash
 # 默认静态库构建

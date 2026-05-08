@@ -20,7 +20,7 @@ A cross-platform C++ HID (Human Interface Device) input simulation and event lis
 
 | Platform | Status | Notes |
 | -------- | ------ | ----- |
-| Windows | ✅ | Requires Windows 10+ (mouse simulation feature) |
+| Windows | ✅ | - |
 | macOS | ✅ | Requires Accessibility permissions (event listening and simulation features) |
 | Linux | ✅ | Requires administrator privileges (access to input & uinput character devices) |
 
@@ -50,7 +50,7 @@ cmake --build build
 | `HIDTOOL_BUILD_WITH_MOUSE` | `ON` | Build mouse module | - |
 | `HIDTOOL_BUILD_SHARED` | `OFF` | Build as shared library | - |
 | `HIDTOOL_BUILD_EXAMPLE` | `ON` (top-level) | Build example programs | - |
-| `HIDTOOL_FORCE_IN_PIXEL` | `ON` | Force APIs related to mouse pointer position to be operated in physical pixel units | Winodws only |
+| `HIDTOOL_FORCE_IN_PIXEL` | `ON` | Force APIs related to mouse pointer position to be operated in physical pixel units | Winodws 10+ only |
 
 ```bash
 # Default static library build
