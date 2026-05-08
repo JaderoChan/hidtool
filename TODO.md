@@ -9,3 +9,4 @@
 - [ ] 实现 Touchpad 和 Gamepad 子模块。
 - [x] 增加 MouseSimulator::doubleClick() 接口。
 - [x] 增加延时事件类型。
+- [ ] 简化代码注释。
