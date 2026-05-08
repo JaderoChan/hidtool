@@ -127,9 +127,6 @@ using KeyboardEventHandler;
 
 KeyboardHooker& hooker = KeyboardHooker::getInstance();
 
-// 检查当前平台是否支持阻断事件传播
-bool supported = KeyboardHooker::isSupportBlockEventPropagation();
-
 // 设置事件处理回调
 hooker.setEventHandler([](const KeyboardEvent& event) -> bool
 {
@@ -157,23 +154,23 @@ KeyboardSimulator& sim = KeyboardSimulator::getInstance();
 sim.initialize();
 
 // 使用 KeyboardKey 枚举
-sim.pressKey(KeyboardKey::KBDKEY_A);
-sim.releaseKey(KeyboardKey::KBDKEY_A);
-sim.clickKey(KeyboardKey::KBDKEY_ENTER);    // pressKey + releaseKey
+sim.pressKey(KBDKEY_A);
+sim.releaseKey(KBDKEY_A);
+sim.clickKey(KBDKEY_ENTER);    // pressKey + releaseKey
 
 // 使用平台原生键值
 sim.pressKey(0x41u);    // Windows VK_A
 
 // 发送组合键（Ctrl+C）
-sim.pressKey(KeyboardKey::KBDKEY_CTRL);
-sim.clickKey(KeyboardKey::KBDKEY_C);
-sim.releaseKey(KeyboardKey::KBDKEY_CTRL);
+sim.pressKey(KBDKEY_CTRL);
+sim.clickKey(KBDKEY_C);
+sim.releaseKey(KBDKEY_CTRL);
 
 // 批量发送事件
 KeyboardEvent events[] =
 {
-    KeyboardEvent(KeyboardEvent::ET_PRESS, KeyboardKey::KBDKEY_A),
-    KeyboardEvent(KeyboardEvent::ET_RELEASE, KeyboardKey::KBDKEY_A),
+    KeyboardEvent(KeyboardEvent::ET_PRESS, KBDKEY_A),
+    KeyboardEvent(KeyboardEvent::ET_RELEASE, KBDKEY_A),
 };
 sim.sendEvent(events, 2);
 
@@ -186,7 +183,7 @@ sim.destroy();
 
 ```cpp
 // KeyboardKey -> 平台原生键值（Win: VK_*, macOS: kVK_*, Linux: KEY_*）
-uint32_t nativeKey = keyboardKeyToNativeKey(KeyboardKey::KBDKEY_A);
+uint32_t nativeKey = keyboardKeyToNativeKey(KBDKEY_A);
 
 // 平台原生键值 -> KeyboardKey
 KeyboardKey key = keyboardKeyFromNativeKey(0x41u);
@@ -222,9 +219,6 @@ using MouseHooker;
 
 MouseHooker& hooker = MouseHooker::getInstance();
 
-// 检查当前平台是否支持阻断事件传播
-bool supported = MouseHooker::isSupportBlockEventPropagation();
-
 hooker.setEventHandler([](const MouseEvent& event) -> bool
 {
     switch (event.type)
@@ -239,7 +233,7 @@ hooker.setEventHandler([](const MouseEvent& event) -> bool
             // event.wheelDelta（单位量 120，正值远离用户，负值靠近用户）
             break;
         case MouseEvent::ET_DRAG:
-            // event.absPos.x, event.absPos.y
+            // event.drag.pos, event.drag.button
             break;
         case MouseEvent::ET_PRESS:
         case MouseEvent::ET_RELEASE:
@@ -277,23 +271,32 @@ sim.wheel(120);     // 向上滚动一格
 sim.wheel(-120);    // 向下滚动一格
 
 // 鼠标按键（在当前位置）
-sim.pressButton(MouseButton::MSBTN_LEFT);
-sim.releaseButton(MouseButton::MSBTN_LEFT);
-sim.clickButton(MouseButton::MSBTN_LEFT);
+sim.pressButton(MSBTN_LEFT);
+sim.releaseButton(MSBTN_LEFT);
+sim.clickButton(MSBTN_LEFT);
 
 // 在指定位置执行鼠标操作
-sim.clickButton(AbsolutePos(500, 300), MouseButton::MSBTN_LEFT);
+sim.clickButton(AbsolutePos(500, 300), MSBTN_LEFT);
 sim.wheel(AbsolutePos(500, 300), 120);
 
 // 拖拽（从当前位置拖拽到目标位置）
 sim.dragCombo(AbsolutePos(800, 400));
 // 拖拽（指定起始和终止位置）
-sim.dragCombo(AbsolutePos(100, 100), AbsolutePos(800, 400), MouseButton::MSBTN_LEFT);
+sim.dragCombo(AbsolutePos(100, 100), AbsolutePos(800, 400), MSBTN_LEFT);
 
 sim.destroy();
 ```
 
-> **macOS 注意**：拖拽操作必须使用 `drag()` 函数或发送拖拽类型的事件，通过 `pressButton()` + `moveTo()` + `releaseButton()` 的组合无法实现拖拽。
+> **macOS 注意**：拖拽操作必须通过 `dragCombo()` 函数或 `pressButton()` + `dragTo()` + `releaseButton()` 的组合实现。而在其他平台下，`dragTo()` 与 `moveTo()` 等效。
+
+可以通过以下方法获取发出的鼠标绝对移动事件的坐标范围，超出此范围的坐标将被钳制。
+
+```cpp
+// 获取当前环境绝对坐标范围
+AbsolutePosRange range = MouseSimulator::getAbsoluteMoveRange();
+// Windows/macOS：虚拟屏幕空间范围
+// Linux：始终为 {0, 65535, 0, 65535}
+```
 
 #### `MouseButton` — 鼠标按键枚举
 
@@ -304,15 +307,6 @@ sim.destroy();
 | `MSBTN_MIDDLE` | 中键 |
 | `MSBTN_BACK` | 后退键 |
 | `MSBTN_FORWARD` | 前进键 |
-
-#### 坐标系
-
-```cpp
-// 获取当前平台绝对坐标范围
-AbsolutePosRange range = getAbsolutePosRange();
-// Windows/macOS：虚拟屏幕空间范围
-// Linux：始终为 {0, 65535, 0, 65535}
-```
 
 ---
 

@@ -127,9 +127,6 @@ using KeyboardEventHandler;
 
 KeyboardHooker& hooker = KeyboardHooker::getInstance();
 
-// Check whether the current platform supports blocking event propagation
-bool supported = KeyboardHooker::isSupportBlockEventPropagation();
-
 // Set event handler callback
 hooker.setEventHandler([](const KeyboardEvent& event) -> bool
 {
@@ -157,23 +154,23 @@ KeyboardSimulator& sim = KeyboardSimulator::getInstance();
 sim.initialize();
 
 // Using KeyboardKey enum
-sim.pressKey(KeyboardKey::KBDKEY_A);
-sim.releaseKey(KeyboardKey::KBDKEY_A);
-sim.clickKey(KeyboardKey::KBDKEY_ENTER);    // pressKey + releaseKey
+sim.pressKey(KBDKEY_A);
+sim.releaseKey(KBDKEY_A);
+sim.clickKey(KBDKEY_ENTER);    // pressKey + releaseKey
 
 // Using platform native key values
 sim.pressKey(0x41u);    // Windows VK_A
 
 // Send key combination (Ctrl+C)
-sim.pressKey(KeyboardKey::KBDKEY_CTRL);
-sim.clickKey(KeyboardKey::KBDKEY_C);
-sim.releaseKey(KeyboardKey::KBDKEY_CTRL);
+sim.pressKey(KBDKEY_CTRL);
+sim.clickKey(KBDKEY_C);
+sim.releaseKey(KBDKEY_CTRL);
 
 // Batch send events
 KeyboardEvent events[] =
 {
-    KeyboardEvent(KeyboardEvent::ET_PRESS, KeyboardKey::KBDKEY_A),
-    KeyboardEvent(KeyboardEvent::ET_RELEASE, KeyboardKey::KBDKEY_A),
+    KeyboardEvent(KeyboardEvent::ET_PRESS, KBDKEY_A),
+    KeyboardEvent(KeyboardEvent::ET_RELEASE, KBDKEY_A),
 };
 sim.sendEvent(events, 2);
 
@@ -186,7 +183,7 @@ The library defines a cross-platform key value enum `KeyboardKey` that can be co
 
 ```cpp
 // KeyboardKey -> platform native key value (Win: VK_*, macOS: kVK_*, Linux: KEY_*)
-uint32_t nativeKey = keyboardKeyToNativeKey(KeyboardKey::KBDKEY_A);
+uint32_t nativeKey = keyboardKeyToNativeKey(KBDKEY_A);
 
 // Platform native key value -> KeyboardKey
 KeyboardKey key = keyboardKeyFromNativeKey(0x41u);
@@ -222,9 +219,6 @@ using MouseHooker;
 
 MouseHooker& hooker = MouseHooker::getInstance();
 
-// Check whether the current platform supports blocking event propagation
-bool supported = MouseHooker::isSupportBlockEventPropagation();
-
 hooker.setEventHandler([](const MouseEvent& event) -> bool
 {
     switch (event.type)
@@ -239,7 +233,7 @@ hooker.setEventHandler([](const MouseEvent& event) -> bool
             // event.wheelDelta (unit 120, positive = away from user, negative = toward user)
             break;
         case MouseEvent::ET_DRAG:
-            // event.absPos.x, event.absPos.y
+            // event.drag.pos, event.drag.button
             break;
         case MouseEvent::ET_PRESS:
         case MouseEvent::ET_RELEASE:
@@ -277,23 +271,32 @@ sim.wheel(120);     // Scroll up one notch
 sim.wheel(-120);    // Scroll down one notch
 
 // Mouse buttons (at current position)
-sim.pressButton(MouseButton::MSBTN_LEFT);
-sim.releaseButton(MouseButton::MSBTN_LEFT);
-sim.clickButton(MouseButton::MSBTN_LEFT);
+sim.pressButton(MSBTN_LEFT);
+sim.releaseButton(MSBTN_LEFT);
+sim.clickButton(MSBTN_LEFT);
 
 // Mouse operations at a specified position
-sim.clickButton(AbsolutePos(500, 300), MouseButton::MSBTN_LEFT);
+sim.clickButton(AbsolutePos(500, 300), MSBTN_LEFT);
 sim.wheel(AbsolutePos(500, 300), 120);
 
 // Drag (from current position to target position)
 sim.dragCombo(AbsolutePos(800, 400));
 // Drag (specify start and end positions)
-sim.dragCombo(AbsolutePos(100, 100), AbsolutePos(800, 400), MouseButton::MSBTN_LEFT);
+sim.dragCombo(AbsolutePos(100, 100), AbsolutePos(800, 400), MSBTN_LEFT);
 
 sim.destroy();
 ```
 
-> **macOS Note**: Drag operations must use the `drag()` function or send mouse event of drag type. The combination of `pressButton()` + `moveTo()` + `releaseButton()` cannot achieve dragging.
+> **macOS Note**: Drag operations must use the `dragCombo()` function or the combination of `pressButton()` + `dragTo()` + `releaseButton()` to produce. `dragTo()` same as `moveTo()` on other platforms.
+
+The coordinate range of the emitted mouse absolute movement event can be obtained through the following method. Coordinates beyond this range will be clamped.
+
+```cpp
+// Get the absolute coordinate range for the current environment.
+AbsolutePosRange range = MouseSimulator::getAbsoluteMoveRange();
+// Windows/macOS: virtual screen space range
+// Linux: always {0, 65535, 0, 65535}
+```
 
 #### `MouseButton` — Mouse Button Enum
 
@@ -304,15 +307,6 @@ sim.destroy();
 | `MSBTN_MIDDLE` | Middle button |
 | `MSBTN_BACK` | Back button |
 | `MSBTN_FORWARD` | Forward button |
-
-#### Coordinate System
-
-```cpp
-// Get the absolute coordinate range for the current platform
-AbsolutePosRange range = getAbsolutePosRange();
-// Windows/macOS: virtual screen space range
-// Linux: always {0, 65535, 0, 65535}
-```
 
 ---
 
