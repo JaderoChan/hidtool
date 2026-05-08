@@ -23,7 +23,7 @@ MouseSimulator& MouseSimulator::getInstance()
 }
 
 AbsolutePosRange MouseSimulator::getAbsoluteMoveRange()
-{ return pri_.getAbsoluteMoveRange(); }
+{ return MouseSimulatorPrivate::getAbsoluteMoveRange(); }
 
 bool MouseSimulator::initialize()
 { return pri_.initialize(); }
