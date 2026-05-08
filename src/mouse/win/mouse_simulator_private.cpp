@@ -1,7 +1,9 @@
 #include "mouse_simulator_private.hpp"
 
-#include <future>       // promise, future
-#include <vector>       // vector
+#include <chrono>   // chrono
+#include <future>   // promise, future
+#include <thread>   // this_thread
+#include <vector>   // vector
 
 #include <windows.h>    // INPUT, SendInput()
 
@@ -109,6 +111,9 @@ bool MouseSimulatorPrivate::sendEvent(const MouseEvent& event)
             if (!setReleaseButtonInput(input, event.button))
                 return false;
             break;
+        case MouseEvent::ET_SLEEP:
+            std::this_thread::sleep_for(std::chrono::milliseconds(event.sleepMs));
+            return true;
         default:
             return false;
     }
@@ -120,6 +125,8 @@ size_t MouseSimulatorPrivate::sendEvent(const MouseEvent* events, size_t count)
 {
     if (!isInitialized_.load())
         return 0;
+
+    size_t sent = 0;
 
     std::vector<INPUT> inputs;
     inputs.reserve(count);
@@ -149,6 +156,17 @@ size_t MouseSimulatorPrivate::sendEvent(const MouseEvent* events, size_t count)
                 if (!setReleaseButtonInput(input, event.button))
                     continue;
                 break;
+            case MouseEvent::ET_SLEEP:
+                if (!inputs.empty())
+                {
+                    sent += SendInput(static_cast<UINT>(inputs.size()), inputs.data(), sizeof(INPUT));
+                    inputs.clear();
+                }
+
+                std::this_thread::sleep_for(std::chrono::milliseconds(event.sleepMs));
+                sent++;
+
+                continue;
             default:
                 continue;
         }
@@ -156,7 +174,7 @@ size_t MouseSimulatorPrivate::sendEvent(const MouseEvent* events, size_t count)
         inputs.emplace_back(std::move(input));
     }
 
-    return SendInput(static_cast<UINT>(inputs.size()), inputs.data(), sizeof(INPUT));
+    return sent + (inputs.empty() ? 0 : SendInput(static_cast<UINT>(inputs.size()), inputs.data(), sizeof(INPUT)));
 }
 
 void MouseSimulatorPrivate::handleDisplayChanged()

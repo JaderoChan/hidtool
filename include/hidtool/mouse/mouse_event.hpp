@@ -27,13 +27,14 @@ struct MouseEvent
          */
         ET_DRAG,
         ET_PRESS,
-        ET_RELEASE
+        ET_RELEASE,
+        ET_SLEEP
     };
 
     constexpr MouseEvent() noexcept
-        : absPos() {}
+        : sleepMs(0) {}
     constexpr explicit MouseEvent(EventType type) noexcept
-        : type(type), absPos() {}
+        : type(type), sleepMs(0) {}
 
     /**
      * @defgroup mouse_event_factory 鼠标事件工厂函数
@@ -79,7 +80,7 @@ struct MouseEvent
     }
 
     /** @sa \ref `wheelDelta`, \ref `MouseSimulator::wheel()` */
-    static MouseEvent createWheelEvent(int32_t wheelDelta)
+    static MouseEvent createWheelEvent(int32_t wheelDelta) noexcept
     {
         MouseEvent result(ET_WHEEL);
         result.wheelDelta = wheelDelta;
@@ -96,7 +97,7 @@ struct MouseEvent
     }
 
     /** @sa \ref `MouseSimulator::press()` */
-    static MouseEvent createPressButtonEvent(MouseButton button)
+    static MouseEvent createPressButtonEvent(MouseButton button) noexcept
     {
         MouseEvent result(ET_PRESS);
         result.button = button;
@@ -104,10 +105,17 @@ struct MouseEvent
     }
 
     /** @sa \ref `MouseSimulator::release()` */
-    static MouseEvent createReleaseButtonEvent(MouseButton button)
+    static MouseEvent createReleaseButtonEvent(MouseButton button) noexcept
     {
         MouseEvent result(ET_RELEASE);
         result.button = button;
+        return result;
+    }
+
+    static MouseEvent createSleepEvent(size_t sleepMs) noexcept
+    {
+        MouseEvent result(ET_SLEEP);
+        result.sleepMs = sleepMs;
         return result;
     }
 
@@ -141,6 +149,7 @@ struct MouseEvent
             MouseButton button;
         } drag;
         MouseButton button;
+        size_t sleepMs;
     };
 };
 

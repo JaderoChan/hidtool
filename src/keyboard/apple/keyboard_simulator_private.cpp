@@ -1,5 +1,8 @@
 #include "keyboard_simulator_private.hpp"
 
+#include <chrono>   // chrono
+#include <thread>   // this_thread
+
 #include <CoreGraphics/CGEvent.h>           // kCG*, CG*
 #include <CoreFoundation/CoreFoundation.h>  // CF*
 
@@ -39,6 +42,12 @@ bool KeyboardSimulatorPrivate::sendEvent(const KeyboardEvent& event)
     if (!isInitialized_.load())
         return false;
 
+    if (event.type == KeyboardEvent::ET_SLEEP)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(event.sleepMs));
+        return true;
+    }
+
     CGEventRef cgEvent = nullptr;
     if (keyboardEventToCGEvent(event, cgEvent))
     {
@@ -60,6 +69,15 @@ size_t KeyboardSimulatorPrivate::sendEvent(const KeyboardEvent* events, size_t c
     CGEventRef cgEvent = nullptr;
     for (size_t i = 0; i < count; ++i)
     {
+        const auto& event = events[i];
+
+        if (event.type == KeyboardEvent::ET_SLEEP)
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(event.sleepMs));
+            sent++;
+            continue;
+        }
+
         if (keyboardEventToCGEvent(events[i], cgEvent))
         {
             CGEventPost(kCGHIDEventTap, cgEvent);

@@ -55,106 +55,136 @@ bool MouseSimulator::pressButton(MouseButton button)
 bool MouseSimulator::releaseButton(MouseButton button)
 { return pri_.sendEvent(MouseEvent::createReleaseButtonEvent(button)); }
 
-bool MouseSimulator::clickButton(MouseButton button)
-{
-    MouseEvent events[2] = {
-        MouseEvent::createPressButtonEvent(button),
-        MouseEvent::createReleaseButtonEvent(button)
-    };
-
-    return pri_.sendEvent(events, 2) == 2;
-}
-
-bool MouseSimulator::doubleClickButton(MouseButton button)
-{
-    MouseEvent events[4] = {
-        MouseEvent::createPressButtonEvent(button),
-        MouseEvent::createReleaseButtonEvent(button),
-        MouseEvent::createPressButtonEvent(button),
-        MouseEvent::createReleaseButtonEvent(button)
-    };
-
-    return pri_.sendEvent(events, 4) == 4;
-}
-
-bool MouseSimulator::wheel(const AbsolutePos& absPos, int32_t wheelDelta)
-{
-    MouseEvent events[2] = {
-        MouseEvent::createAbsMoveEvent(absPos),
-        MouseEvent::createWheelEvent(wheelDelta)
-    };
-
-    return pri_.sendEvent(events, 2) == 2;
-}
-
-bool MouseSimulator::pressButton(const AbsolutePos& absPos, MouseButton button)
-{
-    MouseEvent events[2] = {
-        MouseEvent::createAbsMoveEvent(absPos),
-        MouseEvent::createPressButtonEvent(button)
-    };
-
-    return pri_.sendEvent(events, 2) == 2;
-}
-
-bool MouseSimulator::releaseButton(const AbsolutePos& absPos, MouseButton button)
-{
-    MouseEvent events[2] = {
-        MouseEvent::createAbsMoveEvent(absPos),
-        MouseEvent::createReleaseButtonEvent(button)
-    };
-
-    return pri_.sendEvent(events, 2) == 2;
-}
-
-bool MouseSimulator::clickButton(const AbsolutePos& absPos, MouseButton button)
+bool MouseSimulator::clickButton(MouseButton button, size_t interval)
 {
     MouseEvent events[3] = {
-        MouseEvent::createAbsMoveEvent(absPos),
         MouseEvent::createPressButtonEvent(button),
+        MouseEvent::createSleepEvent(interval),
         MouseEvent::createReleaseButtonEvent(button)
     };
 
     return pri_.sendEvent(events, 3) == 3;
 }
 
-bool MouseSimulator::doubleClickButton(const AbsolutePos& absPos, MouseButton button)
+bool MouseSimulator::doubleClickButton(MouseButton button, size_t interval1, size_t interval2)
+{
+    MouseEvent events[7] = {
+        MouseEvent::createPressButtonEvent(button),
+        MouseEvent::createSleepEvent(interval1),
+        MouseEvent::createReleaseButtonEvent(button),
+
+        MouseEvent::createSleepEvent(interval2),
+
+        MouseEvent::createPressButtonEvent(button),
+        MouseEvent::createSleepEvent(interval1),
+        MouseEvent::createReleaseButtonEvent(button)
+    };
+
+    return pri_.sendEvent(events, 7) == 7;
+}
+
+bool MouseSimulator::wheel(const AbsolutePos& absPos, int32_t wheelDelta, size_t interval)
+{
+    MouseEvent events[3] = {
+        MouseEvent::createAbsMoveEvent(absPos),
+        MouseEvent::createSleepEvent(interval),
+        MouseEvent::createWheelEvent(wheelDelta)
+    };
+
+    return pri_.sendEvent(events, 3) == 3;
+}
+
+bool MouseSimulator::pressButton(const AbsolutePos& absPos, MouseButton button, size_t interval)
+{
+    MouseEvent events[3] = {
+        MouseEvent::createAbsMoveEvent(absPos),
+        MouseEvent::createSleepEvent(interval),
+        MouseEvent::createPressButtonEvent(button)
+    };
+
+    return pri_.sendEvent(events, 3) == 3;
+}
+
+bool MouseSimulator::releaseButton(const AbsolutePos& absPos, MouseButton button, size_t interval)
+{
+    MouseEvent events[3] = {
+        MouseEvent::createAbsMoveEvent(absPos),
+        MouseEvent::createSleepEvent(interval),
+        MouseEvent::createReleaseButtonEvent(button)
+    };
+
+    return pri_.sendEvent(events, 3) == 3;
+}
+
+bool MouseSimulator::clickButton(const AbsolutePos& absPos, MouseButton button,
+    size_t interval1, size_t interval2)
 {
     MouseEvent events[5] = {
         MouseEvent::createAbsMoveEvent(absPos),
+        MouseEvent::createSleepEvent(interval1),
+
         MouseEvent::createPressButtonEvent(button),
-        MouseEvent::createReleaseButtonEvent(button),
-        MouseEvent::createPressButtonEvent(button),
+        MouseEvent::createSleepEvent(interval2),
         MouseEvent::createReleaseButtonEvent(button)
     };
 
     return pri_.sendEvent(events, 5) == 5;
 }
 
+bool MouseSimulator::doubleClickButton(const AbsolutePos& absPos, MouseButton button,
+    size_t interval1, size_t interval2, size_t interval3)
+{
+    MouseEvent events[9] = {
+        MouseEvent::createAbsMoveEvent(absPos),
+        MouseEvent::createSleepEvent(interval1),
+
+        MouseEvent::createPressButtonEvent(button),
+        MouseEvent::createSleepEvent(interval2),
+        MouseEvent::createReleaseButtonEvent(button),
+
+        MouseEvent::createSleepEvent(interval3),
+
+        MouseEvent::createPressButtonEvent(button),
+        MouseEvent::createSleepEvent(interval2),
+        MouseEvent::createReleaseButtonEvent(button)
+    };
+
+    return pri_.sendEvent(events, 9) == 9;
+}
+
 bool MouseSimulator::dragTo(const AbsolutePos& absPos, MouseButton button)
 { return pri_.sendEvent(MouseEvent::createDragEvent(absPos, button)); }
 
-bool MouseSimulator::dragCombo(const AbsolutePos& endPos, MouseButton button)
+bool MouseSimulator::dragCombo(const AbsolutePos& endPos,
+    MouseButton button, size_t interval)
 {
-    MouseEvent events[3] = {
+    MouseEvent events[5] = {
         MouseEvent::createPressButtonEvent(button),
+        MouseEvent::createSleepEvent(interval),
         MouseEvent::createDragEvent(endPos, button),
+        MouseEvent::createSleepEvent(interval),
         MouseEvent::createReleaseButtonEvent(button)
     };
 
-    return pri_.sendEvent(events, 3) == 3;
+    return pri_.sendEvent(events, 5) == 5;
 }
 
-bool MouseSimulator::dragCombo(const AbsolutePos& startPos, const AbsolutePos& endPos, MouseButton button)
+bool MouseSimulator::dragCombo(const AbsolutePos& startPos, const AbsolutePos& endPos,
+    MouseButton button, size_t interval1, size_t interval2)
 {
-    MouseEvent events[4] = {
+    MouseEvent events[7] = {
         MouseEvent::createAbsMoveEvent(startPos),
+        MouseEvent::createSleepEvent(interval1),
+
         MouseEvent::createPressButtonEvent(button),
+        MouseEvent::createSleepEvent(interval2),
+
         MouseEvent::createDragEvent(endPos, button),
+        MouseEvent::createSleepEvent(interval2),
         MouseEvent::createReleaseButtonEvent(button)
     };
 
-    return pri_.sendEvent(events, 4) == 4;
+    return pri_.sendEvent(events, 7) == 7;
 }
 
 } // namespace hidt

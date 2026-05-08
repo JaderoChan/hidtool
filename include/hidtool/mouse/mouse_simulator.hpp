@@ -62,7 +62,6 @@ public:
 
     /**
      * @param wheelDelta 单位量为 `120`。值为正时，滚轮朝远离用户的方向滚动；值为负时，滚轮朝靠近用户的方向滚动。
-     * @note 在各平台下，其行为均为低分辨率纵向滚轮。
      * @sa \ref `MouseEvent::wheelDelta`
      */
     bool wheel(int32_t wheelDelta);
@@ -75,8 +74,12 @@ public:
      */
     bool pressButton(MouseButton button);
     bool releaseButton(MouseButton button);
-    bool clickButton(MouseButton button);
-    bool doubleClickButton(MouseButton button);
+    bool clickButton(MouseButton button, size_t interval = 0);
+    /**
+     * @param interval1 点击事件中按键按下与释放的时间间隔。
+     * @param interval2 两次点击事件的时间间隔。
+     */
+    bool doubleClickButton(MouseButton button, size_t interval1 = 0, size_t interval2 = 10);
     /** @} */
 
     /**
@@ -86,11 +89,22 @@ public:
      *
      * @{
      */
-    bool wheel(const AbsolutePos& absPos, int32_t wheelDelta);
-    bool pressButton(const AbsolutePos& absPos, MouseButton button);
-    bool releaseButton(const AbsolutePos& absPos, MouseButton button);
-    bool clickButton(const AbsolutePos& absPos, MouseButton button);
-    bool doubleClickButton(const AbsolutePos& absPos, MouseButton button);
+    bool wheel(const AbsolutePos& absPos, int32_t wheelDelta, size_t interval = 10);
+    bool pressButton(const AbsolutePos& absPos, MouseButton button, size_t interval = 10);
+    bool releaseButton(const AbsolutePos& absPos, MouseButton button, size_t interval = 10);
+    /**
+     * @param interval1 移动事件与点击事件的时间间隔。
+     * @param interval2 点击事件中按键按下与释放的时间间隔。
+     */
+    bool clickButton(const AbsolutePos& absPos, MouseButton button,
+        size_t interval1 = 10, size_t interval2 = 0);
+    /**
+     * @param interval1 移动事件与点击事件的时间间隔。
+     * @param interval2 点击事件中按键按下与释放的时间间隔。
+     * @param interval3 两次点击事件的时间间隔。
+     */
+    bool doubleClickButton(const AbsolutePos& absPos, MouseButton button,
+        size_t interval1 = 10, size_t interval2 = 0, size_t interval3 = 10);
     /** @} */
 
     /**
@@ -110,9 +124,9 @@ public:
      * @{
      */
     bool dragCombo(const AbsolutePos& endPos,
-        MouseButton button = MSBTN_LEFT);
+        MouseButton button = MSBTN_LEFT, size_t interval = 0);
     bool dragCombo(const AbsolutePos& startPos, const AbsolutePos& endPos,
-        MouseButton button = MSBTN_LEFT);
+        MouseButton button = MSBTN_LEFT, size_t interval1 = 10, size_t interval2 = 0);
     /** @} */
 
     /** @} */

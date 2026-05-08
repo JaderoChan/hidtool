@@ -1,5 +1,8 @@
 #include "keyboard_simulator_private.hpp"
 
+#include <chrono>   // chrono
+#include <thread>   // this_thread
+
 #include <platforms/linux/sync_input_event_factory.hpp>
 #include "input_event_factory.hpp"
 
@@ -50,6 +53,12 @@ bool KeyboardSimulatorPrivate::sendEvent(const KeyboardEvent& event)
     if (!isInitialized_.load())
         return false;
 
+    if (event.type == KeyboardEvent::ET_SLEEP)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(event.sleepMs));
+        return true;
+    }
+
     struct input_event iePair[2] = {0};
     iePair[0].type = EV_KEY;
     iePair[0].code = static_cast<__s32>(event.nativeKey);
@@ -75,14 +84,16 @@ size_t KeyboardSimulatorPrivate::sendEvent(const KeyboardEvent* events, size_t c
     if (!isInitialized_.load())
         return 0;
 
+    size_t sent = 0;
+
     struct input_event iePair[2] = {0};
     iePair[0].type = EV_KEY;
     setSyncReportEvent(iePair[1]);
 
-    size_t sent = 0;
     for (size_t i = 0; i < count; ++i)
     {
         const auto& event = events[i];
+
         switch (event.type)
         {
             case KeyboardEvent::ET_PRESS:
@@ -93,6 +104,10 @@ size_t KeyboardSimulatorPrivate::sendEvent(const KeyboardEvent* events, size_t c
                 iePair[0].code = static_cast<__s32>(event.nativeKey);
                 iePair[0].value = 0;    // 0 is release.
                 break;
+            case KeyboardEvent::ET_SLEEP:
+                std::this_thread::sleep_for(std::chrono::milliseconds(event.sleepMs));
+                sent++;
+                continue;
             default:
                 continue;
         }

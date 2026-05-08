@@ -25,13 +25,13 @@ struct HidEvent
     HidType hidType = HIDTYPE_NONE;
     union
     {
-        uint32_t sleepMs;
     #ifdef HIDTOOL_HAS_KEYBOARD
         KeyboardEvent keyboardEvent;
     #endif // HIDTOOL_HAS_KEYBOARD
     #ifdef HIDTOOL_HAS_MOUSE
         MouseEvent mouseEvent;
     #endif // HIDTOOL_HAS_MOUSE
+        size_t sleepMs;
     };
 };
 

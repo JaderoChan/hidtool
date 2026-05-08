@@ -38,36 +38,38 @@ size_t KeyboardSimulator::sendEvent(const KeyboardEvent* events, size_t count)
 { return pri_.sendEvent(events, count); }
 
 bool KeyboardSimulator::pressKey(uint32_t nativeKey)
-{ return pri_.sendEvent(KeyboardEvent(KeyboardEvent::ET_PRESS, nativeKey)); }
+{ return pri_.sendEvent(KeyboardEvent::createPressEvent(nativeKey)); }
 
 bool KeyboardSimulator::pressKey(KeyboardKey key)
-{ return pri_.sendEvent(KeyboardEvent(KeyboardEvent::ET_PRESS, keyboardKeyToNativeKey(key))); }
+{ return pri_.sendEvent(KeyboardEvent::createPressEvent(key)); }
 
 bool KeyboardSimulator::releaseKey(uint32_t nativeKey)
-{ return pri_.sendEvent(KeyboardEvent(KeyboardEvent::ET_RELEASE, nativeKey)); }
+{ return pri_.sendEvent(KeyboardEvent::createReleaseEvent(nativeKey)); }
 
 bool KeyboardSimulator::releaseKey(KeyboardKey key)
-{ return pri_.sendEvent(KeyboardEvent(KeyboardEvent::ET_RELEASE, keyboardKeyToNativeKey(key))); }
+{ return pri_.sendEvent(KeyboardEvent::createReleaseEvent(key)); }
 
-bool KeyboardSimulator::clickKey(uint32_t nativeKey)
+bool KeyboardSimulator::clickKey(uint32_t nativeKey, size_t interval)
 {
-    KeyboardEvent events[2] = {
-        KeyboardEvent(KeyboardEvent::ET_PRESS, nativeKey),
-        KeyboardEvent(KeyboardEvent::ET_RELEASE, nativeKey)
+    KeyboardEvent events[3] = {
+        KeyboardEvent::createPressEvent(nativeKey),
+        KeyboardEvent::createSleepEvent(interval),
+        KeyboardEvent::createReleaseEvent(nativeKey)
     };
 
-    return pri_.sendEvent(events, 2) == 2;
+    return pri_.sendEvent(events, 3) == 3;
 }
 
-bool KeyboardSimulator::clickKey(KeyboardKey key)
+bool KeyboardSimulator::clickKey(KeyboardKey key, size_t interval)
 {
     int32_t nativeKey = keyboardKeyToNativeKey(key);
-    KeyboardEvent events[2] = {
-        KeyboardEvent(KeyboardEvent::ET_PRESS, nativeKey),
-        KeyboardEvent(KeyboardEvent::ET_RELEASE, nativeKey)
+    KeyboardEvent events[3] = {
+        KeyboardEvent::createPressEvent(nativeKey),
+        KeyboardEvent::createSleepEvent(interval),
+        KeyboardEvent::createReleaseEvent(nativeKey)
     };
 
-    return pri_.sendEvent(events, 2) == 2;
+    return pri_.sendEvent(events, 3) == 3;
 }
 
 } // namespace hidt

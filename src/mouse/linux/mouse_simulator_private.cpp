@@ -1,5 +1,8 @@
 #include "mouse_simulator_private.hpp"
 
+#include <chrono>   // chrono
+#include <thread>   // this_thread
+
 #include <platforms/linux/sync_input_event_factory.hpp>
 #include "input_event_factory.hpp"
 
@@ -61,6 +64,12 @@ bool MouseSimulatorPrivate::sendEvent(const MouseEvent& event)
 {
     if (!isInitialized_.load())
         return 0;
+
+    if (event.type == KeyboardEvent::ET_SLEEP)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(event.sleepMs));
+        return true;
+    }
 
     struct input_event ies[3] = {0};
     switch (event.type)
@@ -134,6 +143,10 @@ size_t MouseSimulatorPrivate::sendEvent(const MouseEvent* events, size_t count)
                 setSyncReportEvent(ies[1]);
                 sent += mouseUInput_.sendEvent(ies, 2);
                 break;
+            case MouseEvent::ET_SLEEP:
+                std::this_thread::sleep_for(std::chrono::milliseconds(event.sleepMs));
+                sent++;
+                continue;
             default:
                 continue;
         }

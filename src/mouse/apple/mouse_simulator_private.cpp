@@ -1,5 +1,7 @@
 #include "mouse_simulator_private.hpp"
 
+#include <chrono>   // chrono
+#include <thread>   // this_thread
 #include <vector>   // vector
 
 #include <CoreFoundation/CoreFoundation.h>  // CF*
@@ -66,6 +68,12 @@ bool MouseSimulatorPrivate::sendEvent(const MouseEvent& event)
     if (!isInitialized_.load())
         return false;
 
+    if (event.type == KeyboardEvent::ET_SLEEP)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(event.sleepMs));
+        return true;
+    }
+
     CGEventRef cgEvent = nullptr;
     if (mouseEventToCGEvent(event, cgEvent))
     {
@@ -87,6 +95,13 @@ size_t MouseSimulatorPrivate::sendEvent(const MouseEvent* events, size_t count)
     CGEventRef cgEvent = nullptr;
     for (size_t i = 0; i < count; ++i)
     {
+        if (event.type == KeyboardEvent::ET_SLEEP)
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(event.sleepMs));
+            sent++;
+            continue;
+        }
+
         if (mouseEventToCGEvent(events[i], cgEvent))
         {
             CGEventPost(kCGHIDEventTap, cgEvent);
