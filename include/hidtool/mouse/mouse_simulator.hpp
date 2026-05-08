@@ -59,21 +59,19 @@ public:
     /**
      * @name 鼠标按键函数
      * @brief 在鼠标当前位置执行按键函数。
-     * @details 在 **MacOS** 平台下需要额外进行获取鼠标当前位置的操作。
      *
      * @{
      */
     bool pressButton(MouseButton button);
     bool releaseButton(MouseButton button);
-    /** @brief 等同于 \ref `pressButton()` 和 \ref `releaseButton()` 的组合。 */
+    /** @note 等同于 \ref `pressButton()` 和 \ref `releaseButton()` 的组合。 */
     bool clickButton(MouseButton button);
     /** @} */
 
     /**
      * @name 带坐标的鼠标函数
      * @brief 在指定位置执行函数。
-     * @details 在 **Windows** 和 **Linux** 平台下，等同于 \ref `moveTo()` + 对应函数的组合。
-     * 在 **MacOS** 平台下，其原生支持。
+     * @note 等同于 \ref `moveTo()` + 对应函数的组合。
      *
      * @{
      */
@@ -91,7 +89,6 @@ public:
      * @sa \ref mouse_drag_combo
      */
     bool dragTo(const AbsolutePos& absPos, MouseButton button = MSBTN_LEFT);
-    /** @} */
 
     /**
      * @anchor mouse_drag_combo
