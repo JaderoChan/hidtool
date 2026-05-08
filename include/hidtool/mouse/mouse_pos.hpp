@@ -96,24 +96,28 @@ inline AbsolutePos clampAbsolutePos(const AbsolutePos& absPos, const AbsolutePos
  */
 
 /**
+ * @ingroup dpi_affected
+ * @{
+ */
+
+/**
  * @brief 获得当前鼠标指针位置。
  * @attention **Linux** 平台下无效。
- * @ingroup dpi_affected
  * @todo **Linux** 平台实现。
  * @sa \ref `getAbsolutePosRange()`
  */
 AbsolutePos getCursorPos();
 
 /**
- * @brief 获得当前环境下的绝对移动事件的坐标范围。
- * @ingroup dpi_affected
+ * @brief 获得当前环境下通过 `MouseSimulator` 发送的的绝对移动事件的坐标范围。
  * @note 在 **Windows** 和 **MacOS** 平台下，当屏幕设备发生变动时，此前获得的值可能会过时。
  * @details
  * 在 **Windows** 和 **MacOS** 平台下，其等同于虚拟屏幕空间的范围。
  * 在 **Linux** 平台下，其始终等同于 {0, 65535, 0, 65535}。
- * @todo **Linux** 下的替代方案。（**Linux** 下的范围 {0, 65535, 0, 65535} 并非硬性规定）
  */
 AbsolutePosRange getAbsolutePosRange();
+
+/** @} */
 
 } // namespace hidt
 
