@@ -10,7 +10,7 @@
 using namespace hidt;
 
 constexpr size_t clickCount = 2;
-constexpr size_t clickInterval = 50;    // in ms.
+constexpr size_t clickInterval = 30;    // in ms.
 
 std::atomic<AbsolutePos> currentPoint;
 bool pointSelected;
@@ -20,12 +20,6 @@ std::atomic<AbsolutePos> selectedPoint;
 bool shouldClose = false;
 std::mutex shouldCloseMtx;
 std::condition_variable shouldCloseCv;
-
-static void clearCurrentLine(int maxLen = 100)
-{
-    printf("\r%s\r", std::string(maxLen, ' ').c_str());
-    fflush(stdout);
-}
 
 static bool keyboardEventHandler(const KeyboardEvent& event)
 {
@@ -59,8 +53,8 @@ static bool keyboardEventHandler(const KeyboardEvent& event)
                     pointSelected = true;
                 }
 
-                clearCurrentLine();
-                printf("Selected point: [%d, %d]", pos.x, pos.y);
+                printf("Selected point: [%d, %d]\n", pos.x, pos.y);
+                fflush(stdout);
 
                 break;
             }
@@ -73,9 +67,11 @@ static bool keyboardEventHandler(const KeyboardEvent& event)
                 std::thread th = std::thread([=]()
                 {
                     auto& msSim = MouseSimulator::getInstance();
+                    msSim.moveTo(pos);
+                    std::this_thread::sleep_for(std::chrono::milliseconds(clickInterval));
                     for (size_t i = 0; i < clickCount; ++i)
                     {
-                        msSim.clickButton(pos, MSBTN_LEFT);
+                        msSim.clickButton(MSBTN_LEFT);
                         std::this_thread::sleep_for(std::chrono::milliseconds(clickInterval));
                     }
                 });
@@ -135,7 +131,8 @@ int main(int argc, char* argv[])
     printf("3. Press 'F6' to double click point you selected.\n\n");
     printf("(Press 'ESC' to exit program).\n" );
 
-    printf("Wait set the point...");
+    printf("Wait set the point...\n");
+    fflush(stdout);
 
     {
         auto fut = pointSelectedPromise.get_future();
