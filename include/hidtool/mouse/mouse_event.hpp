@@ -15,7 +15,6 @@ struct MouseEvent
         /**
          * @details 当前通过 `MouseSimulator` 发送的此类型事件会将数据钳制在合法范围中，
          * 但 `MouseHooker` 并不会尝试钳制其接收到的此类型事件。
-         * @todo 考虑是否对 `MouseHooker` 接收到的此类型事件进行钳制。
          */
         ET_ABS_MOVE,
         ET_REL_MOVE,
