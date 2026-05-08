@@ -64,48 +64,4 @@ size_t KeyboardSimulatorPrivate::sendEvent(const KeyboardEvent* events, size_t c
     return SendInput(static_cast<UINT>(inputs.size()), inputs.data(), sizeof(INPUT));
 }
 
-bool KeyboardSimulatorPrivate::pressKey(uint32_t nativeKey)
-{
-    if (!isInitialized_.load())
-        return false;
-
-    INPUT input = {0};
-    input.type = INPUT_KEYBOARD;
-    input.ki.wVk = static_cast<WORD>(nativeKey);
-    input.ki.dwFlags = 0;   // 0 is key down.
-
-    return SendInput(1, &input, sizeof(INPUT)) == 1;
-}
-
-bool KeyboardSimulatorPrivate::releaseKey(uint32_t nativeKey)
-{
-    if (!isInitialized_.load())
-        return false;
-
-    INPUT input = {0};
-    input.type = INPUT_KEYBOARD;
-    input.ki.wVk = static_cast<WORD>(nativeKey);
-    input.ki.dwFlags = KEYEVENTF_KEYUP;
-
-    return SendInput(1, &input, sizeof(INPUT)) == 1;
-}
-
-bool KeyboardSimulatorPrivate::clickKey(uint32_t nativeKey)
-{
-    if (!isInitialized_.load())
-        return false;
-
-    INPUT inputs[2] = {0};
-
-    inputs[0].type = INPUT_KEYBOARD;
-    inputs[0].ki.wVk = static_cast<WORD>(nativeKey);
-    inputs[0].ki.dwFlags = 0;   // 0 is key down.
-
-    inputs[1].type = INPUT_KEYBOARD;
-    inputs[1].ki.wVk = static_cast<WORD>(nativeKey);
-    inputs[1].ki.dwFlags = KEYEVENTF_KEYUP;
-
-    return SendInput(2, inputs, sizeof(INPUT)) == 2;
-}
-
 } // namespace hidt

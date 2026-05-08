@@ -41,42 +41,95 @@ size_t MouseSimulator::sendEvent(const MouseEvent* events, size_t count)
 { return pri_.sendEvent(events, count); }
 
 bool MouseSimulator::moveTo(const AbsolutePos& absPos)
-{ return pri_.moveTo(absPos); }
+{ return pri_.sendEvent(MouseEvent::createAbsMoveEvent(absPos)); }
 
 bool MouseSimulator::moveBy(const RelativePos& relPos)
-{ return pri_.moveBy(relPos); }
+{ return pri_.sendEvent(MouseEvent::createRelMoveEvent(relPos)); }
 
 bool MouseSimulator::wheel(int32_t wheelDelta)
-{ return pri_.wheel(wheelDelta); }
+{ return pri_.sendEvent(MouseEvent::createWheelEvent(wheelDelta)); }
 
 bool MouseSimulator::pressButton(MouseButton button)
-{ return pri_.pressButton(button); }
+{ return pri_.sendEvent(MouseEvent::createPressButtonEvent(button)); }
 
 bool MouseSimulator::releaseButton(MouseButton button)
-{ return pri_.releaseButton(button); }
+{ return pri_.sendEvent(MouseEvent::createReleaseButtonEvent(button)); }
 
 bool MouseSimulator::clickButton(MouseButton button)
-{ return pri_.clickButton(button); }
+{
+    MouseEvent events[2] = {
+        MouseEvent::createPressButtonEvent(button),
+        MouseEvent::createReleaseButtonEvent(button)
+    };
+
+    return pri_.sendEvent(events, 2) == 2;
+}
 
 bool MouseSimulator::wheel(const AbsolutePos& absPos, int32_t wheelDelta)
-{ return pri_.wheel(absPos, wheelDelta); }
+{
+    MouseEvent events[2] = {
+        MouseEvent::createAbsMoveEvent(absPos),
+        MouseEvent::createWheelEvent(wheelDelta)
+    };
+
+    return pri_.sendEvent(events, 2) == 2;
+}
 
 bool MouseSimulator::pressButton(const AbsolutePos& absPos, MouseButton button)
-{ return pri_.pressButton(absPos, button); }
+{
+    MouseEvent events[2] = {
+        MouseEvent::createAbsMoveEvent(absPos),
+        MouseEvent::createPressButtonEvent(button)
+    };
+
+    return pri_.sendEvent(events, 2) == 2;
+}
 
 bool MouseSimulator::releaseButton(const AbsolutePos& absPos, MouseButton button)
-{ return pri_.releaseButton(absPos, button); }
+{
+    MouseEvent events[2] = {
+        MouseEvent::createAbsMoveEvent(absPos),
+        MouseEvent::createReleaseButtonEvent(button)
+    };
+
+    return pri_.sendEvent(events, 2) == 2;
+}
 
 bool MouseSimulator::clickButton(const AbsolutePos& absPos, MouseButton button)
-{ return pri_.clickButton(absPos, button); }
+{
+    MouseEvent events[3] = {
+        MouseEvent::createAbsMoveEvent(absPos),
+        MouseEvent::createPressButtonEvent(button),
+        MouseEvent::createReleaseButtonEvent(button)
+    };
+
+    return pri_.sendEvent(events, 3) == 3;
+}
 
 bool MouseSimulator::dragTo(const AbsolutePos& absPos, MouseButton button)
-{ return pri_.dragTo(absPos, button); }
+{ return pri_.sendEvent(MouseEvent::createDragEvent(absPos, button)); }
 
 bool MouseSimulator::dragCombo(const AbsolutePos& endPos, MouseButton button)
-{ return pri_.dragCombo(endPos, button); }
+{
+    MouseEvent events[3] = {
+        MouseEvent::createPressButtonEvent(button),
+        MouseEvent::createDragEvent(endPos, button),
+        MouseEvent::createReleaseButtonEvent(button)
+    };
+
+    return pri_.sendEvent(events, 3) == 3;
+}
 
 bool MouseSimulator::dragCombo(const AbsolutePos& startPos, const AbsolutePos& endPos, MouseButton button)
-{ return pri_.dragCombo(startPos, endPos, button); }
+{
+    MouseEvent events[4] = {
+        MouseEvent::createAbsMoveEvent(startPos),
+        MouseEvent::createPressButtonEvent(button),
+        MouseEvent::createDragEvent(endPos, button),
+        MouseEvent::createReleaseButtonEvent(button)
+    };
+
+    return pri_.sendEvent(events, 4) == 4;
+}
 
 } // namespace hidt

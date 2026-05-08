@@ -103,42 +103,4 @@ size_t KeyboardSimulatorPrivate::sendEvent(const KeyboardEvent* events, size_t c
     return sent;
 }
 
-bool KeyboardSimulatorPrivate::pressKey(uint32_t nativeKey)
-{
-    if (!isInitialized_.load())
-        return false;
-
-    struct input_event iePair[2] = {0};
-    setPressKeyInputEvent(iePair[0], nativeKey);
-    setSyncReportEvent(iePair[1]);
-
-    return kbdUInput_.sendEvent(iePair, 2);
-}
-
-bool KeyboardSimulatorPrivate::releaseKey(uint32_t nativeKey)
-{
-    if (!isInitialized_.load())
-        return false;
-
-    struct input_event iePair[2] = {0};
-    setReleaseKeyInputEvent(iePair[0], nativeKey);
-    setSyncReportEvent(iePair[1]);
-
-    return kbdUInput_.sendEvent(iePair, 2);
-}
-
-bool KeyboardSimulatorPrivate::clickKey(uint32_t nativeKey)
-{
-    if (!isInitialized_.load())
-        return false;
-
-    struct input_event ies[4] = {0};
-    setPressKeyInputEvent(ies[0], nativeKey);
-    setSyncReportEvent(ies[1]);
-    setReleaseKeyInputEvent(ies[2], nativeKey);
-    setSyncReportEvent(ies[3]);
-
-    return kbdUInput_.sendEvent(ies, 4);
-}
-
 } // namespace hidt

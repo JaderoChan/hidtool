@@ -23,25 +23,6 @@ public:
     bool sendEvent(const MouseEvent& event);
     size_t sendEvent(const MouseEvent* events, size_t count);
 
-    bool moveTo(const AbsolutePos& absPos);
-    bool moveBy(const RelativePos& relPos);
-
-    bool wheel(int32_t wheelDelta);
-
-    bool pressButton(MouseButton button);
-    bool releaseButton(MouseButton button);
-    bool clickButton(MouseButton button);
-
-    bool wheel(const AbsolutePos& absPos, int32_t wheelDelta);
-    bool pressButton(const AbsolutePos& absPos, MouseButton button);
-    bool releaseButton(const AbsolutePos& absPos, MouseButton button);
-    bool clickButton(const AbsolutePos& absPos, MouseButton button);
-
-    bool dragTo(const AbsolutePos& absPos, MouseButton button);
-
-    bool dragCombo(const AbsolutePos& endPos, MouseButton button);
-    bool dragCombo(const AbsolutePos& startPos, const AbsolutePos& endPos, MouseButton button);
-
 private:
     MouseSimulatorPrivate() = default;
     ~MouseSimulatorPrivate();

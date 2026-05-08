@@ -38,21 +38,36 @@ size_t KeyboardSimulator::sendEvent(const KeyboardEvent* events, size_t count)
 { return pri_.sendEvent(events, count); }
 
 bool KeyboardSimulator::pressKey(uint32_t nativeKey)
-{ return pri_.pressKey(nativeKey); }
+{ return pri_.sendEvent(KeyboardEvent(KeyboardEvent::ET_PRESS, nativeKey)); }
 
 bool KeyboardSimulator::pressKey(KeyboardKey key)
-{ return pri_.pressKey(keyboardKeyToNativeKey(key)); }
+{ return pri_.sendEvent(KeyboardEvent(KeyboardEvent::ET_PRESS, keyboardKeyToNativeKey(key))); }
 
 bool KeyboardSimulator::releaseKey(uint32_t nativeKey)
-{ return pri_.releaseKey(nativeKey); }
+{ return pri_.sendEvent(KeyboardEvent(KeyboardEvent::ET_RELEASE, nativeKey)); }
 
 bool KeyboardSimulator::releaseKey(KeyboardKey key)
-{ return pri_.releaseKey(keyboardKeyToNativeKey(key)); }
+{ return pri_.sendEvent(KeyboardEvent(KeyboardEvent::ET_RELEASE, keyboardKeyToNativeKey(key))); }
 
 bool KeyboardSimulator::clickKey(uint32_t nativeKey)
-{ return pri_.clickKey(nativeKey); }
+{
+    KeyboardEvent events[2] = {
+        KeyboardEvent(KeyboardEvent::ET_PRESS, nativeKey),
+        KeyboardEvent(KeyboardEvent::ET_RELEASE, nativeKey)
+    };
+
+    return pri_.sendEvent(events, 2) == 2;
+}
 
 bool KeyboardSimulator::clickKey(KeyboardKey key)
-{ return pri_.clickKey(keyboardKeyToNativeKey(key)); }
+{
+    int32_t nativeKey = keyboardKeyToNativeKey(key);
+    KeyboardEvent events[2] = {
+        KeyboardEvent(KeyboardEvent::ET_PRESS, nativeKey),
+        KeyboardEvent(KeyboardEvent::ET_RELEASE, nativeKey)
+    };
+
+    return pri_.sendEvent(events, 2) == 2;
+}
 
 } // namespace hidt
