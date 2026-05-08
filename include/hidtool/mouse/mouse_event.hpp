@@ -13,16 +13,17 @@ struct MouseEvent
     {
         ET_NONE,
         /**
-         * @details 通过 `MouseSimulator` 发送的此类型事件会将数据钳制在合法范围中，
-         * 但 `MouseHooker` 并不会尝试钳制其接收到的此类型事件。
+         * @details 通过 \ref `MouseSimulator` 发送的此类型事件会将数据钳制在合法范围中，
+         * 但 \ref `MouseHooker` 并不会尝试钳制其接收到的此类型事件。
+         * @sa \ref `MouseSimulator::getSimulatorAbsMoveRange()`
          */
         ET_ABS_MOVE,
         ET_REL_MOVE,
         ET_WHEEL,
         /**
-         * @details 在 **Windows** 和 **Linux** 平台下，此事件永远不会被 `MouseHooker` 的事件处理程序接收到。
-         * 当在上述两个平台下发送此类型的事件时，其等同于绝对移动事件，字段 `drag.button` 将被丢弃。
-         * 在 **MacOS** 平台下，无论是 `MouseHooker` 还是 `MouseSimulator`，都原生支持此类型事件。
+         * @details 在 **Windows** 和 **Linux** 平台下，此事件永远不会被 \ref `MouseHooker` 的事件处理程序接收到。
+         * 当在上述两个平台下发送此类型的事件时，其等同于绝对移动事件，字段 \ref `MouseEvent::drag.button` 将被丢弃。
+         * 在 **MacOS** 平台下，无论是 \ref `MouseHooker` 还是 \ref `MouseSimulator`，都原生支持此类型事件。
          */
         ET_DRAG,
         ET_PRESS,
@@ -117,11 +118,11 @@ struct MouseEvent
     {
         /**
          * @note
-         * 在 **Windows** 和 **MacOS** 平台下，无论是 `MouseHooker` 事件处理函数中获得的绝对移动事件还是
-         * 通过 `MouseSimulator` 发送的绝对移动事件，此坐标始终以虚拟屏幕空间范围为基准。
-         * 在 **Linux** 平台下，通过 `MouseHooker` 获得的绝对移动事件坐标范围依赖于设备厂商，
-         * 通过 `MouseSimulator` 发送的绝对移动事件，此坐标在 X 和 Y 轴上始终限定为 `[0, 65535]`。
-         * @sa \ref `getAbsolutePosRange()'
+         * 在 **Windows** 和 **MacOS** 平台下，无论是 \ref `MouseHooker` 事件处理函数中获得的绝对移动事件还是
+         * 通过 \ref `MouseSimulator` 发送的绝对移动事件，此坐标始终以虚拟屏幕空间范围为基准。
+         * 在 **Linux** 平台下，通过 \ref `MouseHooker` 获得的绝对移动事件坐标范围依赖于设备厂商，
+         * 通过 \ref `MouseSimulator` 发送的绝对移动事件，此坐标在 X 和 Y 轴上始终限定为 `[0, 65535]`。
+         * @sa \ref `MouseSimulator::getAbsolutePosRange()'
          */
         AbsolutePos absPos;
         /**
