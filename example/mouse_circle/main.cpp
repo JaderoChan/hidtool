@@ -13,9 +13,12 @@ int main(int argc, char* argv[])
     MouseSimulator& msSim = MouseSimulator::getInstance();
     msSim.initialize();
 
-    auto range = getAbsolutePosRange();
-    int32_t halfWidth = (range.maxX - range.minX) / 2;
-    int32_t halfHeight = (range.maxY - range.minY) / 2;
+    auto absMoveRange = MouseSimulator::getAbsoluteMoveRange();
+    printf("Absolute move range: (X[%d, %d], Y[%d, %d]).\n",
+        absMoveRange.minX, absMoveRange.maxX, absMoveRange.minY, absMoveRange.maxY);
+
+    int32_t halfWidth = (absMoveRange.maxX - absMoveRange.minX) / 2;
+    int32_t halfHeight = (absMoveRange.maxY - absMoveRange.minY) / 2;
 
     double th = 0.0;
     while (th < 360.0)
