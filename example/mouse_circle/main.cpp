@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
         int32_t x = halfWidth + halfWidth * cos(th * PI / 180.0);
         int32_t y = halfHeight + halfHeight * sin(th * PI / 180.0);
         msSim.moveTo({x, y});
-        th += 0.01;
+        th += 0.05;
 
         std::this_thread::sleep_for(std::chrono::microseconds(100));
     }
