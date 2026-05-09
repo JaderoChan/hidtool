@@ -5,6 +5,13 @@
 
 #include <windows.h>
 
+#ifdef max
+    #undef max
+#endif
+#ifdef min
+    #undef min
+#endif
+
 #include <hidtool/mouse/mouse_button.hpp>
 #include <hidtool/mouse/mouse_pos.hpp>
 #include "virtual_screen_info.hpp"
