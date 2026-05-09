@@ -98,7 +98,7 @@ private:
 
     intptr_t eventHandler_ = 0;
 
-    // 用于互斥 `run()`，`stop()` 和 `setEventHandler()` 操作。
+    // 用于互斥 run()，stop() 和 setEventHandler() 的执行。
     mutable std::mutex operateMtx_;
     std::atomic<bool> isRunning_{false};
     std::thread workerThread_;
@@ -110,7 +110,7 @@ private:
     // 前两个预留元素分别是供程序传递工作事件的 workEventPollfd 和监听输入设备文件夹变化的 inotifyPollfd。
     // 之后均供输入设备的 pollfd 使用。
     std::vector<struct pollfd> watchedPollfds_{2, pollfd{-1, 0, 0}};
-    // 存放已配置输入设备的名称，与 `watchedPollfds_` 第二个元素之后的 pollfd 形成对应关系。
+    // 存放已配置输入设备的名称，与 watchedPollfds_ 第二个元素之后的 pollfd 形成对应关系。
     std::vector<std::string> evdevNames_;
 };
 

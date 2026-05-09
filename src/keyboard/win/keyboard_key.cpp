@@ -112,8 +112,6 @@ uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept
         case KBDKEY_SLEEP:              return VK_SLEEP;
 
         // OEM (Original Equipment Manufacturer) keys
-        // The specific values of the following keys may vary on different devices.
-        // All of the following uses the standard keyboard layout of the United States.
         case KBDKEY_LEFT_QUOTE:         return VK_OEM_3;
         case KBDKEY_MINUS:              return VK_OEM_MINUS;
         case KBDKEY_EQUAL:              return VK_OEM_PLUS;
@@ -249,8 +247,6 @@ KeyboardKey keyboardKeyFromNativeKey(uint32_t nativeKey) noexcept
         case VK_SLEEP:                  return KBDKEY_SLEEP;
 
         // OEM (Original Equipment Manufacturer) keys
-        // The specific values of the following keys may vary on different devices.
-        // All of the following uses the standard keyboard layout of the United States.
         case VK_OEM_3:                  return KBDKEY_LEFT_QUOTE;
         case VK_OEM_MINUS:              return KBDKEY_MINUS;
         case VK_OEM_PLUS:               return KBDKEY_EQUAL;

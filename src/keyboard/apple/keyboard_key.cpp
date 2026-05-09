@@ -10,6 +10,7 @@ uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept
     switch (key)
     {
         case KBDKEY_NONE:               return 0;
+
         // Number keys
         case KBDKEY_0:                  return kVK_ANSI_0;
         case KBDKEY_1:                  return kVK_ANSI_1;
@@ -131,8 +132,6 @@ uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept
         case KBDKEY_CAPS_LOCK:          return kVK_CapsLock;
 
         // OEM (Original Equipment Manufacturer) keys
-        // The specific values of the following keys may vary on different devices.
-        // All of the following uses the standard keyboard layout of the United States.
         case KBDKEY_LEFT_QUOTE:         return kVK_ANSI_Grave;
         case KBDKEY_MINUS:              return kVK_ANSI_Minus;
         case KBDKEY_EQUAL:              return kVK_ANSI_Equal;
@@ -285,8 +284,6 @@ KeyboardKey keyboardKeyFromNativeKey(uint32_t nativeKey) noexcept
         case kVK_CapsLock:              return KBDKEY_CAPS_LOCK;
 
         // OEM (Original Equipment Manufacturer) keys
-        // The specific values of the following keys may vary on different devices.
-        // All of the following uses the standard keyboard layout of the United States.
         case kVK_ANSI_Grave:            return KBDKEY_LEFT_QUOTE;
         case kVK_ANSI_Minus:            return KBDKEY_MINUS;
         case kVK_ANSI_Equal:            return KBDKEY_EQUAL;

@@ -35,7 +35,7 @@ private:
 
     void handleDisplayChanged();
 
-    // 用于互斥 `initialize()` 和 `destroy()` 操作。
+    // 用于互斥 initialize() 和 destroy() 的执行。
     mutable std::mutex initDestrMtx_;
 
     std::atomic<bool> isInitialized_{false};

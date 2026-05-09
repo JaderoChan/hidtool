@@ -56,7 +56,7 @@ private:
 
     intptr_t eventHandler_ = 0;
 
-    // 用于互斥 `run()`，`stop()` 和 `setEventHandler()` 操作。
+    // 用于互斥 run()，stop() 和 setEventHandler() 的执行。
     mutable std::mutex operateMtx_;
     std::atomic<bool> isRunning_{false};
     std::thread workerThread_;

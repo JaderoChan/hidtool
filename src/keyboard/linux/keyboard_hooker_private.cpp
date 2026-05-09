@@ -28,7 +28,7 @@ bool KeyboardHookerPrivate::isAccessDevice(int fd)
     if (ioctl(fd, EVIOCGBIT(0, sizeof(evBits)), &evBits) == -1)
         return false;
 
-    // 必须含有 `EV_KEY` 事件。
+    // 必须含有 EV_KEY 事件。
     if ((evBits & (1u << EV_KEY)) == 0)
         return false;
 
@@ -65,8 +65,8 @@ void KeyboardHookerPrivate::handleInputEvent(int fd)
         {
             // 处理输入事件。
             auto eventHandler = getEventHandler<KeyboardEventHandler>();
-            // 由于键盘事件始终以 `{EV_KEY, EV_SYN}` 对形式出现，
-            // 所以不对 `EV_SYN` 进行判断，而在接收到 `EV_KEY` 事件时直接调用事件处理程序。
+            // 由于键盘事件始终以 {EV_KEY, EV_SYN} 对形式出现，
+            // 所以不对 EV_SYN 进行判断，而在接收到 EV_KEY 事件时直接调用事件处理程序。
             if (eventHandler && ie.type == EV_KEY)
             {
                 KeyboardEvent event;

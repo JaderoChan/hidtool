@@ -10,7 +10,7 @@ namespace hidt
 
 bool KeyboardUInput::setupUInputFd(int fd)
 {
-    // 键盘 UInput 需要配置 `EV_KEY` 和 `EV_SYN` 事件。
+    // 键盘 UInput 需要配置 EV_KEY 和 EV_SYN 事件。
     if (ioctl(fd, UI_SET_EVBIT, EV_KEY) == -1 || ioctl(fd, UI_SET_EVBIT, EV_SYN) == -1)
         return false;
 

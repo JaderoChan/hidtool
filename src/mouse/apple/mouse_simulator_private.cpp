@@ -47,7 +47,7 @@ AbsolutePosRange MouseSimulatorPrivate::getAbsoluteMoveRange()
 
 bool MouseSimulatorPrivate::initialize()
 {
-    // 无实际作用，仅与其他子模块保持一致性。`destroy()` 同理。
+    // 无实际作用，仅与其他子模块保持一致性。destroy() 同理。
     bool expected = false;
     return isInitialized_.compare_exchange_strong(expected, true);
 }

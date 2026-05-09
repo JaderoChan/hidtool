@@ -33,7 +33,7 @@ LRESULT WINAPI MouseHookerPrivate::LowLevelMouseProc(int nCode, WPARAM wParam, L
         {
             // 调用事件处理程序。
             auto eventHandler = hooker.getEventHandler<MouseEventHandler>();
-            // 如果事件处理程序返回 `false`，返回 `1` 以阻断事件传播。
+            // 如果事件处理程序返回 false，返则回 1 以阻断事件传播。
             if (eventHandler && !eventHandler(event))
                 return 1;
         }

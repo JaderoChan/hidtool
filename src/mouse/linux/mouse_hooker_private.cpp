@@ -30,14 +30,14 @@ bool MouseHookerPrivate::isAccessDevice(int fd)
     if (ioctl(fd, EVIOCGBIT(0, sizeof(evBits)), &evBits) == -1)
         return false;
 
-    // 必须含有 `EV_KEY` 事件，并且含有 `EV_ABS` 和 `EV_REL` 任一事件。
+    // 必须含有 EV_KEY 事件，并且含有 EV_ABS 和 EV_REL 任一事件。
     if (((evBits & (1u << EV_ABS)) == 0 || (evBits & (1u << EV_REL)) == 0) && (evBits & (1u << EV_KEY)) == 0)
         return false;
 
     static auto hasBit = [](uint8_t* bits, uint32_t bit)
     { return (bits[bit / 8] & (1u << (bit % 8))) != 0; };
 
-    // 如果含有 `EV_ABS` 事件，则必须包含 `ABS_X` 和 `ABS_Y` 事件。
+    // 如果含有 EV_ABS 事件，则必须包含 ABS_X 和 ABS_Y 事件。
     if ((evBits & (1u << EV_ABS)) != 0)
     {
         uint8_t absBits[ABS_MAX / 8 + 1];
@@ -48,7 +48,7 @@ bool MouseHookerPrivate::isAccessDevice(int fd)
             return false;
     }
 
-    // 如果含有 `EV_REL` 事件，则必须包含 `REL_WHEEL` 或 `REL_X`，`REL_Y` 事件。
+    // 如果含有 EV_REL 事件，则必须包含 REL_WHEEL 或 REL_X，REL_Y 事件。
     if ((evBits & (1u << EV_REL)) != 0)
     {
         uint8_t relBits[REL_MAX / 8 + 1];
@@ -112,7 +112,7 @@ void MouseHookerPrivate::handleInputEvent(int fd)
         bool hasX = false;
         bool hasY = false;
     };
-    // 通过 `unordered_map` 存储不同设备的双轴位置信息。
+    // 通过 unordered_map 存储不同设备的双轴位置信息。
     static std::unordered_map<int, AbsState> absStatesByFd;
     // 获取当前设备的双轴位置信息。
     auto& absState = absStatesByFd[fd];
@@ -184,8 +184,8 @@ void MouseHookerPrivate::handleInputEvent(int fd)
                 }
                 case EV_SYN:
                 {
-                    // 由于鼠标事件可能在 `SYN_REPORT` 之前有多个事件，
-                    // 所以需要在接收到 `SYN_REPORT` 事件时才调用事件处理程序。
+                    // 由于鼠标事件可能在 SYN_REPORT 之前有多个事件，
+                    // 所以需要在接收到 SYN_REPORT 事件时才调用事件处理程序。
                     if (ie.code == SYN_REPORT)
                     {
                         if (eventHandler && event.type != MouseEvent::ET_NONE)

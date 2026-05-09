@@ -5,7 +5,7 @@ namespace hidt
 
 HookerPrivate::~HookerPrivate()
 {
-    // 由于工作线程循环中未调用纯虚函数，可以在基类析构函数中安全调用 `stop()` 接口以退出工作线程。
+    // 由于工作线程循环中未调用纯虚函数，可以在基类析构函数中安全调用 stop() 以退出工作线程。
     stop();
     // 重置字段
     eventHandler_ = 0;
@@ -75,7 +75,7 @@ void HookerPrivate::work(std::promise<bool>& runningResult)
 
     runningResult.set_value(true);
 
-    // 只接收由 `PostThreadMessage()` 接口发送的消息。
+    // 只接收由 PostThreadMessage() 发送的消息。
     while (GetMessageA(&msg, reinterpret_cast<HWND>(static_cast<intptr_t>(-1)), 0, 0) != 0)
     {
         switch (msg.message)

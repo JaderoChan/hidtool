@@ -30,7 +30,7 @@ protected:
 
 private:
     int uinputFd_ = -1;
-    // 用于互斥涉及到 `uinputFd_` 读写的操作。
+    // 用于互斥涉及到 uinputFd_ 读写的操作。
     mutable std::mutex uinputFdMtx_;
 };
 

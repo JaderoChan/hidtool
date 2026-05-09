@@ -18,7 +18,7 @@ bool UInput::setup(const std::string& name, uint16_t vendor, uint16_t product, u
 {
     std::lock_guard<std::mutex> locker(uinputFdMtx_);
 
-    // 如果 `uinputFd_` 不为 -1，意味着已经是配置完成状态，直接返回 `false`。
+    // 如果 uinputFd_ 不为 -1，意味着已经是配置完成状态，直接返回 false。
     if (uinputFd_ != -1)
         return false;
 
