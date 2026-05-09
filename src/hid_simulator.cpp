@@ -71,21 +71,21 @@ bool HidSimulator::isInitialized() const
 
 bool HidSimulator::sendEvent(const HidEvent& event)
 {
-    switch (event.hidType)
+    switch (event.type)
     {
-        case HIDTYPE_KEYBOARD:
+        case HidEvent::ET_KEYBOARD:
         #ifdef HIDTOOL_HAS_KEYBOARD
             return kbdSimulator_.sendEvent(event.keyboardEvent);
         #else
             return false;
         #endif
-        case HIDTYPE_MOUSE:
+        case HidEvent::ET_MOUSE:
         #ifdef HIDTOOL_HAS_MOUSE
             return msSimulator_.sendEvent(event.mouseEvent);
         #else
             return false;
         #endif
-        case HIDTYPE_SLEEP:
+        case HidEvent::ET_SLEEP:
             std::this_thread::sleep_for(std::chrono::milliseconds(event.sleepMs));
             return true;
         default:
@@ -101,19 +101,19 @@ size_t HidSimulator::sendEvent(const HidEvent* events, size_t count)
     {
         const auto& event = events[i];
 
-        switch (event.hidType)
+        switch (event.type)
         {
-            case HIDTYPE_KEYBOARD:
+            case HidEvent::ET_KEYBOARD:
             #ifdef HIDTOOL_HAS_KEYBOARD
                 sent += kbdSimulator_.sendEvent(event.keyboardEvent);
             #endif
                 break;
-            case HIDTYPE_MOUSE:
+            case HidEvent::ET_MOUSE:
             #ifdef HIDTOOL_HAS_MOUSE
                 sent += msSimulator_.sendEvent(event.mouseEvent);
             #endif
                 break;
-            case HIDTYPE_SLEEP:
+            case HidEvent::ET_SLEEP:
                 std::this_thread::sleep_for(std::chrono::milliseconds(event.sleepMs));
                 sent++;
                 break;
