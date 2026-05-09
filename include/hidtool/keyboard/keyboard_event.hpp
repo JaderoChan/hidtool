@@ -20,8 +20,8 @@ struct KeyboardEvent
 
     constexpr KeyboardEvent() noexcept
         : sleepMs(0) {}
-    constexpr explicit KeyboardEvent(EventType type) noexcept
-        : type(type), sleepMs(0) {}
+    constexpr explicit KeyboardEvent(EventType keyboardEventType) noexcept
+        : type(keyboardEventType), sleepMs(0) {}
 
     /**
      * @defgroup KeyboardEventFactory 键盘事件工厂函数

@@ -41,8 +41,8 @@ struct MouseEvent
 
     constexpr MouseEvent() noexcept
         : sleepMs(0) {}
-    constexpr explicit MouseEvent(EventType type) noexcept
-        : type(type), sleepMs(0) {}
+    constexpr explicit MouseEvent(EventType mouseEventType) noexcept
+        : type(mouseEventType), sleepMs(0) {}
 
     /**
      * @defgroup MouseEventFactory 鼠标事件工厂函数
