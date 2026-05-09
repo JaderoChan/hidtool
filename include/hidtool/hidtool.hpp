@@ -129,4 +129,12 @@
 #include "hid_hooker.hpp"
 #include "hid_simulator.hpp"
 
+/**
+ * @namespace hidt
+ * @brief HID 工具库顶级命名空间
+ * @details 包含键盘/鼠标监听与模拟所有模块
+ */
+namespace hidt
+{}
+
 #endif // !HIDTOOL_HIDTOOL_HPP

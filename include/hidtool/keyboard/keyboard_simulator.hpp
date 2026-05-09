@@ -10,8 +10,8 @@ namespace hidt
 class KeyboardSimulatorPrivate;
 
 /**
+ * @brief 键盘输入模拟器
  * @ingroup Simulators
- * @brief 键盘输入模拟。
  * @note 若未特别说明，此类的所有成员函数都是可重入的。
  */
 class HIDTOOL_API KeyboardSimulator
@@ -33,7 +33,6 @@ public:
 
     /**
      * @ingroup keyboard_simulator_convenient
-     *
      * @{
      */
 

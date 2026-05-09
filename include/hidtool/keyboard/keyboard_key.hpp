@@ -6,7 +6,7 @@
 namespace hidt
 {
 
-/** @brief 键盘键枚举。 */
+/** @brief 跨平台键盘键值枚举 */
 enum KeyboardKey : uint32_t
 {
     /**

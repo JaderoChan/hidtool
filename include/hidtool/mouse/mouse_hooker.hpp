@@ -7,14 +7,17 @@
 namespace hidt
 {
 
-/** @note 返回值为 `true` 时正常传播接收到的事件，返回值为 `false` 时将阻止事件向其他程序传播。 */
+/**
+ * @brief 鼠标事件处理程序签名类型。
+ * @note 返回值为 `true` 时正常传播接收到的事件，返回值为 `false` 时将阻止事件向其他程序传播。
+ */
 using MouseEventHandler = bool (*)(const MouseEvent&);
 
 class MouseHookerPrivate;
 
 /**
- * @ingroup Hookers
  * @brief 全局鼠标事件监听。
+ * @ingroup Hookers
  * @note 若未特别说明，此类的所有成员函数都是线程安全的。
  * @attention 不要在工作线程中（即事件处理回调中）调用成员函数。
  */

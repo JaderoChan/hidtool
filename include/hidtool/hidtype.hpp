@@ -11,7 +11,7 @@ enum HidType : uint8_t
     HIDTYPE_NONE,
     HIDTYPE_KEYBOARD,
     HIDTYPE_MOUSE,
-    /** 供 \ref `HidEvent` 实现进行相邻事件间的睡眠。 */
+    /** 供 \ref HidEvent 实现相邻事件间的睡眠。 */
     HIDTYPE_SLEEP
 };
 
