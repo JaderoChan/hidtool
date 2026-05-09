@@ -13,17 +13,17 @@ struct MouseEvent
     {
         ET_NONE,
         /**
-         * @details 通过 \ref `MouseSimulator` 发送的此类型事件会将数据钳制在合法范围中，
-         * 但 \ref `MouseHooker` 并不会尝试钳制其接收到的此类型事件。
-         * @sa \ref `MouseSimulator::getAbsoluteMoveRange()`
+         * @details 通过 \ref MouseSimulator 发送的此类型事件会将数据钳制在合法范围中，
+         * 但 \ref MouseHooker 并不会尝试钳制其接收到的此类型事件。
+         * @sa \ref MouseSimulator::getAbsoluteMoveRange()
          */
         ET_ABS_MOVE,
         ET_REL_MOVE,
         ET_WHEEL,
         /**
-         * @details 在 **Windows** 和 **Linux** 平台下，此事件永远不会被 \ref `MouseHooker` 的事件处理程序接收到。
-         * 当在上述两个平台下发送此类型的事件时，其等同于绝对移动事件，字段 \ref `MouseEvent::drag.button` 将被丢弃。
-         * 在 **MacOS** 平台下，无论是 \ref `MouseHooker` 还是 \ref `MouseSimulator`，都原生支持此类型事件。
+         * @details 在 **Windows** 和 **Linux** 平台下，此事件永远不会被 \ref MouseHooker 的事件处理程序接收到。
+         * 当在上述两个平台下发送此类型的事件时，其等同于绝对移动事件，字段 \ref MouseEvent::drag.button 将被丢弃。
+         * 在 **MacOS** 平台下，无论是 \ref MouseHooker 还是 \ref MouseSimulator，都原生支持此类型事件。
          */
         ET_DRAG,
         ET_PRESS,
@@ -47,7 +47,7 @@ struct MouseEvent
      * @{
      */
 
-    /** @sa \ref `absPos`, \ref `MouseSimulator::moveTo()` */
+    /** @sa \ref absPos, \ref MouseSimulator::moveTo() */
     static MouseEvent createAbsMoveEvent(int32_t x, int32_t y) noexcept
     {
         MouseEvent result(ET_ABS_MOVE);
@@ -63,7 +63,7 @@ struct MouseEvent
         return result;
     }
 
-    /** @sa \ref `relPos`, \ref `MouseSimulator::moveBy()` */
+    /** @sa \ref relPos, \ref MouseSimulator::moveBy() */
     static MouseEvent createRelMoveEvent(int32_t dx, int32_t dy) noexcept
     {
         MouseEvent result(ET_REL_MOVE);
@@ -79,7 +79,7 @@ struct MouseEvent
         return result;
     }
 
-    /** @sa \ref `wheelDelta`, \ref `MouseSimulator::wheel()` */
+    /** @sa \ref wheelDelta, \ref MouseSimulator::wheel() */
     static MouseEvent createWheelEvent(int32_t wheelDelta) noexcept
     {
         MouseEvent result(ET_WHEEL);
@@ -87,7 +87,7 @@ struct MouseEvent
         return result;
     }
 
-    /** @sa \ref `MouseSimulator::drag()` */
+    /** @sa \ref MouseSimulator::drag() */
     static MouseEvent createDragEvent(const AbsolutePos& absPos, MouseButton button) noexcept
     {
         MouseEvent result(ET_DRAG);
@@ -96,7 +96,7 @@ struct MouseEvent
         return result;
     }
 
-    /** @sa \ref `MouseSimulator::press()` */
+    /** @sa \ref MouseSimulator::press() */
     static MouseEvent createPressButtonEvent(MouseButton button) noexcept
     {
         MouseEvent result(ET_PRESS);
@@ -104,7 +104,7 @@ struct MouseEvent
         return result;
     }
 
-    /** @sa \ref `MouseSimulator::release()` */
+    /** @sa \ref MouseSimulator::release() */
     static MouseEvent createReleaseButtonEvent(MouseButton button) noexcept
     {
         MouseEvent result(ET_RELEASE);
@@ -126,11 +126,11 @@ struct MouseEvent
     {
         /**
          * @note
-         * 在 **Windows** 和 **MacOS** 平台下，无论是 \ref `MouseHooker` 事件处理函数中获得的绝对移动事件还是
-         * 通过 \ref `MouseSimulator` 发送的绝对移动事件，此坐标始终以虚拟屏幕空间范围为基准。
-         * 在 **Linux** 平台下，通过 \ref `MouseHooker` 获得的绝对移动事件坐标范围依赖于设备厂商，
-         * 通过 \ref `MouseSimulator` 发送的绝对移动事件，此坐标在 X 和 Y 轴上始终限定为 `[0, 65535]`。
-         * @sa \ref `MouseSimulator::getAbsoluteMoveRange()'
+         * 在 **Windows** 和 **MacOS** 平台下，无论是 \ref MouseHooker 事件处理函数中获得的绝对移动事件还是
+         * 通过 \ref MouseSimulator 发送的绝对移动事件，此坐标始终以虚拟屏幕空间范围为基准。
+         * 在 **Linux** 平台下，通过 \ref MouseHooker 获得的绝对移动事件坐标范围依赖于设备厂商，
+         * 通过 \ref MouseSimulator 发送的绝对移动事件，此坐标在 X 和 Y 轴上始终限定为 `[0, 65535]`。
+         * @sa \ref MouseSimulator::getAbsoluteMoveRange()
          */
         AbsolutePos absPos;
         /**

@@ -11,6 +11,7 @@ class KeyboardSimulatorPrivate;
 
 /**
  * @ingroup Simulators
+ * @brief 键盘输入模拟。
  * @note 若未特别说明，此类的所有成员函数都是可重入的。
  */
 class HIDTOOL_API KeyboardSimulator
@@ -27,7 +28,7 @@ public:
 
     /**
      * @defgroup keyboard_simulator_convenient 键盘模拟便利函数
-     * @brief 等效于 `sendEvent()` 相应的事件或事件组。
+     * @brief 等效于 \ref sendEvent() 相应的事件或事件组。
      */
 
     /**

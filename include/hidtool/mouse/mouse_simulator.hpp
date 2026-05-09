@@ -11,8 +11,9 @@ class MouseSimulatorPrivate;
 
 /**
  * @ingroup Simulators
+ * @brief 鼠标输入模拟
  * @note 若未特别说明，此类的所有成员函数都是线程安全的。
- * 此外，除 \ref `MouseSimulator::initialize()` 和 \ref `MouseSimulator::destroy()` 外，其他成员函数都是可重入的。
+ * 此外，除 \ref MouseSimulator::initialize() 和 \ref MouseSimulator::destroy() 外，其他成员函数都是可重入的。
  */
 class HIDTOOL_API MouseSimulator
 {
@@ -38,7 +39,7 @@ public:
 
     /**
      * @defgroup mouse_simulator_convenient 鼠标模拟便利函数
-     * @brief 等效于 `sendEvent()` 相应的事件或事件组。
+     * @brief 等效于 \ref sendEvent() 相应的事件或事件组。
      */
 
     /**
@@ -50,19 +51,19 @@ public:
     /**
      * @brief 绝对移动。
      * @note 当发送超过坐标范围的绝对移动事件时，会将其钳制在合法范围内。
-     * @sa \ref `MouseEvent::absPos`
+     * @sa \ref MouseEvent::absPos
      */
     bool moveTo(const AbsolutePos& absPos);
 
     /**
      * @brief 相对移动。
-     * @sa \ref `MouseEvent::relPos`
+     * @sa \ref MouseEvent::relPos
      */
     bool moveBy(const RelativePos& relPos);
 
     /**
      * @param wheelDelta 单位量为 `120`。值为正时，滚轮朝远离用户的方向滚动；值为负时，滚轮朝靠近用户的方向滚动。
-     * @sa \ref `MouseEvent::wheelDelta`
+     * @sa \ref MouseEvent::wheelDelta
      */
     bool wheel(int32_t wheelDelta);
 
@@ -123,10 +124,18 @@ public:
      *
      * @{
      */
+
+    /** @param 拖拽事件中按键按下、拖拽至与按键释放的事件间隔。 */
     bool dragCombo(const AbsolutePos& endPos,
         MouseButton button = MSBTN_LEFT, size_t interval = 0);
+
+    /**
+     * @param interval1 移动到 `startPos` 事件与拖拽事件的时间间隔。
+     * @param interval2 拖拽事件中按键按下、拖拽至与按键释放的事件间隔。
+     */
     bool dragCombo(const AbsolutePos& startPos, const AbsolutePos& endPos,
         MouseButton button = MSBTN_LEFT, size_t interval1 = 10, size_t interval2 = 0);
+
     /** @} */
 
     /** @} */

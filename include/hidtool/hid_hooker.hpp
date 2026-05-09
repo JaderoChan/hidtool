@@ -26,6 +26,7 @@ using HidEventHandler = bool (*)(const HidEvent&);
  * @ingroup Hookers
  * @brief 集成所有 Hooker 模块。
  * @note 相较于直接使用特定 Hooker 模块，使用此接口，性能会有所下降。
+ * @attention 不要在工作线程中（即事件处理回调中）调用成员函数。
  */
 class HIDTOOL_API HidHooker
 {
