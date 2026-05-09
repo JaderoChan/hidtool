@@ -6,7 +6,10 @@
 namespace hidt
 {
 
-/** @brief 键盘事件 */
+/**
+ * @brief 键盘事件
+ * @ingroup HidEvents
+ */
 struct KeyboardEvent
 {
     /** @brief 键盘事件类型 */

@@ -7,7 +7,10 @@
 namespace hidt
 {
 
-/** @brief 鼠标事件 */
+/**
+ * @brief 鼠标事件
+ * @ingroup HidEvents
+ */
 struct MouseEvent
 {
     /** @brief 鼠标事件类型 */
