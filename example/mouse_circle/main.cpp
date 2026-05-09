@@ -1,7 +1,10 @@
 #include <cmath>
 #include <cstdio>
-#include <chrono>
-#include <thread>
+
+#ifndef _MSC_VER
+    #include <chrono>
+    #include <thread>
+#endif
 
 #include <hidtool/hidtool.hpp>
 
@@ -33,7 +36,12 @@ int main(int argc, char* argv[])
         msSim.moveTo({x, y});
         th += 0.05;
 
+        // 使用 MSVC 编译器时禁用睡眠，因为 MSVC 的 `std::this_thread::sleep_for()` 在微秒级别上有实现缺陷。
+        // 其实际调用了 Windows 的 `Sleep()` 函数，而此函数的最小精度大约是 15ms。
+        // 会此程序导致运行后，鼠标运动极其缓慢。
+    #ifndef _MSC_VER
         std::this_thread::sleep_for(std::chrono::microseconds(100));
+    #endif
     }
 
     msSim.destroy();
