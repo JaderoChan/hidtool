@@ -10,3 +10,4 @@
 - [x] 增加 MouseSimulator::doubleClick() 接口。
 - [x] 增加延时事件类型。
 - [x] 简化代码注释。
+- [ ] 将中文注释修改为英文。
