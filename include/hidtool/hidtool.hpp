@@ -123,7 +123,7 @@
  * @section AuthorSec 信息
  *
  * @author 頔珞JaderoChan
- * @version 2.3.1
+ * @version 2.3.2
  * @date 2026
  * @copyright MIT License
  *
