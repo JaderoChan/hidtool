@@ -349,6 +349,20 @@ int main()
 }
 ```
 
+## 示例项目
+
+[HID 事件监听](../example/echo/main.cpp)
+
+> 监听键盘与鼠标事件，并打印事件信息。
+
+[鼠标转圈](../example//mouse_circle/main.cpp)
+
+> 将鼠标以屏幕内接圆/椭圆为轨迹移动。
+
+[简易点击器](../example/simple_clicker/main.cpp)
+
+> 通过按下指定按键，在指定位置双击鼠标左键。
+
 ## 许可证
 
 本项目基于 [MIT License](LICENSE) 开源。
