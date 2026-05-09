@@ -24,12 +24,12 @@ struct KeyboardEvent
         : type(type), sleepMs(0) {}
 
     /**
-     * @defgroup keyboard_event_factory 键盘事件工厂函数
+     * @defgroup KeyboardEventFactory 键盘事件工厂函数
      * @brief 便于构造指定类型的键盘事件。
      */
 
     /**
-     * @ingroup keyboard_event_factory
+     * @ingroup KeyboardEventFactory
      * @{
      */
 

@@ -12,9 +12,17 @@
     #include <hidtool/mouse/mouse_event.hpp>
 #endif // HIDTOOL_HAS_MOUSE
 
+/**
+ * @defgroup HidEvents HID 设备事件
+ */
+
 namespace hidt
 {
 
+/**
+ * @brief HID 设备事件
+ * @ingroup HidEvents
+ */
 struct HidEvent
 {
     constexpr HidEvent() noexcept

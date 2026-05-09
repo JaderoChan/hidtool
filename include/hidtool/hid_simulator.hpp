@@ -22,8 +22,8 @@ namespace hidt
 {
 
 /**
+ * @brief 集成所有 Simulator 模块
  * @ingroup Simulators
- * @brief 集成所有 Simulator 模块。
  * @note 相较于直接使用特定 Simulator 模块，使用此接口，性能会有所下降。
  */
 class HIDTOOL_API HidSimulator

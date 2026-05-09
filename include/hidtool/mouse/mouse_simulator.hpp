@@ -38,12 +38,12 @@ public:
     size_t sendEvent(const MouseEvent* events, size_t count);
 
     /**
-     * @defgroup mouse_simulator_convenient 鼠标模拟便利函数
+     * @defgroup MouseSimulatorConvenient 鼠标模拟便利函数
      * @brief 等效于 \ref sendEvent() 相应的事件或事件组。
      */
 
     /**
-     * @ingroup mouse_simulator_convenient
+     * @ingroup MouseSimulatorConvenient
      * @{
      */
 
@@ -118,12 +118,12 @@ public:
      * @brief 鼠标拖拽移动
      * @note 在 **Windows** 和 **Linux** 平台下，等同于绝对移动事件，参数 `button` 将被丢弃。
      * 在 **MacOS** 平台下，其原生支持。
-     * @sa \ref mouse_drag_combo
+     * @sa \ref dragComboAnchor
      */
     bool dragTo(const AbsolutePos& absPos, MouseButton button = MSBTN_LEFT);
 
     /**
-     * @anchor mouse_drag_combo
+     * @anchor dragComboAnchor
      * @name 鼠标拖拽组合
      * @brief 从指定起始位置拖拽鼠标至指定终点位置。
      * @details 等同于鼠标按键按压事件、拖拽事件与鼠标按键释放事件的组合。

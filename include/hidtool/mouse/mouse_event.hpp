@@ -45,12 +45,12 @@ struct MouseEvent
         : type(type), sleepMs(0) {}
 
     /**
-     * @defgroup mouse_event_factory 鼠标事件工厂函数
+     * @defgroup MouseEventFactory 鼠标事件工厂函数
      * @brief 便于构造指定类型的鼠标事件。
      */
 
     /**
-     * @ingroup mouse_event_factory
+     * @ingroup MouseEventFactory
      * @{
      */
 

@@ -6,6 +6,7 @@
 namespace hidt
 {
 
+/** @brief HID 设备类型 */
 enum HidType : uint8_t
 {
     HIDTYPE_NONE,

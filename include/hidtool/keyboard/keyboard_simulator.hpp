@@ -27,12 +27,12 @@ public:
     size_t sendEvent(const KeyboardEvent* events, size_t count);
 
     /**
-     * @defgroup keyboard_simulator_convenient 键盘模拟便利函数
+     * @defgroup KeyboardSimulatorConvenient 键盘模拟便利函数
      * @brief 等效于 \ref sendEvent() 相应的事件或事件组。
      */
 
     /**
-     * @ingroup keyboard_simulator_convenient
+     * @ingroup KeyboardSimulatorConvenient
      * @{
      */
 
