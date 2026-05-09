@@ -12,7 +12,7 @@ struct KeyboardEvent
     /** @brief 键盘事件类型 */
     enum EventType : uint8_t
     {
-        ET_NONE,    ///< 空类型，事件默认类型
+        ET_NONE,    ///< 空事件，事件默认类型
         ET_PRESS,   ///< 键盘按下事件
         ET_RELEASE, ///< 键盘释放事件
         ET_SLEEP    ///< 睡眠事件

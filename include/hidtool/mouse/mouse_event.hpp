@@ -13,7 +13,7 @@ struct MouseEvent
     /** @brief 鼠标事件类型 */
     enum EventType : uint8_t
     {
-        ET_NONE,        ///< 空类型，事件默认类型
+        ET_NONE,        ///< 空事件，事件默认类型
 
         /**
          * @brief 鼠标绝对移动事件
