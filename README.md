@@ -351,15 +351,15 @@ int main()
 
 ## Example subproject
 
-[HID event listener](../example/echo/main.cpp)
+[HID event listener](./example/echo/main.cpp)
 
 > Listen for keyboard and mouse events and print event information.
 
-[Mouse circle](../example//mouse_circle/main.cpp)
+[Mouse circle](./example//mouse_circle/main.cpp)
 
 > Move the mouse around the circle/ellipse inside the screen as the trajectory.
 
-[Simple clicker](../example/simple_clicker/main.cpp)
+[Simple clicker](./example/simple_clicker/main.cpp)
 
 > Double-click of the left mouse button at the specified position by pressing the designated key.
 
