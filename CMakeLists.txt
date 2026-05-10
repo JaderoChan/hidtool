@@ -120,7 +120,7 @@ if(MSVC)
 endif()
 
 if(HIDTOOL_FORCE_IN_PIXEL)
-    # Windows 10 for API `SetThreadDpiAwarenessContext()`.
+    # Windows 10 for API SetThreadDpiAwarenessContext().
     if(WIN32 AND HIDTOOL_BUILD_WITH_MOUSE)
         target_compile_definitions(
             ${PROJECT_NAME} PRIVATE
