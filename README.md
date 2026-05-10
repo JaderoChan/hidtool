@@ -1,75 +1,75 @@
 # HID Tool
 
-[**简体中文** | [**English**](doc/README_EN.md)]
+[[**简体中文**](doc/README_ZH.md) | **English**]
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/JaderoChan/hidtool)
 
-一个跨平台的 C++ HID（人机接口设备）输入模拟与事件监听库，支持键盘和鼠标。
+A cross-platform C++ HID (Human Interface Device) input simulation and event listening library, supporting keyboard and mouse.
 
-## 特性
+## Features
 
-- **键盘模块**：全局键盘事件监听、键盘输入模拟
-- **鼠标模块**：全局鼠标事件监听、鼠标输入模拟（移动、点击、滚轮、拖拽）
-- 跨平台支持：Windows、macOS、Linux
-- C++11 兼容
-- 支持静态库 / 动态库构建
-- 单例模式，线程安全
+- **Keyboard Module**: Global keyboard event listening, keyboard input simulation
+- **Mouse Module**: Global mouse event listening, mouse input simulation (move, click, wheel, drag)
+- Cross-platform support: Windows, macOS, Linux
+- C++11 compatible
+- Supports static / shared library builds
+- Singleton pattern, thread-safe
 
-## 平台支持
+## Platform Support
 
-| 平台 | 状态 | 备注 |
-| ---- | ---- | ---- |
+| Platform | Status | Notes |
+| -------- | ------ | ----- |
 | Windows | ✅ | - |
-| macOS | ✅ | 需要辅助功能权限（事件监听与模拟功能） |
-| Linux | ✅ | 需要管理员权限（操作 input 与 uinput 字符设备） |
+| macOS | ✅ | Requires Accessibility permissions (event listening and simulation features) |
+| Linux | ✅ | Requires administrator privileges (access to input & uinput character devices) |
 
-> **macOS 注意事项**：由于 macOS API 设计原因，所有模拟函数无法得知执行是否成功，即便返回 `true` 也可能不产生效果。通常需要为应用程序授予**辅助功能**相关权限。
+> **macOS Note**: Due to macOS API design, all simulation functions cannot determine whether execution was successful. Even if `true` is returned, the action may have no effect. You typically need to grant **Accessibility** permissions to the application.
 
-## 要求
+## Requirements
 
 - CMake >= 3.26
-- C++11 编译器
-- **macOS**：CoreFoundation、Carbon、CoreGraphics（CMake 自动查找）
-- **Linux**：pthreads
+- C++11 compiler
+- **macOS**: CoreFoundation, Carbon, CoreGraphics (found automatically by CMake)
+- **Linux**: pthreads
 
-## 构建
+## Build
 
 ```bash
 git clone https://github.com/JaderoChan/hidtool.git
-cd hitool
-cmake -B build [选项]
+cd hidtool
+cmake -B build [options]
 cmake --build build
 ```
 
-### CMake 选项
+### CMake Options
 
-| 选项 | 默认值 | 说明 | 备注 |
-| ---- | ------ | ---- | --- |
-| `HIDTOOL_BUILD_WITH_KEYBOARD` | `ON` | 构建键盘模块 | - |
-| `HIDTOOL_BUILD_WITH_MOUSE` | `ON` | 构建鼠标模块 | - |
-| `HIDTOOL_BUILD_SHARED` | `OFF` | 构建为动态库 | - |
-| `HIDTOOL_BUILD_EXAMPLE` | `ON`（主项目） | 构建示例程序 | - |
-| `HIDTOOL_FORCE_IN_PIXEL` | `ON` | 强制以物理像素为单位操作鼠标指针位置相关 API | 仅限 Windows 10+ |
+| Option | Default | Description | Notes |
+| ------ | ------- | ----------- | ----- |
+| `HIDTOOL_BUILD_WITH_KEYBOARD` | `ON` | Build keyboard module | - |
+| `HIDTOOL_BUILD_WITH_MOUSE` | `ON` | Build mouse module | - |
+| `HIDTOOL_BUILD_SHARED` | `OFF` | Build as shared library | - |
+| `HIDTOOL_BUILD_EXAMPLE` | `ON` (top-level) | Build example programs | - |
+| `HIDTOOL_FORCE_IN_PIXEL` | `ON` | Force APIs related to mouse pointer position to be operated in physical pixel units | Winodws 10+ only |
 
 ```bash
-# 默认静态库构建
+# Default static library build
 cmake -B build -DCMAKE_BUILD_TYPE=Release
 
-# 构建动态库
+# Build shared library
 cmake -B build -DCMAKE_BUILD_TYPE=Release -DHIDTOOL_BUILD_SHARED=ON
 
-# 仅构建键盘模块
+# Build keyboard module only
 cmake -B build -DHIDTOOL_BUILD_WITH_MOUSE=OFF
 ```
 
-## 安装
+## Install
 
 ```bash
 cmake --install build --prefix /your/install/path
 ```
 
-## 集成
+## Integration
 
 ### CMake — find_package
 
@@ -85,15 +85,15 @@ add_subdirectory(hidtool)
 target_link_libraries(your_target PRIVATE hidtool)
 ```
 
-## API 文档
+## API Documentation
 
-### 总览
+### Overview
 
 ```cpp
-#include <hidtool/hidtool.hpp>  // 包含所有模块
+#include <hidtool/hidtool.hpp>  // Include all modules
 ```
 
-也可以单独包含各模块头文件：
+Individual module headers can also be included separately:
 
 ```cpp
 #include <hidtool/keyboard/keyboard_hooker.hpp>
@@ -104,47 +104,47 @@ target_link_libraries(your_target PRIVATE hidtool)
 
 ---
 
-### 工具函数
+### Utility Functions
 
 ```cpp
-// 检查当前环境是否支持指定 HID 类型的子模块
+// Check whether the current environment supports submodules for the specified HID type
 bool isHidTypeSupported(HidType hidType) noexcept;
 ```
 
 ---
 
-### 键盘模块
+### Keyboard Module
 
-#### `KeyboardHooker` — 键盘事件监听
+#### `KeyboardHooker` — Keyboard Event Listening
 
 ```cpp
 using KeyboardHooker;
 
-// 事件处理回调类型
-// 返回 true：正常传播事件；返回 false：阻止事件向其他程序传播
+// Event handler callback type
+// Return true: propagate event normally; Return false: block event propagation to other programs
 // using KeyboardEventHandler = bool (*)(const KeyboardEvent&);
 using KeyboardEventHandler;
 
 KeyboardHooker& hooker = KeyboardHooker::getInstance();
 
-// 设置事件处理回调
+// Set event handler callback
 hooker.setEventHandler([](const KeyboardEvent& event) -> bool
 {
     if (event.type == KeyboardEvent::ET_PRESS)
     {
-        // 处理按键按下事件
+        // Handle key press event
     }
-    return true; // 继续传播事件
+    return true; // Continue propagating event
 });
 
-hooker.run();    // 开始监听
-hooker.stop();   // 停止监听
+hooker.run();        // Start listening
+hooker.stop();       // Stop listening
 hooker.isRunning();
 ```
 
-> **注意**：不要在事件处理回调中调用 `KeyboardHooker` 的成员函数。
+> **Note**: Do not call `KeyboardHooker` member functions inside the event handler callback.
 
-#### `KeyboardSimulator` — 键盘输入模拟
+#### `KeyboardSimulator` — Keyboard Input Simulation
 
 ```cpp
 using KeyboardSimulator;
@@ -153,20 +153,20 @@ using KeyboardKey;
 KeyboardSimulator& sim = KeyboardSimulator::getInstance();
 sim.initialize();
 
-// 使用 KeyboardKey 枚举
+// Using KeyboardKey enum
 sim.pressKey(KBDKEY_A);
 sim.releaseKey(KBDKEY_A);
 sim.clickKey(KBDKEY_ENTER);    // pressKey + releaseKey
 
-// 使用平台原生键值
+// Using platform native key values
 sim.pressKey(0x41u);    // Windows VK_A
 
-// 发送组合键（Ctrl+C）
+// Send key combination (Ctrl+C)
 sim.pressKey(KBDKEY_CTRL);
 sim.clickKey(KBDKEY_C);
 sim.releaseKey(KBDKEY_CTRL);
 
-// 批量发送事件
+// Batch send events
 KeyboardEvent events[] =
 {
     KeyboardEvent::createPressEvent(KBDKEY_A),
@@ -177,42 +177,42 @@ sim.sendEvent(events, 2);
 sim.destroy();
 ```
 
-#### `KeyboardKey` — 键值枚举
+#### `KeyboardKey` — Key Value Enum
 
-库定义了一套跨平台的键值枚举 `KeyboardKey`，可与平台原生键值互相转换：
+The library defines a cross-platform key value enum `KeyboardKey` that can be converted to and from platform native key values:
 
 ```cpp
-// KeyboardKey -> 平台原生键值（Win: VK_*, macOS: kVK_*, Linux: KEY_*）
+// KeyboardKey -> platform native key value (Win: VK_*, macOS: kVK_*, Linux: KEY_*)
 uint32_t nativeKey = keyboardKeyToNativeKey(KBDKEY_A);
 
-// 平台原生键值 -> KeyboardKey
+// Platform native key value -> KeyboardKey
 KeyboardKey key = keyboardKeyFromNativeKey(0x41u);
 ```
 
-常用键值：
+Common key values:
 
-| 枚举 | 说明 |
-| ---- | ---- |
-| `KBDKEY_0` ~ `KBDKEY_9` | 数字键 |
-| `KBDKEY_A` ~ `KBDKEY_Z` | 字母键 |
-| `KBDKEY_F1` ~ `KBDKEY_F24` | 功能键 |
-| `KBDKEY_NUMPAD_0` ~ `KBDKEY_NUMPAD_9` | 小键盘数字键 |
-| `KBDKEY_CTRL` / `KBDKEY_CTRL_LEFT` / `KBDKEY_CTRL_RIGHT` | Ctrl 键 |
-| `KBDKEY_SHIFT` / `KBDKEY_SHIFT_LEFT` / `KBDKEY_SHIFT_RIGHT` | Shift 键 |
-| `KBDKEY_ALT` / `KBDKEY_ALT_LEFT` / `KBDKEY_ALT_RIGHT` | Alt 键（别名 `KBDKEY_OPTION`） |
-| `KBDKEY_META` / `KBDKEY_META_LEFT` / `KBDKEY_META_RIGHT` | Win/Command 键 |
-| `KBDKEY_ENTER` / `KBDKEY_RETURN` | 回车键 |
-| `KBDKEY_ESCAPE` / `KBDKEY_ESC` | ESC 键 |
-| `KBDKEY_SPACE` | 空格键 |
-| `KBDKEY_BACKSPACE` | 退格键 |
-| `KBDKEY_TAB` | Tab 键 |
-| `KBDKEY_LEFT` / `KBDKEY_RIGHT` / `KBDKEY_UP` / `KBDKEY_DOWN` | 方向键 |
+| Enum | Description |
+| ---- | ----------- |
+| `KBDKEY_0` ~ `KBDKEY_9` | Number keys |
+| `KBDKEY_A` ~ `KBDKEY_Z` | Letter keys |
+| `KBDKEY_F1` ~ `KBDKEY_F24` | Function keys |
+| `KBDKEY_NUMPAD_0` ~ `KBDKEY_NUMPAD_9` | Numpad digit keys |
+| `KBDKEY_CTRL` / `KBDKEY_CTRL_LEFT` / `KBDKEY_CTRL_RIGHT` | Ctrl key |
+| `KBDKEY_SHIFT` / `KBDKEY_SHIFT_LEFT` / `KBDKEY_SHIFT_RIGHT` | Shift key |
+| `KBDKEY_ALT` / `KBDKEY_ALT_LEFT` / `KBDKEY_ALT_RIGHT` | Alt key (alias `KBDKEY_OPTION`) |
+| `KBDKEY_META` / `KBDKEY_META_LEFT` / `KBDKEY_META_RIGHT` | Win/Command key |
+| `KBDKEY_ENTER` / `KBDKEY_RETURN` | Enter key |
+| `KBDKEY_ESCAPE` / `KBDKEY_ESC` | Escape key |
+| `KBDKEY_SPACE` | Space key |
+| `KBDKEY_BACKSPACE` | Backspace key |
+| `KBDKEY_TAB` | Tab key |
+| `KBDKEY_LEFT` / `KBDKEY_RIGHT` / `KBDKEY_UP` / `KBDKEY_DOWN` | Arrow keys |
 
 ---
 
-### 鼠标模块
+### Mouse Module
 
-#### `MouseHooker` — 鼠标事件监听
+#### `MouseHooker` — Mouse Event Listening
 
 ```cpp
 using MouseHooker;
@@ -230,7 +230,7 @@ hooker.setEventHandler([](const MouseEvent& event) -> bool
             // event.relPos.x, event.relPos.y
             break;
         case MouseEvent::ET_WHEEL:
-            // event.wheelDelta（单位量 120，正值远离用户，负值靠近用户）
+            // event.wheelDelta (unit 120, positive = away from user, negative = toward user)
             break;
         case MouseEvent::ET_DRAG:
             // event.drag.pos, event.drag.button
@@ -250,9 +250,9 @@ hooker.run();
 hooker.stop();
 ```
 
-> **注意**：不要在事件处理回调中调用 `MouseHooker` 的成员函数。
+> **Note**: Do not call `MouseHooker` member functions inside the event handler callback.
 
-#### `MouseSimulator` — 鼠标输入模拟
+#### `MouseSimulator` — Mouse Input Simulation
 
 ```cpp
 using MouseSimulator;
@@ -263,60 +263,60 @@ using MouseButton;
 MouseSimulator& sim = MouseSimulator::getInstance();
 sim.initialize();
 
-// 移动鼠标（绝对坐标，以虚拟屏幕空间为基准）
+// Move mouse (absolute coordinates, based on virtual screen space)
 sim.moveTo(AbsolutePos(100, 200));
 
-// 移动鼠标（相对偏移）
+// Move mouse (relative offset)
 sim.moveBy(RelativePos(10, -5));
 
-// 滚轮（单位量 120，正值向上，负值向下）
-sim.wheel(120);     // 向上滚动一格
-sim.wheel(-120);    // 向下滚动一格
+// Scroll wheel (unit 120, positive = up, negative = down)
+sim.wheel(120);     // Scroll up one notch
+sim.wheel(-120);    // Scroll down one notch
 
-// 鼠标按键（在当前位置）
+// Mouse buttons (at current position)
 sim.pressButton(MSBTN_LEFT);
 sim.releaseButton(MSBTN_LEFT);
 sim.clickButton(MSBTN_LEFT);
 sim.doubleClickButton(MSBTN_LEFT);
 
-// 在指定位置执行鼠标操作
+// Mouse operations at a specified position
 sim.clickButton(AbsolutePos(500, 300), MSBTN_LEFT);
 sim.wheel(AbsolutePos(500, 300), 120);
 
-// 拖拽（从当前位置拖拽到目标位置）
+// Drag (from current position to target position)
 sim.dragCombo(AbsolutePos(800, 400));
-// 拖拽（指定起始和终止位置）
+// Drag (specify start and end positions)
 sim.dragCombo(AbsolutePos(100, 100), AbsolutePos(800, 400), MSBTN_LEFT);
 
 sim.destroy();
 ```
 
-> **macOS 注意**：拖拽操作必须通过 `dragCombo()` 函数或 `pressButton()` + `dragTo()` + `releaseButton()` 的组合实现。而在其他平台下，`dragTo()` 与 `moveTo()` 等效。
+> **macOS Note**: Drag operations must use the `dragCombo()` function or the combination of `pressButton()` + `dragTo()` + `releaseButton()` to produce. `dragTo()` same as `moveTo()` on other platforms.
 
-可以通过以下方法获取发出的鼠标绝对移动事件的坐标范围，超出此范围的坐标将被钳制。
+The coordinate range of the emitted mouse absolute movement event can be obtained through the following method. Coordinates beyond this range will be clamped.
 
 ```cpp
-// 获取当前环境绝对坐标范围
+// Get the absolute coordinate range for the current environment.
 AbsolutePosRange range = MouseSimulator::getAbsoluteMoveRange();
-// Windows/macOS：虚拟屏幕空间范围
-// Linux：始终为 {0, 65535, 0, 65535}
+// Windows/macOS: virtual screen space range
+// Linux: always {0, 65535, 0, 65535}
 ```
 
-#### `MouseButton` — 鼠标按键枚举
+#### `MouseButton` — Mouse Button Enum
 
-| 枚举 | 说明 |
-| ---- | ---- |
-| `MSBTN_LEFT` | 左键 |
-| `MSBTN_RIGHT` | 右键 |
-| `MSBTN_MIDDLE` | 中键 |
-| `MSBTN_BACK` | 后退键 |
-| `MSBTN_FORWARD` | 前进键 |
+| Enum | Description |
+| ---- | ----------- |
+| `MSBTN_LEFT` | Left button |
+| `MSBTN_RIGHT` | Right button |
+| `MSBTN_MIDDLE` | Middle button |
+| `MSBTN_BACK` | Back button |
+| `MSBTN_FORWARD` | Forward button |
 
 ---
 
-## 完整使用示例
+## Full Usage Example
 
-### 示例：监听键盘并模拟鼠标点击
+### Example: Listen for Keyboard Events and Simulate Mouse Click
 
 ```cpp
 #include <hidtool/hidtool.hpp>
@@ -329,7 +329,7 @@ int main()
 
     kbdHooker.setEventHandler([](const KeyboardEvent& event) -> bool
     {
-        // 按下 F1 时，在 (500, 300) 处左键单击
+        // When F1 is pressed, left-click at (500, 300)
         if (event.type == KeyboardEvent::ET_PRESS &&
             event.nativeKey == keyboardKeyToNativeKey(KBDKEY_F1))
         {
@@ -341,7 +341,7 @@ int main()
 
     kbdHooker.run();
 
-    // 主线程等待...
+    // Main thread waiting...
 
     kbdHooker.stop();
     mouseSimulator.destroy();
@@ -349,22 +349,22 @@ int main()
 }
 ```
 
-## 示例项目
+## Example subproject
 
-[HID 事件监听](./example/echo/main.cpp)
+[HID event listener](../example/echo/main.cpp)
 
-> 监听键盘与鼠标事件，并打印事件信息。
+> Listen for keyboard and mouse events and print event information.
 
-[鼠标转圈](./example//mouse_circle/main.cpp)
+[Mouse circle](../example//mouse_circle/main.cpp)
 
-> 将鼠标以屏幕内接圆/椭圆为轨迹移动。
+> Move the mouse around the circle/ellipse inside the screen as the trajectory.
 
-[简易点击器](./example/simple_clicker/main.cpp)
+[Simple clicker](../example/simple_clicker/main.cpp)
 
-> 通过按下指定按键，在指定位置双击鼠标左键。
+> Double-click of the left mouse button at the specified position by pressing the designated key.
 
-## 许可证
+## License
 
-本项目基于 [MIT License](LICENSE) 开源。
+This project is open-sourced under the MIT License.
 
 Copyright (c) 2026 頔珞JaderoChan
