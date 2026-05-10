@@ -12,12 +12,11 @@ install/
 
 .DS_Store
 
+*.o
 *.a
 *.so
-*.o
 *.lib
 *.dll
-*.bin
 *.exe
 *.pdb
 
