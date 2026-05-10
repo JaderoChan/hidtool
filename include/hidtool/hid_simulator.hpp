@@ -12,19 +12,22 @@
 #endif // HIDTOOL_HAS_MOUSE
 
 /**
- * @defgroup Simulators HID 输入模拟器
- * @attention 在 **MacOS** 平台上，由于其 API 设计原因，实际上所有模拟函数都无法知晓其成功与否，
- * 所以，在 **MacOS** 平台上，即使你执行模拟函数并得到 `true` 值，其仍然可能不产生任何效果。通常来讲，
- * 你需要给你的应用程序获得 **辅助功能** 相关权限才能正常执行。
+ * @defgroup hid_simulators HID Input Simulator
+ * @attention On the **MacOS** platform, due to the design of its API.
+ * In fact, it is impossible to know the success or failure of any simulated function execution.
+ * So, on the **MacOS** platform, even if you execute the simulation function and get a `true` value,
+ * it still might not have any effect. Generally speaking,
+ * you need to grant your application **Accessibility** permissions to function properly.
  */
 
 namespace hidt
 {
 
 /**
- * @brief 集成所有 Simulator 模块
- * @ingroup Simulators
- * @note 相较于直接使用特定 Simulator 模块，使用此接口，性能会有所下降。
+ * @brief Integrates all Simulator modules
+ * @ingroup hid_simulators
+ * @note Compared to directly using a specific Hooker module,
+ * using this interface will result in some performance degradation.
  */
 class HIDTOOL_API HidSimulator
 {

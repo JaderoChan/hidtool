@@ -24,43 +24,43 @@
 // SOFTWARE.
 
 /**
- * @mainpage HID Tool 文档
- * @brief 跨平台 C++ HID 输入模拟与事件监听库
+ * @mainpage HID Tool Documentation
+ * @brief Cross-platform C++ HID input simulation and event listening library
  *
- * @section IntroSec 项目简介
+ * @section intro_sec Project Introduction
  *
- * HID Tool 是一个跨平台的 C++ HID（人机接口设备）输入模拟与事件监听库，
- * 支持全局键盘监听、键盘模拟、全局鼠标监听和鼠标模拟（移动、点击、滚轮、拖拽）。
+ * HID Tool is a cross-platform C++ HID (Human Interface Device) input simulation and event listening library,
+ * supporting global keyboard listening, keyboard simulation, global mouse listening, and mouse simulation (movement, click, scroll, drag).
  *
- * 采用 C++11 标准，单例模式，线程安全，支持 Windows / macOS / Linux。
+ * It adopts the C++11 standard, singleton pattern, thread-safe, and supports Windows / macOS / Linux.
  *
- * @section FeatureSec 核心特性
+ * @section feature_sec Core Features
  *
- * - 键盘模块：全局键盘事件监听、键盘输入模拟
- * - 鼠标模块：全局鼠标事件监听、鼠标输入模拟
- * - 跨平台支持：Windows、macOS、Linux
- * - C++11 兼容
- * - 支持静态库 / 动态库构建
- * - 单例模式，线程安全
+ * - Keyboard Module: Global keyboard event listening, keyboard input simulation
+ * - Mouse Module: Global mouse event listening, mouse input simulation
+ * - Cross-platform Support: Windows, macOS, Linux
+ * - C++11 Compatible
+ * - Supports static library / dynamic library builds
+ * - Singleton pattern, thread-safe
  *
- * @section PlatformSec 平台支持
+ * @section platform_sec Platform Support
  *
- * | 平台     | 状态 | 备注 |
- * |----------|------|------|
- * | Windows  | ✅ 支持 | - |
- * | macOS    | ✅ 支持 | 需要辅助功能权限 |
- * | Linux    | ✅ 支持 | 需要管理员权限 |
+ * | Platform  | Status | Notes |
+ * |-----------|--------|-------|
+ * | Windows   | ✅ Supported | - |
+ * | macOS     | ✅ Supported | Requires accessibility permissions |
+ * | Linux     | ✅ Supported | Requires administrator permissions |
  *
- * @section RequireSec 编译要求
+ * @section require_sec Compilation Requirements
  *
  * - CMake >= 3.26
- * - C++11 编译器
- * - macOS：依赖 CoreFoundation、Carbon、CoreGraphics
- * - Linux：依赖 pthreads
+ * - C++11 Compiler
+ * - macOS: Depends on CoreFoundation, Carbon, CoreGraphics
+ * - Linux: Depends on pthreads
  *
- * @section BuildSec 构建与安装
+ * @section build_sec Build and Installation
  *
- * @subsection BuildSub 构建命令
+ * @subsection build_subsec Build Commands
  *
  * @code{.sh}
  * git clone https://github.com/JaderoChan/hidtool.git
@@ -69,58 +69,58 @@
  * cmake --build build
  * @endcode
  *
- * @subsection InstallSub 安装命令
+ * @subsection install_subsec Installation Commands
  *
  * @code{.sh}
  * cmake --install build --prefix /your/install/path
  * @endcode
  *
- * @section CMakeOptionSec CMake 选项
+ * @section cmake_option_sec CMake Options
  *
- * | 选项 | 默认值 | 说明 |
- * |------|--------|------|
- * | HIDTOOL_BUILD_WITH_KEYBOARD | ON | 构建键盘模块 |
- * | HIDTOOL_BUILD_WITH_MOUSE | ON | 构建鼠标模块 |
- * | HIDTOOL_BUILD_SHARED | OFF | 构建为动态库 |
- * | HIDTOOL_BUILD_EXAMPLE | ON | 构建示例程序 |
+ * | Option | Default Value | Description |
+ * |--------|---------------|-------------|
+ * | HIDTOOL_BUILD_WITH_KEYBOARD | ON | Build keyboard module |
+ * | HIDTOOL_BUILD_WITH_MOUSE | ON | Build mouse module |
+ * | HIDTOOL_BUILD_SHARED | OFF | Build as shared library |
+ * | HIDTOOL_BUILD_EXAMPLE | ON | Build example programs |
  *
- * @section IntegrateSec 项目集成
+ * @section integrate_sec Project Integration
  *
- * @subsection IntegrateFindpackage find_package 方式
+ * @subsection integrate_find_package_subsec find_package Method
  *
  * @code{.cmake}
  * find_package(hidtool REQUIRED)
  * target_link_libraries(your_target PRIVATE hidtool)
  * @endcode
  *
- * @subsection IntegrateAddSubdirectory add_subdirectory 方式
+ * @subsection integrate_add_subdirectory_subsec add_subdirectory Method
  *
  * @code{.cmake}
  * add_subdirectory(hidtool)
  * target_link_libraries(your_target PRIVATE hidtool)
  * @endcode
  *
- * @section ModuleSec 模块总览
+ * @section module_sec Module Overview
  *
- * @subsection KeyboardSec 键盘模块
+ * @subsection keyboard_sec Keyboard Module
  *
- * - <b>KeyboardHooker</b>：全局键盘事件监听
- * - <b>KeyboardSimulator</b>：键盘按键模拟
- * - <b>KeyboardKey</b>：跨平台键值枚举（如 KBDKEY_A、KBDKEY_ENTER）
+ * - <b>KeyboardHooker</b>: Global keyboard event listener
+ * - <b>KeyboardSimulator</b>: Keyboard key simulation
+ * - <b>KeyboardKey</b>: Cross-platform key enumeration (e.g., KBDKEY_A, KBDKEY_ENTER)
  *
- * @subsection MouseSec 鼠标模块
+ * @subsection mouse_sec Mouse Module
  *
- * - <b>MouseHooker</b>：全局鼠标事件监听
- * - <b>MouseSimulator</b>：鼠标操作模拟
- * - <b>MouseButton</b>：鼠标按键枚举（MSBTN_LEFT、MSBTN_RIGHT 等）
+ * - <b>MouseHooker</b>: Global mouse event listener
+ * - <b>MouseSimulator</b>: Mouse operation simulator
+ * - <b>MouseButton</b>: Mouse button enumeration (MSBTN_LEFT, MSBTN_RIGHT, etc.)
  *
- * @section ExampleSec 示例项目
+ * @section example_sec Example Projects
  *
- * - HID 事件监听：实时打印键盘鼠标事件
- * - 鼠标转圈：让鼠标沿屏幕内接圆/椭圆轨迹运动
- * - 简易点击器：按键触发鼠标自动点击
+ * - HID Event Listener: Real-time printing of keyboard and mouse events.
+ * - Mouse Circling: Make the mouse move along a circular/elliptical trajectory on the screen.
+ * - Simple Clicker: Trigger automatic mouse clicks with a key press.
  *
- * @section AuthorSec 信息
+ * @section author_sec Information
  *
  * @author 頔珞JaderoChan
  * @version 2.3.2
@@ -132,7 +132,7 @@
 
 /**
  * @file
- * @brief 包含所有子模块头文件
+ * @brief Include all submodule header files
  */
 
 #ifndef HIDTOOL_HIDTOOL_HPP
@@ -146,8 +146,7 @@
 
 /**
  * @namespace hidt
- * @brief HID 工具库顶级命名空间
- * @details 包含键盘/鼠标监听与模拟所有模块
+ * @brief Top-level namespace of HID Tool library.
  */
 namespace hidt
 {}

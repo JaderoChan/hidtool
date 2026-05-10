@@ -26,7 +26,7 @@ struct RelativePos
     int32_t dy = 0;
 };
 
-/** @brief 绝对移动事件的坐标范围。 */
+/** @brief The coordinate range of absolute movement events. */
 struct AbsolutePosRange
 {
     int32_t minX = 0;
@@ -71,7 +71,7 @@ inline AbsolutePos& operator+=(AbsolutePos& lhs, int32_t rhs) noexcept
 inline AbsolutePos& operator-=(AbsolutePos& lhs, int32_t rhs) noexcept
 { lhs.x -= rhs; lhs.y -= rhs; return lhs; }
 
-/** @brief 将给定的绝对坐标钳制在指定范围内。 */
+/** @brief Clamp the given absolute coordinates within the specified range. */
 inline AbsolutePos clampAbsolutePos(const AbsolutePos& absPos, const AbsolutePosRange& absPosRange) noexcept
 {
     AbsolutePos result = absPos;

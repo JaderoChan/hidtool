@@ -10,9 +10,9 @@ namespace hidt
 class KeyboardSimulatorPrivate;
 
 /**
- * @brief 键盘输入模拟器
- * @ingroup Simulators
- * @note 若未特别说明，此类的所有成员函数都是可重入的。
+ * @brief Keyboard Input Simulator
+ * @ingroup hid_simulators
+ * @note Unless otherwise specified, all member functions of this class are reentrant.
  */
 class HIDTOOL_API KeyboardSimulator
 {
@@ -27,12 +27,12 @@ public:
     size_t sendEvent(const KeyboardEvent* events, size_t count);
 
     /**
-     * @defgroup KeyboardSimulatorConvenient 键盘模拟便利函数
-     * @brief 等效于 \ref sendEvent() 相应的事件或事件组。
+     * @defgroup keyboard_simulator_convenient Keyboard simulation utility functions
+     * @brief Equivalent to send event or send a group events by \ref sendEvent().
      */
 
     /**
-     * @ingroup KeyboardSimulatorConvenient
+     * @ingroup keyboard_simulator_convenient
      * @{
      */
 

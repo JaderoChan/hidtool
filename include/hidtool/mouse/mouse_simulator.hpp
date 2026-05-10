@@ -10,10 +10,11 @@ namespace hidt
 class MouseSimulatorPrivate;
 
 /**
- * @brief 鼠标输入模拟
- * @ingroup Simulators
- * @note 若未特别说明，此类的所有成员函数都是线程安全的。
- * 此外，除 \ref MouseSimulator::initialize() 和 \ref MouseSimulator::destroy() 外，其他成员函数都是可重入的。
+ * @brief Mouse Input Simulator
+ * @ingroup hid_simulators
+ * @note Unless otherwise specified, all member functions of this class are reentrant.
+ * In addition, except for \ref MouseSimulator::initialize() and \ref MouseSimulator::destroy(),
+ * other member functions are reentrant.
  */
 class HIDTOOL_API MouseSimulator
 {
@@ -21,12 +22,13 @@ public:
     static MouseSimulator& getInstance();
 
     /**
-     * @brief 获得当前环境下发送的绝对移动事件的坐标范围。
-     * @note 当发送的绝对移动事件的坐标超出此范围时将会被钳制。
-     * @note 此 API 会受环境 DPI 策略的影响。
-     * 在 **Windows** 平台下可通过启用 `HIDTOOL_FORCE_IN_PIXEL` 编译选项强制以物理像素为单位。
-     * @details 在 **Windows** 和 **MacOS** 平台下，其等同于虚拟屏幕空间的范围。
-     * 在 **Linux** 平台下，其始终等同于 {0, 65535, 0, 65535}。
+     * @brief Get the coordinate range of absolute movement events sent in the current environment.
+     * @note When the coordinates of the sent absolute movement event exceed this range, they will be clamped.
+     * @note This API is affected by the environment's DPI policy.
+     * On the **Windows** platform, the `HIDTOOL_FORCE_IN_PIXEL` compile option can be enabled to
+     * force the use of physical pixels as units.
+     * @details On the **Windows** and **MacOS** platforms, it corresponds to the range of the virtual screen space.
+     * On the **Linux** platform, it always corresponds to {0, 65535, 0, 65535}.
      */
     static AbsolutePosRange getAbsoluteMoveRange();
 
@@ -38,38 +40,41 @@ public:
     size_t sendEvent(const MouseEvent* events, size_t count);
 
     /**
-     * @defgroup MouseSimulatorConvenient 鼠标模拟便利函数
-     * @brief 等效于 \ref sendEvent() 相应的事件或事件组。
+     * @defgroup mouse_simulator_convenient Mouse simulation utility functions
+     * @brief Equivalent to send event or send a group events by \ref sendEvent().
      */
 
     /**
-     * @ingroup MouseSimulatorConvenient
+     * @ingroup mouse_simulator_convenient
      * @{
      */
 
     /**
-     * @brief 鼠标绝对移动
-     * @note 当发送超过坐标范围的绝对移动事件时，会将其钳制在合法范围内。
+     * @brief Mouse absolute movement
+     * @note When an absolute move event exceeding the coordinate range is sent,
+     * it will be clamped within the valid range.
      * @sa \ref MouseEvent::absPos
      */
     bool moveTo(const AbsolutePos& absPos);
 
     /**
-     * @brief 鼠标相对移动
+     * @brief Mouse relative movement
      * @sa \ref MouseEvent::relPos
      */
     bool moveBy(const RelativePos& relPos);
 
     /**
-     * @brief 鼠标滚轮滚动
-     * @param wheelDelta 单位量为 `120`。值为正时，滚轮朝远离用户的方向滚动；值为负时，滚轮朝靠近用户的方向滚动。
+     * @brief Mouse wheel scrolling
+     * @param wheelDelta The unit amount is `120`.
+     * When the value is positive, the scroll wheel moves away from the user;
+     * when the value is negative, the scroll wheel moves toward the user.
      * @sa \ref MouseEvent::wheelDelta
      */
     bool wheel(int32_t wheelDelta);
 
     /**
-     * @name 鼠标按键函数
-     * @brief 在当前鼠标指针位置执行按键函数。
+     * @name Mouse button function
+     * @brief Execute the button function at the current mouse pointer position.
      * @{
      */
 
@@ -78,18 +83,18 @@ public:
     bool clickButton(MouseButton button, size_t interval = 0);
 
     /**
-     * @brief 鼠标双击
-     * @param interval1 点击事件中按键按下与释放的时间间隔。
-     * @param interval2 两次点击事件的时间间隔。
+     * @brief Double-click the mouse
+     * @param interval1 The time interval between key press and release in a click event.
+     * @param interval2 The time interval between two click events.
      */
     bool doubleClickButton(MouseButton button, size_t interval1 = 0, size_t interval2 = 10);
 
     /** @} */
 
     /**
-     * @name 带坐标的鼠标函数
-     * @brief 在指定位置执行函数。
-     * @note 等效于绝对移动事件与其他事件的组合。
+     * @name Mouse function with coordinates
+     * @brief Execute the function at the specified location.
+     * @note Equivalent to a combination of absolute movement events and other events.
      * @{
      */
 
@@ -98,16 +103,16 @@ public:
     bool releaseButton(const AbsolutePos& absPos, MouseButton button, size_t interval = 10);
 
     /**
-     * @param interval1 移动事件与点击事件的时间间隔。
-     * @param interval2 点击事件中按键按下与释放的时间间隔。
+     * @param interval1 The time interval between the move event and the click event.
+     * @param interval2 The time interval between key press and release in a click event.
      */
     bool clickButton(const AbsolutePos& absPos, MouseButton button,
         size_t interval1 = 10, size_t interval2 = 0);
 
     /**
-     * @param interval1 移动事件与点击事件的时间间隔。
-     * @param interval2 点击事件中按键按下与释放的时间间隔。
-     * @param interval3 两次点击事件的时间间隔。
+     * @param interval1 The time interval between the move event and the click event.
+     * @param interval2 The time interval between key press and release in a click event.
+     * @param interval3 The time interval between two click events.
      */
     bool doubleClickButton(const AbsolutePos& absPos, MouseButton button,
         size_t interval1 = 10, size_t interval2 = 0, size_t interval3 = 10);
@@ -115,28 +120,32 @@ public:
     /** @} */
 
     /**
-     * @brief 鼠标拖拽移动
-     * @note 在 **Windows** 和 **Linux** 平台下，等同于绝对移动事件，参数 `button` 将被丢弃。
-     * 在 **MacOS** 平台下，其原生支持。
-     * @sa \ref dragComboAnchor
+     * @brief Mouse drag move
+     * @note On **Windows** and **Linux** platforms, it is equivalent to an absolute move event,
+     * and the `button` parameter will be discarded. On the **MacOS** platform, it is natively supported.
+     * @sa \ref drag_combo_anchor
      */
     bool dragTo(const AbsolutePos& absPos, MouseButton button = MSBTN_LEFT);
 
     /**
-     * @anchor dragComboAnchor
-     * @name 鼠标拖拽组合
-     * @brief 从指定起始位置拖拽鼠标至指定终点位置。
-     * @details 等同于鼠标按键按压事件、拖拽事件与鼠标按键释放事件的组合。
+     * @anchor drag_combo_anchor
+     * @name Mouse drag operation combination
+     * @brief Drag the mouse from the specified starting position to the specified ending position.
+     * @details Equivalent to a combination of mouse button press events, drag events, and mouse button release events.
      * @{
      */
 
-    /** @param 拖拽事件中按键按下、拖拽至与按键释放的事件间隔。 */
+    /**
+     * @param interval The interval between the key press, drag, and key release events during
+     * a drag-and-drop operation.
+     */
     bool dragCombo(const AbsolutePos& endPos,
         MouseButton button = MSBTN_LEFT, size_t interval = 0);
 
     /**
-     * @param interval1 移动到 `startPos` 事件与拖拽事件的时间间隔。
-     * @param interval2 拖拽事件中按键按下、拖拽至与按键释放的事件间隔。
+     * @param interval1 The time interval between the event of move to `startPos` and the drag event.
+     * @param interval2 The interval between the key press, drag, and key release events during
+     * a drag-and-drop operation.
      */
     bool dragCombo(const AbsolutePos& startPos, const AbsolutePos& endPos,
         MouseButton button = MSBTN_LEFT, size_t interval1 = 10, size_t interval2 = 0);

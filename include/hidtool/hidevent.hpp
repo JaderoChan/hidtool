@@ -12,25 +12,25 @@
 #endif // HIDTOOL_HAS_MOUSE
 
 /**
- * @defgroup HidEvents HID 设备事件
+ * @defgroup hid_events HID events
  */
 
 namespace hidt
 {
 
 /**
- * @brief HID 设备事件
- * @ingroup HidEvents
+ * @brief HID event
+ * @ingroup hid_events
  */
 struct HidEvent
 {
-    /** @brief HID 设备事件类型 */
+    /** @brief HID event types */
     enum EventType : uint8_t
     {
-        ET_NONE,        ///< 空事件，事件默认类型
-        ET_KEYBOARD,    ///< 键盘事件
-        ET_MOUSE,       ///< 鼠标事件
-        ET_SLEEP        ///< 睡眠事件
+        ET_NONE,        ///< Invalid event, default event type
+        ET_KEYBOARD,    ///< Keyboard event
+        ET_MOUSE,       ///< Mouse event
+        ET_SLEEP        ///< Sleep event
     };
 
     constexpr HidEvent() noexcept
@@ -47,7 +47,7 @@ struct HidEvent
     #ifdef HIDTOOL_HAS_MOUSE
         MouseEvent mouseEvent;
     #endif // HIDTOOL_HAS_MOUSE
-        size_t sleepMs; ///< 睡眠时间，单位为毫秒
+        size_t sleepMs; ///< Sleep time in millisecond
     };
 };
 

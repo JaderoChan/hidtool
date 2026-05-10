@@ -6,18 +6,18 @@
 namespace hidt
 {
 
-/** @brief 跨平台键盘键值枚举 */
+/** @brief Cross-platform keyboard key value enumeration */
 enum KeyboardKey : uint32_t
 {
     /**
-     * @name 空值
+     * @name Invalid key
      * @{
      */
     KBDKEY_NONE     = 0x0000,
     /** @} */
 
     /**
-     * @name 数字键
+     * @name Numeric keys
      * @{
      */
     KBDKEY_0        = 0x0030,
@@ -33,7 +33,7 @@ enum KeyboardKey : uint32_t
     /** @} */
 
     /**
-     * @name 字母键
+     * @name Letter keys
      * @{
      */
     KBDKEY_A        = 0x0041,
@@ -65,7 +65,7 @@ enum KeyboardKey : uint32_t
     /** @} */
 
     /**
-     * @name 空白字符键
+     * @name Whitespace character keys
      * @{
      */
     KBDKEY_TAB      = 0x8000,
@@ -74,7 +74,7 @@ enum KeyboardKey : uint32_t
     /** @} */
 
     /**
-     * @name 导航键
+     * @name Navigation keys
      * @{
      */
     KBDKEY_HOME,
@@ -88,7 +88,7 @@ enum KeyboardKey : uint32_t
     /** @} */
 
     /**
-     * @name 编辑键
+     * @name Editing keys
      * @{
      */
     KBDKEY_BACKSPACE,
@@ -98,7 +98,7 @@ enum KeyboardKey : uint32_t
     /** @} */
 
     /**
-     * @name Fn 功能键
+     * @name Function keys
      * @{
      */
     KBDKEY_F1,
@@ -128,7 +128,7 @@ enum KeyboardKey : uint32_t
     /** @} */
 
     /**
-     * @name 小键盘数字键
+     * @name Numeric keys on keypad
      * @{
      */
     KBDKEY_NUMPAD_0,
@@ -144,32 +144,32 @@ enum KeyboardKey : uint32_t
     /** @} */
 
     /**
-     * @name 小键盘算数符与回车键
+     * @name Arithmetic operator keys and enter key on keypad
      * @{
      */
-    KBDKEY_NUMPAD_ADD,          ///< '+' on numpad
-    KBDKEY_NUMPAD_SUBTRACT,     ///< '-' on numpad
-    KBDKEY_NUMPAD_MULTIPLY,     ///< '*' or '×' on numpad
-    KBDKEY_NUMPAD_DIVIDE,       ///< '/' or '÷' on numpad
-    KBDKEY_NUMPAD_DECIMAL,      ///< '.' on numpad
-    KBDKEY_NUMPAD_SEPARATOR,    ///< ',' on numpad
-    KBDKEY_NUMPAD_EQUAL,        ///< ' =' on numpad
-    KBDKEY_NUMPAD_ENTER,        ///< Enter on numpad
+    KBDKEY_NUMPAD_ADD,          ///< '+' on keypad
+    KBDKEY_NUMPAD_SUBTRACT,     ///< '-' on keypad
+    KBDKEY_NUMPAD_MULTIPLY,     ///< '*' or '×' on keypad
+    KBDKEY_NUMPAD_DIVIDE,       ///< '/' or '÷' on keypad
+    KBDKEY_NUMPAD_DECIMAL,      ///< '.' on keypad
+    KBDKEY_NUMPAD_SEPARATOR,    ///< ',' on keypad
+    KBDKEY_NUMPAD_EQUAL,        ///< ' =' on keypad
+    KBDKEY_NUMPAD_ENTER,        ///< Enter on keypad
     /** @} */
 
     /**
-     * @name 应用键
+     * @name Application keys
      * @{
      */
     KBDKEY_ESCAPE,
-    KBDKEY_PAUSE,               ///< Not is \ref KBDKEY_Media_Play_Pause
-    KBDKEY_PLAY,                ///< Not is \ref KBDKEY_Media_Play_Pause
+    KBDKEY_PAUSE,               ///< Not is \ref KBDKEY_MEDIA_PLAY_PAUSE
+    KBDKEY_PLAY,                ///< Not is \ref KBDKEY_MEDIA_PLAY_PAUSE
     KBDKEY_HELP,
     KBDKEY_MENU,
     /** @} */
 
     /**
-     * @name 多媒体键
+     * @name Multimedia keys
      * @{
      */
     KBDKEY_MEDIA_NEXT,
@@ -179,7 +179,7 @@ enum KeyboardKey : uint32_t
     /** @} */
 
     /**
-     * @name 音量键
+     * @name Volume keys
      * @{
      */
     KBDKEY_VOLUME_UP,
@@ -188,7 +188,7 @@ enum KeyboardKey : uint32_t
     /** @} */
 
     /**
-     * @name 锁定键
+     * @name Lock keys
      * @{
      */
     KBDKEY_CAPS_LOCK,
@@ -197,7 +197,7 @@ enum KeyboardKey : uint32_t
     /** @} */
 
     /**
-     * @name 设备键
+     * @name Device keys
      * @{
      */
     KBDKEY_PRINT_SCREEN,
@@ -205,13 +205,13 @@ enum KeyboardKey : uint32_t
     /** @} */
 
     /**
-     * @name OEM (Original Equipment Manufacturer) 原始设备制造商键
-     * @note 以下键的命名可能因设备而异，此处均使用美国标准键盘布局。
+     * @name OEM (Original Equipment Manufacturer) keys
+     * @note The naming of the following keys may vary by device; the US standard keyboard layout is used here.
      * @{
      */
     KBDKEY_LEFT_QUOTE,          ///< '`~' on US standard keyboard
     KBDKEY_MINUS,               ///< '-_' on US standard keyboard
-    KBDKEY_EQUAL,               ///< ' =+' on US standard keyboard
+    KBDKEY_EQUAL,               ///< '=+' on US standard keyboard
     KBDKEY_LEFT_BRACKET,        ///< '[{' on US standard keyboard
     KBDKEY_RIGHT_BRACKET,       ///< ']}' on US standard keyboard
     KBDKEY_SEMICOLON,           ///< ';:' on US standard keyboard
@@ -224,7 +224,7 @@ enum KeyboardKey : uint32_t
     /** @} */
 
     /**
-     * @name 修饰符键
+     * @name Modifier keys
      * @{
      */
     KBDKEY_FUNCTION,
@@ -243,7 +243,7 @@ enum KeyboardKey : uint32_t
     /** @} */
 
     /**
-     * @name 别名
+     * @name Key alias
      * @{
      */
     KBDKEY_RETURN               = KBDKEY_ENTER,
@@ -262,19 +262,19 @@ enum KeyboardKey : uint32_t
 };
 
 /**
- * @brief 返回给定 \ref KeyboardKey 对应的平台相关的原生键值。
- * @return 如果给定 \ref KeyboardKey 不存在对应的原生键值返回 `0`，否则返回其对应的原生键值。
- * @note
- * 在 **Windows** 平台下，其返回的原生键值是 `VK_*`；
- * 在 **MacOS** 平台下，其返回的原生键值是 `kVK_*`；
- * 在 **Linux** 平台下，其返回的原生键值是 `KEY_*`。
+ * @brief Returns the platform-specific native key value corresponding to the given \ref KeyboardKey.
+ * @return If the given \ref KeyboardKey value does not have a corresponding native key value, return `0`;
+ * otherwise, return its corresponding native key value.
+ * @note On the **Windows** platform, the native key value it returns is `VK_*`.
+ * @note On the **MacOS** platform, the native key value it returns is `kVK_*`.
+ * @note On the **Linux** platform, the native key value it returns is `KEY_*`.
  */
 HIDTOOL_API uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept;
 
 /**
- * @brief 返回给定平台相关的原生键值对应的 \ref KeyboardKey。
- * @return 如果给定的原生键值不存在对应的 \ref KeyboardKey 返回 \ref KeyboardKey::KBDKEY_NONE，
- * 否则返回其对应的 \ref KeyboardKey。
+ * @brief Return the corresponding \ref KeyboardKey for the given platform-specific native key value.
+ * @return If the given native key value does not have a corresponding \ref KeyboardKey,
+ * return \ref KeyboardKey::KBDKEY_NONE, otherwise, return its corresponding \ref KeyboardKey.
  */
 HIDTOOL_API KeyboardKey keyboardKeyFromNativeKey(uint32_t nativeKey) noexcept;
 

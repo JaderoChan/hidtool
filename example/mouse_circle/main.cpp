@@ -36,9 +36,10 @@ int main(int argc, char* argv[])
         msSim.moveTo({x, y});
         th += 0.05;
 
-        // 使用 MSVC 编译器时禁用睡眠，因为 MSVC 的 `std::this_thread::sleep_for()` 在微秒级别上有实现缺陷。
-        // 其实际调用了 Windows 的 `Sleep()` 函数，而此函数的最小精度大约是 15ms。
-        // 会使此程序导致运行后，鼠标运动极其缓慢。
+        // Disable sleep when using the MSVC compiler,
+        // as MSVC's std::this_thread::sleep_for() has implementation flaws at the microsecond level.
+        // It actually calls Windows's Sleep() function, whose minimum precision is approximately 15ms.
+        // This will cause the program to make the mouse movement extremely slow after running.
     #ifndef _MSC_VER
         std::this_thread::sleep_for(std::chrono::microseconds(100));
     #endif

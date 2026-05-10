@@ -8,38 +8,41 @@ namespace hidt
 {
 
 /**
- * @brief 鼠标事件
- * @ingroup HidEvents
+ * @brief Mouse event
+ * @ingroup hid_events
  */
 struct MouseEvent
 {
-    /** @brief 鼠标事件类型 */
+    /** @brief Mouse event types */
     enum EventType : uint8_t
     {
-        ET_NONE,        ///< 空事件，事件默认类型
+        ET_NONE,        ///< Invalid event, default event type
 
         /**
-         * @brief 鼠标绝对移动事件
-         * @note 通过 \ref MouseSimulator 发送的此类型事件会将数据钳制在合法范围中，
-         * 但 \ref MouseHooker 并不会尝试钳制其接收到的此类型事件。
+         * @brief Mouse absolute movement event
+         * @note This type of event sent via \ref MouseSimulator will clamp the data within the valid range.
+         * But \ref MouseHooker does not attempt to clamp this type of event it receives.
          * @sa \ref MouseSimulator::getAbsoluteMoveRange()
          */
         ET_ABS_MOVE,
 
-        ET_REL_MOVE,    ///< 鼠标相对移动事件
-        ET_WHEEL,       ///< 鼠标滚轮事件
+        ET_REL_MOVE,    ///< Mouse relative movement event
+        ET_WHEEL,       ///< Mouse wheel event
 
         /**
-         * @brief 鼠标拖拽事件
-         * @note 在 **Windows** 和 **Linux** 平台下，此事件永远不会被 \ref MouseHooker 的事件处理程序接收到。
-         * 当在上述两个平台下发送此类型的事件时，其等同于绝对移动事件，字段 \ref MouseEvent::drag.button 将被丢弃。
-         * 在 **MacOS** 平台下，无论是 \ref MouseHooker 还是 \ref MouseSimulator，都原生支持此类型事件。
+         * @brief Mouse drag event
+         * @note On **Windows** and **Linux** platforms,
+         * this type of event will never be received by the event handler of \ref MouseHooker.
+         * When sending this type of event on the two platforms mentioned above,
+         * it is equivalent to an absolute move event, and the field \ref MouseEvent::drag.button will be discarded.
+         * @note On the **MacOS** platform,
+         * both \ref MouseHooker and \ref MouseSimulator natively support this type of event.
          */
         ET_DRAG,
 
-        ET_PRESS,       ///< 鼠标按键按下事件
-        ET_RELEASE,     ///< 鼠标按键释放事件
-        ET_SLEEP        ///< 睡眠事件
+        ET_PRESS,       ///< Mouse button press event
+        ET_RELEASE,     ///< Mouse button release event
+        ET_SLEEP        ///< Sleep event
     };
 
     constexpr MouseEvent() noexcept
@@ -48,12 +51,12 @@ struct MouseEvent
         : type(mouseEventType), sleepMs(0) {}
 
     /**
-     * @defgroup MouseEventFactory 鼠标事件工厂函数
-     * @brief 便于构造指定类型的鼠标事件。
+     * @defgroup mouse_event_factory Mouse event factory function
+     * @brief Facilitates the construction of specified types of mouse events.
      */
 
     /**
-     * @ingroup MouseEventFactory
+     * @ingroup mouse_event_factory
      * @{
      */
 
@@ -135,37 +138,45 @@ struct MouseEvent
     union
     {
         /**
-         * @brief 绝对移动事件坐标
+         * @brief Absolute movement event coordinates
          * @note
-         * 在 **Windows** 和 **MacOS** 平台下，无论是 \ref MouseHooker 事件处理函数中获得的绝对移动事件还是
-         * 通过 \ref MouseSimulator 发送的绝对移动事件，此坐标始终以虚拟屏幕空间范围为基准。
-         * 在 **Linux** 平台下，通过 \ref MouseHooker 获得的绝对移动事件坐标范围依赖于设备厂商，
-         * 通过 \ref MouseSimulator 发送的绝对移动事件，此坐标在 X 和 Y 轴上始终限定为 `[0, 65535]`。
+         * On **Windows** and **MacOS** platforms,
+         * whether it is the absolute movement event obtained in the \ref MouseHooker event handler or
+         * the absolute movement event sent through \ref MouseSimulator, this coordinate is always
+         * based on the virtual screen space range.
+         * @note
+         * On the **Linux** platform, the range of absolute movement event coordinates
+         * obtained through \ref MouseHooker depends on the device manufacturer.
+         * Absolute movement events sent via \ref MouseSimulator are always constrained to
+         * `[0, 65535]` on the X and Y axes.
          * @sa \ref MouseSimulator::getAbsoluteMoveRange()
          */
         AbsolutePos absPos;
 
         /**
-         * @brief 相对移动事件坐标
-         * @details 由于 **MacOS** 平台下没有原生支持相对移动的 API，
-         * 所以在实现中将通过计算后的绝对移动坐标模拟相对移动。
+         * @brief Relative movement event coordinates
+         * @note Since the **MacOS** platform does not natively support relative movement APIs,
+         * the implementation simulates relative movement through calculated absolute movement coordinates.
          */
         RelativePos relPos;
 
         /**
-         * @brief 鼠标滚轮事件滚动量
-         * @note 单位量为 `120`。值为正时，滚轮朝远离用户的方向滚动；值为负时，滚轮朝靠近用户的方向滚动。
-         * @attention 若发送事件的滚动量绝对值小于 `120`，可能不会有效果。
+         * @brief Mouse wheel event scroll amount
+         * @note The unit amount is `120`.
+         * @note When the value is positive, the scroll wheel moves away from the user;
+         * when the value is negative, the scroll wheel moves toward the user.
+         * @attention If the absolute value of the scroll amount for the dispatched event is less than `120`,
+         * it may not have any effect.
          */
         int32_t wheelDelta;
 
         struct
         {
-            AbsolutePos pos;    ///< 拖拽事件鼠标绝对移动坐标
-            MouseButton button; ///< 拖拽事件鼠标按键
-        } drag; ///< 鼠标拖拽事件数据
-        MouseButton button;     ///< 鼠标按键
-        size_t sleepMs;         ///< 睡眠时间，单位为毫秒
+            AbsolutePos pos;    ///< Drag event mouse absolute movement coordinates
+            MouseButton button; ///< Drag event mouse button
+        } drag; ///< Mouse drag event data
+        MouseButton button;     ///< Mouse button
+        size_t sleepMs;         ///< Sleep time in millisecond
     };
 };
 

@@ -6,14 +6,14 @@
 namespace hidt
 {
 
-/** @brief HID 设备类型 */
+/** @brief HID Device types */
 enum HidType : uint8_t
 {
     HIDTYPE_KEYBOARD,
     HIDTYPE_MOUSE
 };
 
-/** @brief 检查当前环境是否支持指定 HID 类型的子模块。 */
+/** @brief Check if the current environment supports the specified HID type submodule. */
 HIDTOOL_API bool isHidTypeSupported(HidType hidType) noexcept;
 
 } // namespace hidt

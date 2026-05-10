@@ -6,7 +6,7 @@
 namespace hidt
 {
 
-/** @brief 鼠标按键键值枚举 */
+/** @brief Mouse button key value enumeration */
 enum MouseButton : uint8_t
 {
     MSBTN_NONE,

@@ -14,7 +14,7 @@
 #endif // HIDTOOL_HAS_MOUSE
 
 /**
- * @defgroup Hookers HID 事件监听器
+ * @defgroup hid_hookers Global HID Event Listener
  */
 
 namespace hidt
@@ -23,17 +23,18 @@ namespace hidt
 using HidEventHandler = bool (*)(const HidEvent&);
 
 /**
- * @brief 集成所有 Hooker 模块
- * @ingroup Hookers
- * @note 相较于直接使用特定 Hooker 模块，使用此接口，性能会有所下降。
- * @attention 不要在工作线程中（即事件处理回调中）调用成员函数。
+ * @brief Integrates all Hooker modules
+ * @ingroup hid_hookers
+ * @note Compared to directly using a specific Hooker module,
+ * using this interface will result in some performance degradation.
+ * @attention Do not call member functions in worker threads (i.e., in event handling callbacks).
  */
 class HIDTOOL_API HidHooker
 {
 public:
     static HidHooker& getInstance();
 
-    /** @brief 检查当前环境是否支持阻断事件的传播。 */
+    /** @brief Check if the current environment supports blocking event propagation. */
     static bool isSupportBlockEventPropagation() noexcept;
 
     bool run();

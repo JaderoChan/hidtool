@@ -8,18 +8,19 @@ namespace hidt
 {
 
 /**
- * @brief 鼠标事件处理程序签名类型。
- * @note 返回值为 `true` 时正常传播接收到的事件，返回值为 `false` 时将阻止事件向其他程序传播。
+ * @brief Mouse event handling call-back function signature.
+ * @note When the return value is `true`, the received event is propagated normally;
+ * when the return value is `false`, the event is prevented from propagating to other programs.
  */
 using MouseEventHandler = bool (*)(const MouseEvent&);
 
 class MouseHookerPrivate;
 
 /**
- * @brief 全局鼠标事件监听。
- * @ingroup Hookers
- * @note 若未特别说明，此类的所有成员函数都是线程安全的。
- * @attention 不要在工作线程中（即事件处理回调中）调用成员函数。
+ * @brief Global Mouse Event Listener
+ * @ingroup hid_hookers
+ * @note Unless otherwise specified, all member functions of this class are thread-safe.
+ * @attention Do not call member functions in worker threads (i.e., in event handling callbacks).
  */
 class HIDTOOL_API MouseHooker
 {

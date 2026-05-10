@@ -7,18 +7,18 @@ namespace hidt
 {
 
 /**
- * @brief 键盘事件
- * @ingroup HidEvents
+ * @brief Keyboard event
+ * @ingroup hid_events
  */
 struct KeyboardEvent
 {
-    /** @brief 键盘事件类型 */
+    /** @brief Keyboard event types */
     enum EventType : uint8_t
     {
-        ET_NONE,    ///< 空事件，事件默认类型
-        ET_PRESS,   ///< 键盘按下事件
-        ET_RELEASE, ///< 键盘释放事件
-        ET_SLEEP    ///< 睡眠事件
+        ET_NONE,    ///< Invalid event, default event type
+        ET_PRESS,   ///< Keyboard key press event
+        ET_RELEASE, ///< Keyboard key release event
+        ET_SLEEP    ///< Sleep event
     };
 
     constexpr KeyboardEvent() noexcept
@@ -27,12 +27,12 @@ struct KeyboardEvent
         : type(keyboardEventType), sleepMs(0) {}
 
     /**
-     * @defgroup KeyboardEventFactory 键盘事件工厂函数
-     * @brief 便于构造指定类型的键盘事件。
+     * @defgroup keyboard_event_factory Keyboard event factory function
+     * @brief Facilitates the construction of specified types of keyboard events.
      */
 
     /**
-     * @ingroup KeyboardEventFactory
+     * @ingroup keyboard_event_factory
      * @{
      */
 
@@ -76,8 +76,8 @@ struct KeyboardEvent
     EventType type = ET_NONE;
     union
     {
-        uint32_t nativeKey; ///< 系统原生键值
-        size_t sleepMs;     ///< 睡眠时间，单位为毫秒
+        uint32_t nativeKey; ///< Platform native keyboard key
+        size_t sleepMs;     ///< Sleep time in millisecond
     };
 };
 
