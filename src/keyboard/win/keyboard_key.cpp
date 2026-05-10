@@ -81,7 +81,7 @@ uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept
         case KBDKEY_NUMPAD_DIVIDE:      return VK_DIVIDE;
         case KBDKEY_NUMPAD_DECIMAL:     return VK_DECIMAL;
         case KBDKEY_NUMPAD_SEPARATOR:   return VK_SEPARATOR;
-        case KBDKEY_NUMPAD_EQUAL:       return VK_OEM_NEC_EQUAL;    // Need check
+        case KBDKEY_NUMPAD_EQUAL:       return VK_OEM_NEC_EQUAL;    // TODO: Need check
         case KBDKEY_NUMPAD_ENTER:       return VK_RETURN;
 
         // Applications keys

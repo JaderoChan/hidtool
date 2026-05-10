@@ -144,7 +144,7 @@ uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept
         case KBDKEY_SCROLL_LOCK:        return KEY_SCROLLLOCK;
 
         // Device keys
-        case KBDKEY_PRINT_SCREEN:       return KEY_PRINT;   // Need to check
+        case KBDKEY_PRINT_SCREEN:       return KEY_PRINT;   // TODO: Need to check
         case KBDKEY_SLEEP:              return KEY_SLEEP;
 
         // OEM (Original Equipment Manufacturer) keys
@@ -159,7 +159,7 @@ uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept
         case KBDKEY_PERIOD:             return KEY_DOT;
         case KBDKEY_SLASH:              return KEY_SLASH;
         case KBDKEY_BACKSLASH:          return KEY_BACKSLASH;
-        case KBDKEY_ANGLE_BRACKET:      return KEY_102ND;   // Need to check
+        case KBDKEY_ANGLE_BRACKET:      return KEY_102ND;   // TODO: Need to check
 
         // Modifier keys
         case KBDKEY_FUNCTION:           return 0;   // Not supported
@@ -317,7 +317,7 @@ KeyboardKey keyboardKeyFromNativeKey(uint32_t nativeKey) noexcept
         case KEY_SCROLLLOCK:            return KBDKEY_SCROLL_LOCK;
 
         // Device keys
-        case KEY_PRINT:                 return KBDKEY_PRINT_SCREEN;     // Need to check
+        case KEY_PRINT:                 return KBDKEY_PRINT_SCREEN;     // TODO: Need to check
         case KEY_SLEEP:                 return KBDKEY_SLEEP;
 
         // OEM (Original Equipment Manufacturer) keys
@@ -332,7 +332,7 @@ KeyboardKey keyboardKeyFromNativeKey(uint32_t nativeKey) noexcept
         case KEY_DOT:                   return KBDKEY_PERIOD;
         case KEY_SLASH:                 return KBDKEY_SLASH;
         case KEY_BACKSLASH:             return KBDKEY_BACKSLASH;
-        case KEY_102ND:                 return KBDKEY_ANGLE_BRACKET;    // Need to check
+        case KEY_102ND:                 return KBDKEY_ANGLE_BRACKET;    // TODO: Need to check
 
         // Modifier keys
         case KEY_LEFTMETA:              return KBDKEY_META_LEFT;
