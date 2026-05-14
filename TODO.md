@@ -5,7 +5,7 @@
 - [x] 增强鼠标拖拽事件在各平台之间的一致性
 - [ ] 完成项目中的 TODO
 - [x] 考虑增加代码的复用性，简化代码，移除冗余部分。（见 “考虑点” 相关注释）
-- [x] 完成 HID Event 和通用API
+- [x] 完成 HID Event 和通用 API
 - [ ] 实现 Touchpad 和 Gamepad 子模块。
 - [x] 增加 MouseSimulator::doubleClick() 接口。
 - [x] 增加延时事件类型。
