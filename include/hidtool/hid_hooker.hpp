@@ -41,6 +41,7 @@ public:
     void stop();
     bool isRunning() const;
 
+    /** @brief Pass in nullptr to unset the event handler. */
     bool setEventHandler(const HidEventHandler& eventHandler);
 
 private:
