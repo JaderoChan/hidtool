@@ -3,6 +3,9 @@
 
 #include <hidtool/config.hpp>
 
+#include <cstddef>
+#include <cstdint>
+
 #ifdef _WIN32
     #define HIDTOOL_WIN
 #elif defined(__APPLE__)
