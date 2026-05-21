@@ -1,7 +1,7 @@
 #ifndef HIDTOOL_KEYBOARD_HOOKER_PRIVATE_HPP
 #define HIDTOOL_KEYBOARD_HOOKER_PRIVATE_HPP
 
-#include <platforms/apple/hooker_private.hpp>
+#include <platforms/macos/hooker_private.hpp>
 #include <hidtool/keyboard/keyboard_hooker.hpp>
 
 namespace hidt

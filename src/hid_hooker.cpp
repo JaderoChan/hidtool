@@ -61,7 +61,7 @@ bool HidHooker::isSupportBlockEventPropagation() noexcept
 {
 #if defined(HIDTOOL_WIN)
     return true;
-#elif defined(HIDTOOL_APPLE)
+#elif defined(HIDTOOL_MACOS)
     return true;
 #elif defined(HIDTOOL_LINUX)
     return false;

@@ -2,8 +2,8 @@
 
 #if defined(HIDTOOL_WIN)
     #include "win/keyboard_simulator_private.hpp"
-#elif defined(HIDTOOL_APPLE)
-    #include "apple/keyboard_simulator_private.hpp"
+#elif defined(HIDTOOL_MACOS)
+    #include "macos/keyboard_simulator_private.hpp"
 #elif defined(HIDTOOL_LINUX)
     #include "linux/keyboard_simulator_private.hpp"
 #else
