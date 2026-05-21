@@ -3,7 +3,7 @@
 #if defined(HIDTOOL_WIN)
     #include "win/mouse_simulator_private.hpp"
 #elif defined(HIDTOOL_APPLE)
-    #include "apple/mouse_simulator_private.hpp"
+    #include "macos/mouse_simulator_private.hpp"
 #elif defined(HIDTOOL_LINUX)
     #include "linux/mouse_simulator_private.hpp"
 #else

@@ -1,7 +1,7 @@
-#ifndef HIDTOOL_KEYBOARD_HOOKER_PRIVATE_HPP
-#define HIDTOOL_KEYBOARD_HOOKER_PRIVATE_HPP
+#ifndef HIDTOOL_MOUSE_HOOKER_PRIVATE_HPP
+#define HIDTOOL_MOUSE_HOOKER_PRIVATE_HPP
 
-#include <platforms/apple/hooker_private.hpp>
+#include <platforms/macos/hooker_private.hpp>
 #include <hidtool/mouse/mouse_hooker.hpp>
 
 namespace hidt
@@ -29,4 +29,4 @@ private:
 
 } // namespace hidt
 
-#endif // !HIDTOOL_KEYBOARD_HOOKER_PRIVATE_HPP
+#endif // !HIDTOOL_MOUSE_HOOKER_PRIVATE_HPP
