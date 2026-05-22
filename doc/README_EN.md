@@ -183,7 +183,7 @@ The library defines a cross-platform key value enum `KeyboardKey` that can be co
 
 ```cpp
 // KeyboardKey -> platform native key value (Win: VK_*, macOS: kVK_*, Linux: KEY_*)
-uint32_t nativeKey = keyboardKeyToNativeKey(KBDKEY_A);
+int32_t nativeKey = keyboardKeyToNativeKey(KBDKEY_A);
 
 // Platform native key value -> KeyboardKey
 KeyboardKey key = keyboardKeyFromNativeKey(0x41u);

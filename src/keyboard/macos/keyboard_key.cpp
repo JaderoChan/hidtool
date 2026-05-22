@@ -5,11 +5,11 @@
 namespace hidt
 {
 
-uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept
+int32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept
 {
     switch (key)
     {
-        case KBDKEY_NONE:               return 0;
+        case KBDKEY_NONE:               return -1;
 
         // Number keys
         case KBDKEY_0:                  return kVK_ANSI_0;
@@ -68,7 +68,7 @@ uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept
 
         // Editing keys
         case KBDKEY_BACKSPACE:          return kVK_Delete;
-        case KBDKEY_INSERT:             return 0;   // Not supported
+        case KBDKEY_INSERT:             return -1;  // Not supported
         case KBDKEY_DELETE:             return kVK_ForwardDelete;
         case KBDKEY_CLEAR:              return kVK_ANSI_KeypadClear;
 
@@ -112,7 +112,7 @@ uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept
         case KBDKEY_NUMPAD_MULTIPLY:    return kVK_ANSI_KeypadMultiply;
         case KBDKEY_NUMPAD_DIVIDE:      return kVK_ANSI_KeypadDivide;
         case KBDKEY_NUMPAD_DECIMAL:     return kVK_ANSI_KeypadDecimal;
-        case KBDKEY_NUMPAD_SEPARATOR:   return 0;   // Not supported
+        case KBDKEY_NUMPAD_SEPARATOR:   return -1;  // Not supported
         case KBDKEY_NUMPAD_EQUAL:       return kVK_ANSI_KeypadEquals;
         case KBDKEY_NUMPAD_ENTER:       return kVK_ANSI_KeypadEnter;
 
@@ -143,28 +143,28 @@ uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept
         case KBDKEY_PERIOD:             return kVK_ANSI_Period;
         case KBDKEY_SLASH:              return kVK_ANSI_Slash;
         case KBDKEY_BACKSLASH:          return kVK_ANSI_Backslash;
-        case KBDKEY_ANGLE_BRACKET:      return 0;   // Not supported
+        case KBDKEY_ANGLE_BRACKET:      return -1;  // Not supported
 
         // Modifiers keys
         case KBDKEY_FN:                 return kVK_Function;
         case KBDKEY_META:               return kVK_Command;
-        case KBDKEY_META_LEFT:          return 0;  // Not supported
+        case KBDKEY_META_LEFT:          return -1; // Not supported
         case KBDKEY_META_RIGHT:         return kVK_RightCommand;
         case KBDKEY_CTRL:               return kVK_Control;
-        case KBDKEY_CTRL_LEFT:          return 0;   // Not supported
+        case KBDKEY_CTRL_LEFT:          return -1;  // Not supported
         case KBDKEY_CTRL_RIGHT:         return kVK_RightControl;
         case KBDKEY_ALT:                return kVK_Option;
-        case KBDKEY_ALT_LEFT:           return 0;   // Not supported
+        case KBDKEY_ALT_LEFT:           return -1;  // Not supported
         case KBDKEY_ALT_RIGHT:          return kVK_RightOption;
         case KBDKEY_SHIFT:              return kVK_Shift;
-        case KBDKEY_SHIFT_LEFT:         return 0;   // Not supported
+        case KBDKEY_SHIFT_LEFT:         return -1;  // Not supported
         case KBDKEY_SHIFT_RIGHT:        return kVK_RightShift;
 
-        default:                        return 0;
+        default:                        return -1;
     }
 }
 
-KeyboardKey keyboardKeyFromNativeKey(uint32_t nativeKey) noexcept
+KeyboardKey keyboardKeyFromNativeKey(int32_t nativeKey) noexcept
 {
     switch (nativeKey)
     {

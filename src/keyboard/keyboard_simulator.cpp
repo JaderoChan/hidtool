@@ -37,19 +37,19 @@ bool KeyboardSimulator::sendEvent(const KeyboardEvent& event)
 size_t KeyboardSimulator::sendEvent(const KeyboardEvent* events, size_t count)
 { return pri_.sendEvent(events, count); }
 
-bool KeyboardSimulator::pressKey(uint32_t nativeKey)
+bool KeyboardSimulator::pressKey(int32_t nativeKey)
 { return pri_.sendEvent(KeyboardEvent::createPressEvent(nativeKey)); }
 
 bool KeyboardSimulator::pressKey(KeyboardKey key)
 { return pri_.sendEvent(KeyboardEvent::createPressEvent(key)); }
 
-bool KeyboardSimulator::releaseKey(uint32_t nativeKey)
+bool KeyboardSimulator::releaseKey(int32_t nativeKey)
 { return pri_.sendEvent(KeyboardEvent::createReleaseEvent(nativeKey)); }
 
 bool KeyboardSimulator::releaseKey(KeyboardKey key)
 { return pri_.sendEvent(KeyboardEvent::createReleaseEvent(key)); }
 
-bool KeyboardSimulator::clickKey(uint32_t nativeKey, size_t interval)
+bool KeyboardSimulator::clickKey(int32_t nativeKey, size_t interval)
 {
     KeyboardEvent events[3] = {
         KeyboardEvent::createPressEvent(nativeKey),

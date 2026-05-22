@@ -263,20 +263,20 @@ enum KeyboardKey : uint32_t
 
 /**
  * @brief Returns the platform-specific native key value corresponding to the given \ref KeyboardKey.
- * @return If the given \ref KeyboardKey value does not have a corresponding native key value, return `0`;
+ * @return If the given \ref KeyboardKey value does not have a corresponding native key value, return `-1`;
  * otherwise, return its corresponding native key value.
  * @note On the **Windows** platform, the native key value it returns is `VK_*`.
  * @note On the **MacOS** platform, the native key value it returns is `kVK_*`.
  * @note On the **Linux** platform, the native key value it returns is `KEY_*`.
  */
-HIDTOOL_API uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept;
+HIDTOOL_API int32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept;
 
 /**
  * @brief Return the corresponding \ref KeyboardKey for the given platform-specific native key value.
  * @return If the given native key value does not have a corresponding \ref KeyboardKey,
  * return \ref KeyboardKey::KBDKEY_NONE, otherwise, return its corresponding \ref KeyboardKey.
  */
-HIDTOOL_API KeyboardKey keyboardKeyFromNativeKey(uint32_t nativeKey) noexcept;
+HIDTOOL_API KeyboardKey keyboardKeyFromNativeKey(int32_t nativeKey) noexcept;
 
 } // namespace hidt
 

@@ -39,10 +39,10 @@ bool KeyboardHookerPrivate::isAccessDevice(int fd)
 
     // TODO：使检查更加精确。
     // 待检查的键值。（未来可能修改）
-    uint32_t checkedKeys[] = {KEY_0, KEY_A, KEY_SPACE, KEY_ESC};
-    size_t checkedCount = sizeof(checkedKeys) / sizeof(uint32_t);
+    int32_t checkedKeys[] = {KEY_0, KEY_A, KEY_SPACE, KEY_ESC};
+    size_t checkedCount = sizeof(checkedKeys) / sizeof(int32_t);
 
-    static auto hasKey = [](uint8_t* keyBits, uint32_t key)
+    static auto hasKey = [](uint8_t* keyBits, int32_t key)
     { return (keyBits[key / 8] & (1u << (key % 8))) != 0; };
 
     // 判断此设备是否具备以上定义的键值。

@@ -5,13 +5,13 @@
 namespace hidt
 {
 
-uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept
+int32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept
 {
     if (key == KBDKEY_NONE)
-        return 0;
+        return -1;
 
     if ((key >= KBDKEY_0 && key <= KBDKEY_9) || (key >= KBDKEY_A && key <= KBDKEY_Z))
-        return static_cast<uint32_t>(key);
+        return static_cast<int32_t>(key);
 
     switch (key)
     {
@@ -126,8 +126,8 @@ uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept
         case KBDKEY_ANGLE_BRACKET:      return VK_OEM_102;
 
         // Modifier keys
-        case KBDKEY_FUNCTION:           return 0;   // Not supported
-        case KBDKEY_META:               return 0;   // Not supported
+        case KBDKEY_FUNCTION:           return -1;  // Not supported
+        case KBDKEY_META:               return -1;  // Not supported
         case KBDKEY_META_LEFT:          return VK_LWIN;
         case KBDKEY_META_RIGHT:         return VK_RWIN;
         case KBDKEY_CTRL:               return VK_CONTROL;
@@ -140,11 +140,11 @@ uint32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept
         case KBDKEY_SHIFT_LEFT:         return VK_LSHIFT;
         case KBDKEY_SHIFT_RIGHT:        return VK_RSHIFT;
 
-        default:                        return 0;
+        default:                        return -1;
     }
 }
 
-KeyboardKey keyboardKeyFromNativeKey(uint32_t nativeKey) noexcept
+KeyboardKey keyboardKeyFromNativeKey(int32_t nativeKey) noexcept
 {
     if ((nativeKey >= '0' && nativeKey <= '9') || (nativeKey >= 'A' && nativeKey <= 'Z'))
         return static_cast<KeyboardKey>(nativeKey);

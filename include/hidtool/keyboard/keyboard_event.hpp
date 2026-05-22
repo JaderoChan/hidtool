@@ -36,7 +36,7 @@ struct KeyboardEvent
      * @{
      */
 
-    static KeyboardEvent createPressEvent(uint32_t nativeKey) noexcept
+    static KeyboardEvent createPressEvent(int32_t nativeKey) noexcept
     {
         KeyboardEvent result(ET_PRESS);
         result.nativeKey = nativeKey;
@@ -50,7 +50,7 @@ struct KeyboardEvent
         return result;
     }
 
-    static KeyboardEvent createReleaseEvent(uint32_t nativeKey) noexcept
+    static KeyboardEvent createReleaseEvent(int32_t nativeKey) noexcept
     {
         KeyboardEvent result(ET_RELEASE);
         result.nativeKey = nativeKey;
@@ -76,7 +76,7 @@ struct KeyboardEvent
     EventType type = ET_NONE;
     union
     {
-        uint32_t nativeKey; ///< Platform native keyboard key
+        int32_t nativeKey;  ///< Platform native keyboard key
         size_t sleepMs;     ///< Sleep time in millisecond
     };
 };

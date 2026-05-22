@@ -36,13 +36,13 @@ public:
      * @{
      */
 
-    bool pressKey(uint32_t nativeKey);
+    bool pressKey(int32_t nativeKey);
     bool pressKey(KeyboardKey key);
 
-    bool releaseKey(uint32_t nativeKey);
+    bool releaseKey(int32_t nativeKey);
     bool releaseKey(KeyboardKey key);
 
-    bool clickKey(uint32_t nativeKey, size_t interval = 0);
+    bool clickKey(int32_t nativeKey, size_t interval = 0);
     bool clickKey(KeyboardKey key, size_t interval = 0);
 
     /** @} */

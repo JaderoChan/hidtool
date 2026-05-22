@@ -183,7 +183,7 @@ sim.destroy();
 
 ```cpp
 // KeyboardKey -> 平台原生键值（Win: VK_*, macOS: kVK_*, Linux: KEY_*）
-uint32_t nativeKey = keyboardKeyToNativeKey(KBDKEY_A);
+int32_t nativeKey = keyboardKeyToNativeKey(KBDKEY_A);
 
 // 平台原生键值 -> KeyboardKey
 KeyboardKey key = keyboardKeyFromNativeKey(0x41u);

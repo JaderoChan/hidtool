@@ -80,7 +80,7 @@ keyboardEventFromCGEvent(KeyboardEvent& event, CGEventType cgEventType, const CG
             return false;
     }
 
-    event.nativeKey = static_cast<uint32_t>(keycode);
+    event.nativeKey = static_cast<int32_t>(keycode);
 
     return true;
 }

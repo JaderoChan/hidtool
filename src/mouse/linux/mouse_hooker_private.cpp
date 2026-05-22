@@ -64,8 +64,8 @@ bool MouseHookerPrivate::isAccessDevice(int fd)
     if (ioctl(fd, EVIOCGBIT(EV_KEY, sizeof(keyBits)), keyBits) == -1)
         return false;
 
-    uint32_t checkedKeys[] = {BTN_LEFT, BTN_RIGHT};
-    size_t checkedCount = sizeof(checkedKeys) / sizeof(uint32_t);
+    int32_t checkedKeys[] = {BTN_LEFT, BTN_RIGHT};
+    size_t checkedCount = sizeof(checkedKeys) / sizeof(int32_t);
 
     for (size_t i = 0; i < checkedCount; ++i)
     {
