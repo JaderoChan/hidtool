@@ -146,7 +146,7 @@ int32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept
         case KBDKEY_ANGLE_BRACKET:      return -1;  // Not supported
 
         // Modifiers keys
-        case KBDKEY_FN:                 return kVK_Function;
+        case KBDKEY_FUNCTION:           return kVK_Function;
         case KBDKEY_META:               return kVK_Command;
         case KBDKEY_META_LEFT:          return -1; // Not supported
         case KBDKEY_META_RIGHT:         return kVK_RightCommand;
