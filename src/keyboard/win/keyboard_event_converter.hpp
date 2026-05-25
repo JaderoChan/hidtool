@@ -49,6 +49,7 @@ namespace hidt
     }
 
     event.nativeKey = kbdllhs->vkCode;
+    event.timestamp = static_cast<uint64_t>(kbdllhs->time) * 1000000ULL;
 
     return true;
 }

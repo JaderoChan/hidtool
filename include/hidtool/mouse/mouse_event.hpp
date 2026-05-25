@@ -135,6 +135,7 @@ struct MouseEvent
     /** @} */
 
     EventType type = ET_NONE;
+    uint64_t timestamp = 0; ///< Event timestamp in nanoseconds.
     union
     {
         /**

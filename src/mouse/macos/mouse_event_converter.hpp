@@ -243,6 +243,8 @@ mouseEventFromCGEvent(MouseEvent& event, CGEventType cgEventType, const CGEventR
             return false;
     }
 
+    event.timestamp = CGEventGetTimestamp(cgEvent);
+
     return true;
 }
 

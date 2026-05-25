@@ -67,6 +67,8 @@ namespace hidt
             return false;
     }
 
+    event.timestamp = static_cast<uint64_t>(msllh->time) * 1000000ULL;
+
     return true;
 }
 

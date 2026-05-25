@@ -81,6 +81,7 @@ keyboardEventFromCGEvent(KeyboardEvent& event, CGEventType cgEventType, const CG
     }
 
     event.nativeKey = static_cast<int32_t>(keycode);
+    event.timestamp = CGEventGetTimestamp(cgEvent);
 
     return true;
 }

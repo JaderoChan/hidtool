@@ -189,7 +189,12 @@ void MouseHookerPrivate::handleInputEvent(int fd)
                     if (ie.code == SYN_REPORT)
                     {
                         if (eventHandler && event.type != MouseEvent::ET_NONE)
+                        {
+                            event.timestamp =
+                                static_cast<uint64_t>(ie.time.tv_sec) * 1000000000ULL +
+                                static_cast<uint64_t>(ie.time.tv_usec) * 1000ULL;
                             eventHandler(event);
+                        }
                     }
 
                     // 重置事件

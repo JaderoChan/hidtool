@@ -72,6 +72,9 @@ void KeyboardHookerPrivate::handleInputEvent(int fd)
                 KeyboardEvent event;
                 event.type = (ie.value == 1 ? KeyboardEvent::ET_PRESS : KeyboardEvent::ET_RELEASE);
                 event.nativeKey = static_cast<int32_t>(ie.code);
+                event.timestamp =
+                    static_cast<uint64_t>(ie.time.tv_sec) * 1000000000ULL +
+                    static_cast<uint64_t>(ie.time.tv_usec) * 1000ULL;
 
                 eventHandler(event);
             }

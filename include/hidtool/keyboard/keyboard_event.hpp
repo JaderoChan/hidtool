@@ -74,6 +74,7 @@ struct KeyboardEvent
     /** @} */
 
     EventType type = ET_NONE;
+    uint64_t timestamp = 0; ///< Event timestamp in nanoseconds.
     union
     {
         int32_t nativeKey;  ///< Platform native keyboard key
