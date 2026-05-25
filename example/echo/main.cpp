@@ -52,7 +52,7 @@ static bool keyboardEventHandler(const KeyboardEvent& event, void* userData)
             break;
         case KeyboardEvent::ET_RELEASE:
             if (key == KBDKEY_NONE)
-                printf("Native key pressed: %d.\n", event.nativeKey);
+                printf("Native key released: %d.\n", event.nativeKey);
             else
                 printf("Key Released: %d.\n", key);
 
