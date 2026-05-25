@@ -1,8 +1,8 @@
 #include "key_state_getter.hpp"
 
+#include <cerrno>          // errno
 #include <string>
 
-#include <errno.h>          // errno
 #include <dirent.h>         // dirent ...
 #include <fcntl.h>          // open()
 #include <unistd.h>         // read(), write(), close()

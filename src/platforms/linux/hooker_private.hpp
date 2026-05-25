@@ -10,6 +10,7 @@
 #include <vector>   // vector
 
 #include <poll.h>           // pollfd
+
 #include <linux/input.h>    // input_event
 
 namespace hidt

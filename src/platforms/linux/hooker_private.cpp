@@ -1,11 +1,10 @@
 #include "hooker_private.hpp"
 
-#include <errno.h>          // errno
+#include <cerrno>           // errno
 
 #include <dirent.h>         // dirent
 #include <fcntl.h>          // open()
 #include <unistd.h>         // read(), write(), close()
-
 #include <sys/eventfd.h>    // eventfd
 #include <sys/inotify.h>    // inotify
 #include <sys/stat.h>       // stat
