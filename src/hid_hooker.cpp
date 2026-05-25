@@ -71,6 +71,25 @@ bool HidHooker::isSupportBlockEventPropagation() noexcept
 #endif // HIDTOOL_WIN
 }
 
+#ifdef HIDTOOL_HAS_KEYBOARD
+bool HidHooker::isKeyPressed(int32_t nativeKey)
+{
+    return KeyboardHooker::isKeyPressed(nativeKey);
+}
+#endif
+
+#ifdef HIDTOOL_HAS_MOUSE
+bool HidHooker::isButtonPressed(MouseButton button)
+{
+    return MouseHooker::isButtonPressed(button);
+}
+
+AbsolutePos HidHooker::getCursorPos()
+{
+    return MouseHooker::getCursorPos();
+}
+#endif
+
 bool HidHooker::run()
 {
 #ifdef HIDTOOL_HAS_KEYBOARD

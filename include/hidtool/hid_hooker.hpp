@@ -37,6 +37,14 @@ public:
     /** @brief Check if the current environment supports blocking event propagation. */
     static bool isSupportBlockEventPropagation() noexcept;
 
+#ifdef HIDTOOL_HAS_KEYBOARD
+    static bool isKeyPressed(int32_t nativeKey);
+#endif
+#ifdef HIDTOOL_HAS_MOUSE
+    static bool isButtonPressed(MouseButton button);
+    static AbsolutePos getCursorPos();
+#endif
+
     bool run();
     void stop();
     bool isRunning() const;
