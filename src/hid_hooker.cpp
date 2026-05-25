@@ -4,29 +4,30 @@ namespace hidt
 {
 
 std::atomic<HidEventHandler> HidHooker::hidEventHandler_{nullptr};
+std::atomic<intptr_t> HidHooker::hidUserData_{0};
 
 #ifdef HIDTOOL_HAS_KEYBOARD
-KeyboardEventHandler HidHooker::kbdEventHandler_ = [](const KeyboardEvent& event) -> bool
+KeyboardEventHandler HidHooker::kbdEventHandler_ = [](const KeyboardEvent& event, void*) -> bool
 {
     HidEvent hidEvent(HidEvent::ET_KEYBOARD);
     hidEvent.keyboardEvent = event;
 
     auto hidEventHandler = hidEventHandler_.load();
     if (hidEventHandler)
-        return hidEventHandler(hidEvent);
+        return hidEventHandler(hidEvent, reinterpret_cast<void*>(hidUserData_.load()));
     return true;
 };
 #endif
 
 #ifdef HIDTOOL_HAS_MOUSE
-MouseEventHandler HidHooker::msEventHandler_ = [](const MouseEvent& event) -> bool
+MouseEventHandler HidHooker::msEventHandler_ = [](const MouseEvent& event, void*) -> bool
 {
     HidEvent hidEvent(HidEvent::ET_MOUSE);
     hidEvent.mouseEvent = event;
 
     auto hidEventHandler = hidEventHandler_.load();
     if (hidEventHandler)
-        return hidEventHandler(hidEvent);
+        return hidEventHandler(hidEvent, reinterpret_cast<void*>(hidUserData_.load()));
     return true;
 };
 #endif
@@ -114,9 +115,16 @@ bool HidHooker::isRunning() const
     return result;
 }
 
-bool HidHooker::setEventHandler(const HidEventHandler& eventHandler)
+bool HidHooker::setEventHandler(HidEventHandler eventHandler, void* userData)
 {
     hidEventHandler_.store(eventHandler);
+    hidUserData_.store(reinterpret_cast<intptr_t>(userData));
+    return true;
+}
+
+bool HidHooker::setUserData(void* userData)
+{
+    hidUserData_.store(reinterpret_cast<intptr_t>(userData));
     return true;
 }
 

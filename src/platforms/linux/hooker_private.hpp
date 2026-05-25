@@ -28,7 +28,7 @@ public:
 protected:
     // 提供一个抽象的事件处理程序设置接口，供派生类调用。
     template <typename T>
-    bool setEventHandler(T eventHandler)
+    bool setEventHandler(T eventHandler, void* userData = nullptr)
     {
         std::lock_guard<std::mutex> locker(operateMtx_);
 
@@ -36,17 +36,38 @@ protected:
         if (!isRunning_.load())
         {
             eventHandler_ = reinterpret_cast<intptr_t>(eventHandler);
+            userData_ = reinterpret_cast<intptr_t>(userData);
             return true;
         }
 
         // 否则，发送事件处理程序设置事件。
-        WorkEvent event{WorkEvent::SET_EVENT_HANDLER, reinterpret_cast<intptr_t>(eventHandler)};
+        WorkEvent event{
+            WorkEvent::SET_EVENT_HANDLER,
+            reinterpret_cast<intptr_t>(eventHandler),
+            reinterpret_cast<intptr_t>(userData)
+        };
+        return sendWorkEvent(event);
+    }
+
+    bool setUserData(void* userData)
+    {
+        std::lock_guard<std::mutex> locker(operateMtx_);
+
+        if (!isRunning_.load())
+        {
+            userData_ = reinterpret_cast<intptr_t>(userData);
+            return true;
+        }
+
+        WorkEvent event{WorkEvent::SET_USER_DATA, 0, reinterpret_cast<intptr_t>(userData)};
         return sendWorkEvent(event);
     }
 
     // 提供事件处理程序获取接口，供派生类调用。
     template <typename T>
     T getEventHandler() { return reinterpret_cast<T>(eventHandler_); }
+
+    void* getUserData() const { return reinterpret_cast<void*>(userData_); }
 
     // 派生类实现：判断指定文件描述符对应的输入设备是否是需要监听的设备。
     virtual bool isAccessDevice(int fd) = 0;
@@ -61,11 +82,13 @@ private:
         enum Type : uint8_t
         {
             END,
-            SET_EVENT_HANDLER
+            SET_EVENT_HANDLER,
+            SET_USER_DATA
         };
 
         Type type;
         intptr_t eventHandler;
+        intptr_t userData;
     };
 
     // 发送一个工作事件。
@@ -97,6 +120,7 @@ private:
     static bool isCharacterDevice(const std::string& filepath);
 
     intptr_t eventHandler_ = 0;
+    intptr_t userData_ = 0;
 
     // 用于互斥 run()，stop() 和 setEventHandler() 的执行。
     mutable std::mutex operateMtx_;

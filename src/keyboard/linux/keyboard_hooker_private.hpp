@@ -12,7 +12,8 @@ class KeyboardHookerPrivate : public HookerPrivate
 public:
     static KeyboardHookerPrivate& getInstance();
 
-    bool setEventHandler(const KeyboardEventHandler& eventHandler);
+    bool setEventHandler(KeyboardEventHandler eventHandler, void* userData = nullptr);
+    bool setUserData(void* userData);
 
 private:
     KeyboardHookerPrivate() = default;

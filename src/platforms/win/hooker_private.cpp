@@ -9,6 +9,7 @@ HookerPrivate::~HookerPrivate()
     stop();
     // 重置字段
     eventHandler_ = 0;
+    userData_ = 0;
 }
 
 bool HookerPrivate::run()
@@ -82,6 +83,10 @@ void HookerPrivate::work(std::promise<bool>& runningResult)
         {
             case WM_SET_EVENT_HANDLER:
                 eventHandler_ = static_cast<intptr_t>(msg.wParam);
+                userData_ = static_cast<intptr_t>(msg.lParam);
+                break;
+            case WM_SET_USER_DATA:
+                userData_ = static_cast<intptr_t>(msg.lParam);
                 break;
             default:
                 break;

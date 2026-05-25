@@ -11,9 +11,14 @@ MouseHookerPrivate& MouseHookerPrivate::getInstance()
     return instance;
 }
 
-bool MouseHookerPrivate::setEventHandler(const MouseEventHandler& eventHandler)
+bool MouseHookerPrivate::setEventHandler(MouseEventHandler eventHandler, void* userData)
 {
-    return HookerPrivate::setEventHandler<MouseEventHandler>(eventHandler);
+    return HookerPrivate::setEventHandler<MouseEventHandler>(eventHandler, userData);
+}
+
+bool MouseHookerPrivate::setUserData(void* userData)
+{
+    return HookerPrivate::setUserData(userData);
 }
 
 HHOOK MouseHookerPrivate::setWindowHook()
@@ -34,7 +39,7 @@ LRESULT WINAPI MouseHookerPrivate::LowLevelMouseProc(int nCode, WPARAM wParam, L
             // 调用事件处理程序。
             auto eventHandler = hooker.getEventHandler<MouseEventHandler>();
             // 如果事件处理程序返回 false，返则回 1 以阻断事件传播。
-            if (eventHandler && !eventHandler(event))
+            if (eventHandler && !eventHandler(event, hooker.getUserData()))
                 return 1;
         }
     }

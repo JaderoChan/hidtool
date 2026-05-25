@@ -20,7 +20,7 @@
 namespace hidt
 {
 
-using HidEventHandler = bool (*)(const HidEvent&);
+using HidEventHandler = bool (*)(const HidEvent&, void* userData);
 
 /**
  * @brief Integrates all Hooker modules
@@ -42,7 +42,8 @@ public:
     bool isRunning() const;
 
     /** @note Pass in nullptr to unset the event handler. */
-    bool setEventHandler(const HidEventHandler& eventHandler);
+    bool setEventHandler(HidEventHandler eventHandler, void* userData = nullptr);
+    bool setUserData(void* userData);
 
 private:
     HidHooker();
@@ -51,6 +52,7 @@ private:
     HidHooker& operator=(const HidHooker&) = delete;
 
     static std::atomic<HidEventHandler> hidEventHandler_;
+    static std::atomic<intptr_t> hidUserData_;
 #ifdef HIDTOOL_HAS_KEYBOARD
     static KeyboardEventHandler kbdEventHandler_;
 #endif

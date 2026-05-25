@@ -12,7 +12,8 @@ class MouseHookerPrivate : public HookerPrivate
 public:
     static MouseHookerPrivate& getInstance();
 
-    bool setEventHandler(const MouseEventHandler& eventHandler);
+    bool setEventHandler(MouseEventHandler eventHandler, void* userData = nullptr);
+    bool setUserData(void* userData);
 
 private:
     MouseHookerPrivate() = default;

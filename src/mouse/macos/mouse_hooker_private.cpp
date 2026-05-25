@@ -13,14 +13,20 @@ MouseHookerPrivate& MouseHookerPrivate::getInstance()
     return instance;
 }
 
-bool MouseHookerPrivate::setEventHandler(const MouseEventHandler& eventHandler)
+bool MouseHookerPrivate::setEventHandler(MouseEventHandler eventHandler, void* userData)
 {
-    return HookerPrivate::setEventHandler<MouseEventHandler>(eventHandler);
+    return HookerPrivate::setEventHandler<MouseEventHandler>(eventHandler, userData);
+}
+
+bool MouseHookerPrivate::setUserData(void* userData)
+{
+    return HookerPrivate::setUserData(userData);
 }
 
 CGEventMask MouseHookerPrivate::getCGEventMask() const
 {
-    return CGEventMaskBit(kCGEventMouseMoved) |
+    return
+        CGEventMaskBit(kCGEventMouseMoved) |
         CGEventMaskBit(kCGEventScrollWheel) |
         CGEventMaskBit(kCGEventLeftMouseDown) |
         CGEventMaskBit(kCGEventLeftMouseUp) |
@@ -49,7 +55,7 @@ CGEventRef MouseHookerPrivate::mouseTapCallback(
         // 取得事件处理程序。
         auto eventHandler = hooker.getEventHandler<MouseEventHandler>();
         // 如果事件处理程序返回 false，则返回 nullptr 以阻断事件传播。
-        if (eventHandler && !eventHandler(event))
+        if (eventHandler && !eventHandler(event, hooker.getUserData()))
             return nullptr;
     }
 

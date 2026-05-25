@@ -31,7 +31,10 @@ void KeyboardHooker::stop()
 bool KeyboardHooker::isRunning() const
 { return pri_.isRunning(); }
 
-bool KeyboardHooker::setEventHandler(const KeyboardEventHandler& eventHandler)
-{ return pri_.setEventHandler(eventHandler); }
+bool KeyboardHooker::setEventHandler(KeyboardEventHandler eventHandler, void* userData)
+{ return pri_.setEventHandler(eventHandler, userData); }
+
+bool KeyboardHooker::setUserData(void* userData)
+{ return pri_.setUserData(userData); }
 
 } // namespace hidt

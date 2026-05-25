@@ -282,6 +282,10 @@ void HookerPrivate::handleWorkEvent(int fd, bool& shouldClose)
                     break;
                 case WorkEvent::SET_EVENT_HANDLER:
                     eventHandler_ = workEvent.eventHandler;
+                    userData_ = workEvent.userData;
+                    break;
+                case WorkEvent::SET_USER_DATA:
+                    userData_ = workEvent.userData;
                     break;
                 default:
                     break;

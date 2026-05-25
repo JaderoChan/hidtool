@@ -31,7 +31,10 @@ void MouseHooker::stop()
 bool MouseHooker::isRunning() const
 { return pri_.isRunning(); }
 
-bool MouseHooker::setEventHandler(const MouseEventHandler& eventHandler)
-{ return pri_.setEventHandler(eventHandler); }
+bool MouseHooker::setEventHandler(MouseEventHandler eventHandler, void* userData)
+{ return pri_.setEventHandler(eventHandler, userData); }
+
+bool MouseHooker::setUserData(void* userData)
+{ return pri_.setUserData(userData); }
 
 } // namespace hidt

@@ -13,9 +13,14 @@ KeyboardHookerPrivate& KeyboardHookerPrivate::getInstance()
     return instance;
 }
 
-bool KeyboardHookerPrivate::setEventHandler(const KeyboardEventHandler& eventHandler)
+bool KeyboardHookerPrivate::setEventHandler(KeyboardEventHandler eventHandler, void* userData)
 {
-    return HookerPrivate::setEventHandler<KeyboardEventHandler>(eventHandler);
+    return HookerPrivate::setEventHandler<KeyboardEventHandler>(eventHandler, userData);
+}
+
+bool KeyboardHookerPrivate::setUserData(void* userData)
+{
+    return HookerPrivate::setUserData(userData);
 }
 
 CGEventMask KeyboardHookerPrivate::getCGEventMask() const
@@ -41,7 +46,7 @@ CGEventRef KeyboardHookerPrivate::keyboardTapCallback(
         // 取得事件处理程序。
         auto eventHandler = hooker.getEventHandler<KeyboardEventHandler>();
         // 如果事件处理程序返回 false，则返回 nullptr 以阻断事件传播。
-        if (eventHandler && !eventHandler(event))
+        if (eventHandler && !eventHandler(event, hooker.getUserData()))
             return nullptr;
     }
 

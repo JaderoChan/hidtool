@@ -12,7 +12,7 @@ namespace hidt
  * @note When the return value is `true`, the received event is propagated normally;
  * when the return value is `false`, the event is prevented from propagating to other programs.
  */
-using MouseEventHandler = bool (*)(const MouseEvent&);
+using MouseEventHandler = bool (*)(const MouseEvent&, void* userData);
 
 class MouseHookerPrivate;
 
@@ -32,7 +32,8 @@ public:
     bool isRunning() const;
 
     /** @note Pass in nullptr to unset the event handler. */
-    bool setEventHandler(const MouseEventHandler& eventHandler);
+    bool setEventHandler(MouseEventHandler eventHandler, void* userData = nullptr);
+    bool setUserData(void* userData);
 
 private:
     explicit MouseHooker(MouseHookerPrivate&);

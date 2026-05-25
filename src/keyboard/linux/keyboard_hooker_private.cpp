@@ -16,9 +16,14 @@ KeyboardHookerPrivate& KeyboardHookerPrivate::getInstance()
     return instance;
 }
 
-bool KeyboardHookerPrivate::setEventHandler(const KeyboardEventHandler& eventHandler)
+bool KeyboardHookerPrivate::setEventHandler(KeyboardEventHandler eventHandler, void* userData)
 {
-    return HookerPrivate::setEventHandler<KeyboardEventHandler>(eventHandler);
+    return HookerPrivate::setEventHandler<KeyboardEventHandler>(eventHandler, userData);
+}
+
+bool KeyboardHookerPrivate::setUserData(void* userData)
+{
+    return HookerPrivate::setUserData(userData);
 }
 
 bool KeyboardHookerPrivate::isAccessDevice(int fd)
@@ -76,7 +81,7 @@ void KeyboardHookerPrivate::handleInputEvent(int fd)
                     static_cast<uint64_t>(ie.time.tv_sec) * 1000000000ULL +
                     static_cast<uint64_t>(ie.time.tv_usec) * 1000ULL;
 
-                eventHandler(event);
+                eventHandler(event, getUserData());
             }
 
             continue;

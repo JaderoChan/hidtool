@@ -18,9 +18,14 @@ MouseHookerPrivate& MouseHookerPrivate::getInstance()
     return instance;
 }
 
-bool MouseHookerPrivate::setEventHandler(const MouseEventHandler& eventHandler)
+bool MouseHookerPrivate::setEventHandler(MouseEventHandler eventHandler, void* userData)
 {
-    return HookerPrivate::setEventHandler<MouseEventHandler>(eventHandler);
+    return HookerPrivate::setEventHandler<MouseEventHandler>(eventHandler, userData);
+}
+
+bool MouseHookerPrivate::setUserData(void* userData)
+{
+    return HookerPrivate::setUserData(userData);
 }
 
 bool MouseHookerPrivate::isAccessDevice(int fd)
@@ -193,7 +198,7 @@ void MouseHookerPrivate::handleInputEvent(int fd)
                             event.timestamp =
                                 static_cast<uint64_t>(ie.time.tv_sec) * 1000000000ULL +
                                 static_cast<uint64_t>(ie.time.tv_usec) * 1000ULL;
-                            eventHandler(event);
+                            eventHandler(event, getUserData());
                         }
                     }
 

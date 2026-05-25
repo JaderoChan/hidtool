@@ -122,13 +122,13 @@ using KeyboardHooker;
 
 // 事件处理回调类型
 // 返回 true：正常传播事件；返回 false：阻止事件向其他程序传播
-// using KeyboardEventHandler = bool (*)(const KeyboardEvent&);
+// using KeyboardEventHandler = bool (*)(const KeyboardEvent&, void* userData);
 using KeyboardEventHandler;
 
 KeyboardHooker& hooker = KeyboardHooker::getInstance();
 
 // 设置事件处理回调
-hooker.setEventHandler([](const KeyboardEvent& event) -> bool
+hooker.setEventHandler([](const KeyboardEvent& event, void* userData) -> bool
 {
     if (event.type == KeyboardEvent::ET_PRESS)
     {
@@ -219,7 +219,7 @@ using MouseHooker;
 
 MouseHooker& hooker = MouseHooker::getInstance();
 
-hooker.setEventHandler([](const MouseEvent& event) -> bool
+hooker.setEventHandler([](const MouseEvent& event, void* userData) -> bool
 {
     switch (event.type)
     {

@@ -12,7 +12,7 @@ namespace hidt
  * @note When the return value is `true`, the received event is propagated normally;
  * when the return value is `false`, the event is prevented from propagating to other programs.
  */
-using KeyboardEventHandler = bool (*)(const KeyboardEvent&);
+using KeyboardEventHandler = bool (*)(const KeyboardEvent&, void* userData);
 
 class KeyboardHookerPrivate;
 
@@ -32,7 +32,8 @@ public:
     bool isRunning() const;
 
     /** @note Pass in nullptr to unset the event handler. */
-    bool setEventHandler(const KeyboardEventHandler& eventHandler);
+    bool setEventHandler(KeyboardEventHandler eventHandler, void* userData = nullptr);
+    bool setUserData(void* userData);
 
 private:
     explicit KeyboardHooker(KeyboardHookerPrivate&);
