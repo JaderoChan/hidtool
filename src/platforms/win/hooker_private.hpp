@@ -6,7 +6,7 @@
 #include <mutex>    // mutex, lock_guard
 #include <thread>   // thread
 
-#include <windows.h>    // WM_USER, DWORD, HHOOK, GetCurrentThreadId(), Message... Hook...
+#include <windows.h>    // WM_USER, DWORD, HHOOK, GetCurrentThreadId(), Message ... Hook ...
 
 namespace hidt
 {

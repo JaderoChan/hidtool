@@ -7,7 +7,7 @@
 #include <unistd.h>         // write(), close()
 #include <sys/ioctl.h>      // ioctl()
 
-#include <linux/uinput.h>   // uinput...
+#include <linux/uinput.h>   // uinput ...
 
 namespace hidt
 {

@@ -2,7 +2,7 @@
 
 #include <sys/ioctl.h>  // ioctl()
 
-#include <linux/uinput.h>               // uinput...
+#include <linux/uinput.h>               // uinput ...
 #include <linux/input-event-codes.h>    // EV_*, ABS_*, REL_*, BTN_*
 
 namespace hidt
