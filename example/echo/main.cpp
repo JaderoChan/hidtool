@@ -33,7 +33,7 @@ static bool keyboardEventHandler(const KeyboardEvent& event, void* userData)
 {
     auto key = keyboardKeyFromNativeKey(event.nativeKey);
 
-    printf("[%zu] ", event.timestamp);
+    printf("[%llu] ", event.timestamp);
     switch (event.type)
     {
         case KeyboardEvent::ET_PRESS:
@@ -67,7 +67,7 @@ static bool keyboardEventHandler(const KeyboardEvent& event, void* userData)
 
 static bool mouseEventHandler(const MouseEvent& event, void* userData)
 {
-    printf("[%zu] ", event.timestamp);
+    printf("[%llu] ", event.timestamp);
     switch (event.type)
     {
         case MouseEvent::ET_ABS_MOVE:
