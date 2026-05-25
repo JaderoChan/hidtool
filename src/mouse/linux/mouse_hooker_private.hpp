@@ -12,6 +12,9 @@ class MouseHookerPrivate : public HookerPrivate
 public:
     static MouseHookerPrivate& getInstance();
 
+    static bool isButtonPressed(MouseButton button);
+    static AbsolutePos getCursorPos();
+
     bool setEventHandler(MouseEventHandler eventHandler, void* userData = nullptr);
     bool setUserData(void* userData);
 

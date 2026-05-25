@@ -12,6 +12,8 @@ class KeyboardHookerPrivate : public HookerPrivate
 public:
     static KeyboardHookerPrivate& getInstance();
 
+    static bool isKeyPressed(int32_t nativeKey);
+
     bool setEventHandler(KeyboardEventHandler eventHandler, void* userData = nullptr);
     bool setUserData(void* userData);
 

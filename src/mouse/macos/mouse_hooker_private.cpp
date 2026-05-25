@@ -13,6 +13,29 @@ MouseHookerPrivate& MouseHookerPrivate::getInstance()
     return instance;
 }
 
+bool MouseHookerPrivate::isButtonPressed(MouseButton button)
+{
+    CGMouseButton cgButton;
+    switch (button)
+    {
+        case MSBTN_LEFT:    cgButton = kCGMouseButtonLeft;            break;
+        case MSBTN_RIGHT:   cgButton = kCGMouseButtonRight;           break;
+        case MSBTN_MIDDLE:  cgButton = kCGMouseButtonCenter;          break;
+        case MSBTN_BACK:    cgButton = static_cast<CGMouseButton>(3); break;
+        case MSBTN_FORWARD: cgButton = static_cast<CGMouseButton>(4); break;
+        default: return false;
+    }
+    return CGEventSourceButtonState(kCGEventSourceStateCombinedSessionState, cgButton);
+}
+
+AbsolutePos MouseHookerPrivate::getCursorPos()
+{
+    CGEventRef event = CGEventCreate(nullptr);
+    CGPoint pt = CGEventGetLocation(event);
+    CFRelease(event);
+    return AbsolutePos(static_cast<int32_t>(pt.x), static_cast<int32_t>(pt.y));
+}
+
 bool MouseHookerPrivate::setEventHandler(MouseEventHandler eventHandler, void* userData)
 {
     return HookerPrivate::setEventHandler<MouseEventHandler>(eventHandler, userData);

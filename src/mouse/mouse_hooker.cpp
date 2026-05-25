@@ -22,6 +22,12 @@ MouseHooker& MouseHooker::getInstance()
     return instance;
 }
 
+bool MouseHooker::isButtonPressed(MouseButton button)
+{ return MouseHookerPrivate::isButtonPressed(button); }
+
+AbsolutePos MouseHooker::getCursorPos()
+{ return MouseHookerPrivate::getCursorPos(); }
+
 bool MouseHooker::run()
 { return pri_.run(); }
 

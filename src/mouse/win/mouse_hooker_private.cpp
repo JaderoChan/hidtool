@@ -11,6 +11,29 @@ MouseHookerPrivate& MouseHookerPrivate::getInstance()
     return instance;
 }
 
+bool MouseHookerPrivate::isButtonPressed(MouseButton button)
+{
+    int vk;
+    switch (button)
+    {
+        case MSBTN_LEFT:    vk = VK_LBUTTON;  break;
+        case MSBTN_RIGHT:   vk = VK_RBUTTON;  break;
+        case MSBTN_MIDDLE:  vk = VK_MBUTTON;  break;
+        case MSBTN_BACK:    vk = VK_XBUTTON1; break;
+        case MSBTN_FORWARD: vk = VK_XBUTTON2; break;
+        default: return false;
+    }
+    return (GetAsyncKeyState(vk) & 0x8000) != 0;
+}
+
+AbsolutePos MouseHookerPrivate::getCursorPos()
+{
+    POINT pt;
+    if (GetCursorPos(&pt))
+        return AbsolutePos(static_cast<int32_t>(pt.x), static_cast<int32_t>(pt.y));
+    return AbsolutePos(0, 0);
+}
+
 bool MouseHookerPrivate::setEventHandler(MouseEventHandler eventHandler, void* userData)
 {
     return HookerPrivate::setEventHandler<MouseEventHandler>(eventHandler, userData);

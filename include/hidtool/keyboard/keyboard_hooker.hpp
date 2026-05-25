@@ -27,6 +27,8 @@ class HIDTOOL_API KeyboardHooker
 public:
     static KeyboardHooker& getInstance();
 
+    static bool isKeyPressed(int32_t nativeKey);
+
     bool run();
     void stop();
     bool isRunning() const;

@@ -5,6 +5,8 @@
 
 #include <linux/input-event-codes.h>    // EV_*, KEY_*
 
+#include <platforms/linux/key_state_getter.hpp>
+
 namespace hidt
 {
 
@@ -14,6 +16,12 @@ KeyboardHookerPrivate& KeyboardHookerPrivate::getInstance()
 {
     static KeyboardHookerPrivate instance;
     return instance;
+}
+
+bool KeyboardHookerPrivate::isKeyPressed(int32_t nativeKey)
+{
+    static KeyStateGetter getter;
+    return getter.isKeyPressed(nativeKey);
 }
 
 bool KeyboardHookerPrivate::setEventHandler(KeyboardEventHandler eventHandler, void* userData)
@@ -75,7 +83,7 @@ void KeyboardHookerPrivate::handleInputEvent(int fd)
             if (eventHandler && ie.type == EV_KEY)
             {
                 KeyboardEvent event;
-                event.type = (ie.value == 1 ? KeyboardEvent::ET_PRESS : KeyboardEvent::ET_RELEASE);
+                event.type = ((ie.value >= 1) ? KeyboardEvent::ET_PRESS : KeyboardEvent::ET_RELEASE);
                 event.nativeKey = static_cast<int32_t>(ie.code);
                 event.timestamp =
                     static_cast<uint64_t>(ie.time.tv_sec) * 1000000000ULL +

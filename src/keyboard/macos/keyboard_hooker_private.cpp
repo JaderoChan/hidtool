@@ -13,6 +13,13 @@ KeyboardHookerPrivate& KeyboardHookerPrivate::getInstance()
     return instance;
 }
 
+bool KeyboardHookerPrivate::isKeyPressed(int32_t nativeKey)
+{
+    return CGEventSourceKeyState(
+        kCGEventSourceStateCombinedSessionState,
+        static_cast<CGKeyCode>(nativeKey));
+}
+
 bool KeyboardHookerPrivate::setEventHandler(KeyboardEventHandler eventHandler, void* userData)
 {
     return HookerPrivate::setEventHandler<KeyboardEventHandler>(eventHandler, userData);

@@ -22,6 +22,11 @@ KeyboardHooker& KeyboardHooker::getInstance()
     return instance;
 }
 
+bool KeyboardHooker::isKeyPressed(int32_t nativeKey)
+{
+    return KeyboardHookerPrivate::isKeyPressed(nativeKey);
+}
+
 bool KeyboardHooker::run()
 { return pri_.run(); }
 

@@ -7,6 +7,8 @@
 
 #include <linux/input-event-codes.h>    // EV_*, ABS_*, REL_*, BTN_*
 
+#include <platforms/linux/key_state_getter.hpp>
+
 namespace hidt
 {
 
@@ -16,6 +18,26 @@ MouseHookerPrivate& MouseHookerPrivate::getInstance()
 {
     static MouseHookerPrivate instance;
     return instance;
+}
+
+bool MouseHookerPrivate::isButtonPressed(MouseButton button)
+{
+    static KeyStateGetter getter;
+    switch (button)
+    {
+        case MSBTN_LEFT:    return getter.isKeyPressed(BTN_LEFT);
+        case MSBTN_RIGHT:   return getter.isKeyPressed(BTN_RIGHT);
+        case MSBTN_MIDDLE:  return getter.isKeyPressed(BTN_MIDDLE);
+        case MSBTN_BACK:    return getter.isKeyPressed(BTN_BACK);
+        case MSBTN_FORWARD: return getter.isKeyPressed(BTN_FORWARD);
+        default:            return false;
+    }
+}
+
+AbsolutePos MouseHookerPrivate::getCursorPos()
+{
+    // Linux 下可能存在多个鼠标设备，并且没有底层接口获取当前坐标。所以返回总是返回一个 {0, 0} 坐标。
+    return AbsolutePos(0, 0);
 }
 
 bool MouseHookerPrivate::setEventHandler(MouseEventHandler eventHandler, void* userData)
