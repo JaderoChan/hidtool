@@ -18,7 +18,7 @@ bool shouldClose = false;
 std::mutex shouldCloseMtx;
 std::condition_variable shouldCloseCv;
 
-static bool keyboardEventHandler(const KeyboardEvent& event)
+static bool keyboardEventHandler(const KeyboardEvent& event, void* userData)
 {
     if (event.type == KeyboardEvent::ET_PRESS)
     {
@@ -77,7 +77,7 @@ static bool keyboardEventHandler(const KeyboardEvent& event)
     return true;
 }
 
-static bool mouseEventHandler(const MouseEvent& event)
+static bool mouseEventHandler(const MouseEvent& event, void* userData)
 {
     if (event.type == MouseEvent::ET_ABS_MOVE)
         currentPoint.store(event.absPos);

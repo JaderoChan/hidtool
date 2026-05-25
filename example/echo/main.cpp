@@ -29,7 +29,7 @@ static const char* getMouseButtonString(MouseButton button)
     }
 }
 
-static bool keyboardEventHandler(const KeyboardEvent& event)
+static bool keyboardEventHandler(const KeyboardEvent& event, void* userData)
 {
     auto key = keyboardKeyFromNativeKey(event.nativeKey);
 
@@ -64,7 +64,7 @@ static bool keyboardEventHandler(const KeyboardEvent& event)
     return true;
 }
 
-static bool mouseEventHandler(const MouseEvent& event)
+static bool mouseEventHandler(const MouseEvent& event, void* userData)
 {
     switch (event.type)
     {
