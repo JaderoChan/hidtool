@@ -42,8 +42,8 @@ public:
     bool releaseKey(int32_t nativeKey);
     bool releaseKey(KeyboardKey key);
 
-    bool clickKey(int32_t nativeKey, size_t interval = 0);
-    bool clickKey(KeyboardKey key, size_t interval = 0);
+    bool clickKey(int32_t nativeKey, uint64_t interval = 0);
+    bool clickKey(KeyboardKey key, uint64_t interval = 0);
 
     /** @} */
 

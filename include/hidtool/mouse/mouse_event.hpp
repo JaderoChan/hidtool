@@ -125,7 +125,7 @@ struct MouseEvent
         return result;
     }
 
-    static MouseEvent createSleepEvent(size_t sleepMs) noexcept
+    static MouseEvent createSleepEvent(uint64_t sleepMs) noexcept
     {
         MouseEvent result(ET_SLEEP);
         result.sleepMs = sleepMs;
@@ -176,7 +176,7 @@ struct MouseEvent
             MouseButton button; ///< Drag event mouse button
         } drag; ///< Mouse drag event data
         MouseButton button;     ///< Mouse button
-        size_t sleepMs;         ///< Sleep time in millisecond
+        uint64_t sleepMs;       ///< Sleep time in millisecond
     };
     uint64_t timestamp = 0; ///< Event timestamp in nanoseconds
 };

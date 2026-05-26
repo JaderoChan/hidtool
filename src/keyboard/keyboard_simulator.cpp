@@ -49,7 +49,7 @@ bool KeyboardSimulator::releaseKey(int32_t nativeKey)
 bool KeyboardSimulator::releaseKey(KeyboardKey key)
 { return pri_.sendEvent(KeyboardEvent::createReleaseEvent(key)); }
 
-bool KeyboardSimulator::clickKey(int32_t nativeKey, size_t interval)
+bool KeyboardSimulator::clickKey(int32_t nativeKey, uint64_t interval)
 {
     KeyboardEvent events[3] = {
         KeyboardEvent::createPressEvent(nativeKey),
@@ -60,7 +60,7 @@ bool KeyboardSimulator::clickKey(int32_t nativeKey, size_t interval)
     return pri_.sendEvent(events, 3) == 3;
 }
 
-bool KeyboardSimulator::clickKey(KeyboardKey key, size_t interval)
+bool KeyboardSimulator::clickKey(KeyboardKey key, uint64_t interval)
 {
     int32_t nativeKey = keyboardKeyToNativeKey(key);
     KeyboardEvent events[3] = {

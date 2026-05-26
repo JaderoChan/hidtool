@@ -64,7 +64,7 @@ struct KeyboardEvent
         return result;
     }
 
-    static KeyboardEvent createSleepEvent(size_t sleepMs) noexcept
+    static KeyboardEvent createSleepEvent(uint64_t sleepMs) noexcept
     {
         KeyboardEvent result(ET_SLEEP);
         result.sleepMs = sleepMs;
@@ -77,7 +77,7 @@ struct KeyboardEvent
     union
     {
         int32_t nativeKey;  ///< Platform native keyboard key
-        size_t sleepMs;     ///< Sleep time in millisecond
+        uint64_t sleepMs;   ///< Sleep time in millisecond
     };
     uint64_t timestamp = 0; ///< Event timestamp in nanoseconds
 };

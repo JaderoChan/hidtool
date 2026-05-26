@@ -80,14 +80,14 @@ public:
 
     bool pressButton(MouseButton button);
     bool releaseButton(MouseButton button);
-    bool clickButton(MouseButton button, size_t interval = 0);
+    bool clickButton(MouseButton button, uint64_t interval = 0);
 
     /**
      * @brief Double-click the mouse
      * @param interval1 The time interval between key press and release in a click event.
      * @param interval2 The time interval between two click events.
      */
-    bool doubleClickButton(MouseButton button, size_t interval1 = 0, size_t interval2 = 10);
+    bool doubleClickButton(MouseButton button, uint64_t interval1 = 0, uint64_t interval2 = 10);
 
     /** @} */
 
@@ -98,16 +98,16 @@ public:
      * @{
      */
 
-    bool wheel(const AbsolutePos& absPos, int32_t wheelDelta, size_t interval = 10);
-    bool pressButton(const AbsolutePos& absPos, MouseButton button, size_t interval = 10);
-    bool releaseButton(const AbsolutePos& absPos, MouseButton button, size_t interval = 10);
+    bool wheel(const AbsolutePos& absPos, int32_t wheelDelta, uint64_t interval = 10);
+    bool pressButton(const AbsolutePos& absPos, MouseButton button, uint64_t interval = 10);
+    bool releaseButton(const AbsolutePos& absPos, MouseButton button, uint64_t interval = 10);
 
     /**
      * @param interval1 The time interval between the move event and the click event.
      * @param interval2 The time interval between key press and release in a click event.
      */
     bool clickButton(const AbsolutePos& absPos, MouseButton button,
-        size_t interval1 = 10, size_t interval2 = 0);
+        uint64_t interval1 = 10, uint64_t interval2 = 0);
 
     /**
      * @param interval1 The time interval between the move event and the click event.
@@ -115,7 +115,7 @@ public:
      * @param interval3 The time interval between two click events.
      */
     bool doubleClickButton(const AbsolutePos& absPos, MouseButton button,
-        size_t interval1 = 10, size_t interval2 = 0, size_t interval3 = 10);
+        uint64_t interval1 = 10, uint64_t interval2 = 0, uint64_t interval3 = 10);
 
     /** @} */
 
@@ -140,7 +140,7 @@ public:
      * a drag-and-drop operation.
      */
     bool dragCombo(const AbsolutePos& endPos,
-        MouseButton button = MSBTN_LEFT, size_t interval = 0);
+        MouseButton button = MSBTN_LEFT, uint64_t interval = 0);
 
     /**
      * @param interval1 The time interval between the event of move to `startPos` and the drag event.
@@ -148,7 +148,7 @@ public:
      * a drag-and-drop operation.
      */
     bool dragCombo(const AbsolutePos& startPos, const AbsolutePos& endPos,
-        MouseButton button = MSBTN_LEFT, size_t interval1 = 10, size_t interval2 = 0);
+        MouseButton button = MSBTN_LEFT, uint64_t interval1 = 10, uint64_t interval2 = 0);
 
     /** @} */
 

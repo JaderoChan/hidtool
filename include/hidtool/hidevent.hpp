@@ -47,7 +47,7 @@ struct HidEvent
     #ifdef HIDTOOL_HAS_MOUSE
         MouseEvent mouseEvent;
     #endif // HIDTOOL_HAS_MOUSE
-        size_t sleepMs; ///< Sleep time in millisecond
+        uint64_t sleepMs;   ///< Sleep time in millisecond
     };
 };
 

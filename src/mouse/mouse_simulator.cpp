@@ -55,7 +55,7 @@ bool MouseSimulator::pressButton(MouseButton button)
 bool MouseSimulator::releaseButton(MouseButton button)
 { return pri_.sendEvent(MouseEvent::createReleaseButtonEvent(button)); }
 
-bool MouseSimulator::clickButton(MouseButton button, size_t interval)
+bool MouseSimulator::clickButton(MouseButton button, uint64_t interval)
 {
     MouseEvent events[3] = {
         MouseEvent::createPressButtonEvent(button),
@@ -66,7 +66,7 @@ bool MouseSimulator::clickButton(MouseButton button, size_t interval)
     return pri_.sendEvent(events, 3) == 3;
 }
 
-bool MouseSimulator::doubleClickButton(MouseButton button, size_t interval1, size_t interval2)
+bool MouseSimulator::doubleClickButton(MouseButton button, uint64_t interval1, uint64_t interval2)
 {
     MouseEvent events[7] = {
         MouseEvent::createPressButtonEvent(button),
@@ -83,7 +83,7 @@ bool MouseSimulator::doubleClickButton(MouseButton button, size_t interval1, siz
     return pri_.sendEvent(events, 7) == 7;
 }
 
-bool MouseSimulator::wheel(const AbsolutePos& absPos, int32_t wheelDelta, size_t interval)
+bool MouseSimulator::wheel(const AbsolutePos& absPos, int32_t wheelDelta, uint64_t interval)
 {
     MouseEvent events[3] = {
         MouseEvent::createAbsMoveEvent(absPos),
@@ -94,7 +94,7 @@ bool MouseSimulator::wheel(const AbsolutePos& absPos, int32_t wheelDelta, size_t
     return pri_.sendEvent(events, 3) == 3;
 }
 
-bool MouseSimulator::pressButton(const AbsolutePos& absPos, MouseButton button, size_t interval)
+bool MouseSimulator::pressButton(const AbsolutePos& absPos, MouseButton button, uint64_t interval)
 {
     MouseEvent events[3] = {
         MouseEvent::createAbsMoveEvent(absPos),
@@ -105,7 +105,7 @@ bool MouseSimulator::pressButton(const AbsolutePos& absPos, MouseButton button, 
     return pri_.sendEvent(events, 3) == 3;
 }
 
-bool MouseSimulator::releaseButton(const AbsolutePos& absPos, MouseButton button, size_t interval)
+bool MouseSimulator::releaseButton(const AbsolutePos& absPos, MouseButton button, uint64_t interval)
 {
     MouseEvent events[3] = {
         MouseEvent::createAbsMoveEvent(absPos),
@@ -117,7 +117,7 @@ bool MouseSimulator::releaseButton(const AbsolutePos& absPos, MouseButton button
 }
 
 bool MouseSimulator::clickButton(const AbsolutePos& absPos, MouseButton button,
-    size_t interval1, size_t interval2)
+    uint64_t interval1, uint64_t interval2)
 {
     MouseEvent events[5] = {
         MouseEvent::createAbsMoveEvent(absPos),
@@ -132,7 +132,7 @@ bool MouseSimulator::clickButton(const AbsolutePos& absPos, MouseButton button,
 }
 
 bool MouseSimulator::doubleClickButton(const AbsolutePos& absPos, MouseButton button,
-    size_t interval1, size_t interval2, size_t interval3)
+    uint64_t interval1, uint64_t interval2, uint64_t interval3)
 {
     MouseEvent events[9] = {
         MouseEvent::createAbsMoveEvent(absPos),
@@ -156,7 +156,7 @@ bool MouseSimulator::dragTo(const AbsolutePos& absPos, MouseButton button)
 { return pri_.sendEvent(MouseEvent::createDragEvent(absPos, button)); }
 
 bool MouseSimulator::dragCombo(const AbsolutePos& endPos,
-    MouseButton button, size_t interval)
+    MouseButton button, uint64_t interval)
 {
     MouseEvent events[5] = {
         MouseEvent::createPressButtonEvent(button),
@@ -170,7 +170,7 @@ bool MouseSimulator::dragCombo(const AbsolutePos& endPos,
 }
 
 bool MouseSimulator::dragCombo(const AbsolutePos& startPos, const AbsolutePos& endPos,
-    MouseButton button, size_t interval1, size_t interval2)
+    MouseButton button, uint64_t interval1, uint64_t interval2)
 {
     MouseEvent events[7] = {
         MouseEvent::createAbsMoveEvent(startPos),
