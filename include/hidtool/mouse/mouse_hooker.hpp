@@ -28,7 +28,7 @@ public:
     static MouseHooker& getInstance();
 
     static bool isButtonPressed(MouseButton button);
-    /** @attention Always returns {0, 0} on Linux. */
+    /** @note Always returns {0, 0} on Linux. */
     static AbsolutePos getCursorPos();
 
     bool run();
