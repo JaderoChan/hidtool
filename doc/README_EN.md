@@ -3,7 +3,7 @@
 [[**简体中文**](README_ZH.md) | **English**]
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-2.3.2-blue.svg)](https://github.com/JaderoChan/hidtool)
+[![Version](https://img.shields.io/badge/version-2.4.1-blue.svg)](https://github.com/JaderoChan/hidtool)
 
 A cross-platform C++ HID (Human Interface Device) input simulation and event listening library, supporting keyboard and mouse.
 

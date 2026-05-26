@@ -3,7 +3,7 @@
 [**简体中文** | [**English**](README_EN.md)]
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-2.3.2-blue.svg)](https://github.com/JaderoChan/hidtool)
+[![Version](https://img.shields.io/badge/version-2.4.1-blue.svg)](https://github.com/JaderoChan/hidtool)
 
 一个跨平台的 C++ HID（人机接口设备）输入模拟与事件监听库，支持键盘和鼠标。
 
