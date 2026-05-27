@@ -7,7 +7,12 @@
 
 A cross-platform C++ HID (Human Interface Device) input simulation and event listening library, supporting keyboard and mouse.
 
-This library has C language binding, See [HID Tool C](https://github.com/JaderoChan/hidtool_c)
+This library has other language binding.
+
+| Language | Repository URL |
+| -------- | -------------- |
+| C | [HID Tool C](https://github.com/JaderoChan/hidtool_c) |
+| Python | [HID Tool Python](https://github.com/JaderoChan/hidtool_python) |
 
 ## Features
 
