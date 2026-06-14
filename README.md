@@ -27,7 +27,7 @@ This library has other language binding.
 
 | Platform | Status | Notes |
 | -------- | ------ | ----- |
-| Windows | ✅ | - |
+| Windows | ✅ | If it is necessary to normally monitor the events of high-privilege processes, administrator privileges are required |
 | macOS | ✅ | Requires Accessibility permissions (event listening and simulation features) |
 | Linux | ✅ | Requires administrator privileges (access to input & uinput character devices) |
 
