@@ -13,9 +13,9 @@
 
 /**
  * @defgroup hid_simulators HID Input Simulator
- * @attention On the **MacOS** platform, due to the design of its API.
+ * @attention On the **macOS** platform, due to the design of its API.
  * In fact, it is impossible to know the success or failure of any simulated function execution.
- * So, on the **MacOS** platform, even if you execute the simulation function and get a `true` value,
+ * So, on the **macOS** platform, even if you execute the simulation function and get a `true` value,
  * it still might not have any effect. Generally speaking,
  * you need to grant your application **Accessibility** permissions to function properly.
  */

@@ -266,7 +266,7 @@ enum KeyboardKey : uint32_t
  * @return If the given \ref KeyboardKey value does not have a corresponding native key value, return `-1`;
  * otherwise, return its corresponding native key value.
  * @note On the **Windows** platform, the native key value it returns is `VK_*`.
- * @note On the **MacOS** platform, the native key value it returns is `kVK_*`.
+ * @note On the **macOS** platform, the native key value it returns is `kVK_*`.
  * @note On the **Linux** platform, the native key value it returns is `KEY_*`.
  */
 HIDTOOL_API int32_t keyboardKeyToNativeKey(KeyboardKey key) noexcept;

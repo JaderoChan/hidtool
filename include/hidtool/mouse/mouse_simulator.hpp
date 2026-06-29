@@ -27,7 +27,7 @@ public:
      * @note This API is affected by the environment's DPI policy.
      * On the **Windows** platform, the `HIDTOOL_FORCE_IN_PIXEL` compile option can be enabled to
      * force the use of physical pixels as units.
-     * @details On the **Windows** and **MacOS** platforms, it corresponds to the range of the virtual screen space.
+     * @details On the **Windows** and **macOS** platforms, it corresponds to the range of the virtual screen space.
      * On the **Linux** platform, it always corresponds to {0, 65535, 0, 65535}.
      */
     static AbsolutePosRange getAbsoluteMoveRange();
@@ -122,7 +122,7 @@ public:
     /**
      * @brief Mouse drag move
      * @note On **Windows** and **Linux** platforms, it is equivalent to an absolute move event,
-     * and the `button` parameter will be discarded. On the **MacOS** platform, it is natively supported.
+     * and the `button` parameter will be discarded. On the **macOS** platform, it is natively supported.
      * @sa \ref drag_combo_anchor
      */
     bool dragTo(const AbsolutePos& absPos, MouseButton button = MSBTN_LEFT);

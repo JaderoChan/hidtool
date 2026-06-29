@@ -35,7 +35,7 @@ struct MouseEvent
          * this type of event will never be received by the event handler of \ref MouseHooker.
          * When sending this type of event on the two platforms mentioned above,
          * it is equivalent to an absolute move event, and the field \ref MouseEvent::drag.button will be discarded.
-         * @note On the **MacOS** platform,
+         * @note On the **macOS** platform,
          * both \ref MouseHooker and \ref MouseSimulator natively support this type of event.
          */
         ET_DRAG,
@@ -140,7 +140,7 @@ struct MouseEvent
         /**
          * @brief Absolute movement event coordinates
          * @note
-         * On **Windows** and **MacOS** platforms,
+         * On **Windows** and **macOS** platforms,
          * whether it is the absolute movement event obtained in the \ref MouseHooker event handler or
          * the absolute movement event sent through \ref MouseSimulator, this coordinate is always
          * based on the virtual screen space range.
@@ -155,7 +155,7 @@ struct MouseEvent
 
         /**
          * @brief Relative movement event coordinates
-         * @note Since the **MacOS** platform does not natively support relative movement APIs,
+         * @note Since the **macOS** platform does not natively support relative movement APIs,
          * the implementation simulates relative movement through calculated absolute movement coordinates.
          */
         RelativePos relPos;

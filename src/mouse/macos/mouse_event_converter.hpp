@@ -64,7 +64,7 @@ inline CGPoint getCurrentLocation()
             switch (button)
             {
                 case MSBTN_MIDDLE: cgButton = kCGMouseButtonCenter; break;
-                // TODO: MacOS下，未来可能弃用前进和后退侧键，因为他们在不同的设备厂商上可能具有不一致的值。
+                // TODO: macOS下，未来可能弃用前进和后退侧键，因为他们在不同的设备厂商上可能具有不一致的值。
                 case MSBTN_BACK: cgButton = static_cast<CGMouseButton>(3); break;       // 3 is back button.
                 case MSBTN_FORWARD: cgButton = static_cast<CGMouseButton>(4); break;    // 4 is forward button.
                 default: return false;
@@ -184,7 +184,7 @@ mouseEventFromCGEvent(MouseEvent& event, CGEventType cgEventType, const CGEventR
             switch (button)
             {
                 case kCGMouseButtonCenter: event.button = MSBTN_MIDDLE; break;
-                // TODO: MacOS下，未来可能弃用前进和后退侧键，因为他们在不同的设备厂商上可能具有不一致的值。
+                // TODO: macOS下，未来可能弃用前进和后退侧键，因为他们在不同的设备厂商上可能具有不一致的值。
                 case 3: event.button = MSBTN_BACK; break;       // 3 is back button.
                 case 4: event.button = MSBTN_FORWARD; break;    // 4 is forward button.
                 default: return false;
@@ -200,7 +200,7 @@ mouseEventFromCGEvent(MouseEvent& event, CGEventType cgEventType, const CGEventR
             switch (button)
             {
                 case kCGMouseButtonCenter: event.button = MSBTN_MIDDLE; break;
-                // TODO: MacOS下，未来可能弃用前进和后退侧键，因为他们在不同的设备厂商上可能具有不一致的值。
+                // TODO: macOS下，未来可能弃用前进和后退侧键，因为他们在不同的设备厂商上可能具有不一致的值。
                 case 3: event.button = MSBTN_BACK; break;       // 3 is back button.
                 case 4: event.button = MSBTN_FORWARD; break;    // 4 is forward button.
                 default: return false;
@@ -228,7 +228,7 @@ mouseEventFromCGEvent(MouseEvent& event, CGEventType cgEventType, const CGEventR
                     switch (button)
                     {
                         case kCGMouseButtonCenter: event.button = MSBTN_MIDDLE; break;
-                        // TODO: MacOS下，未来可能弃用前进和后退侧键，因为他们在不同的设备厂商上可能具有不一致的值。
+                        // TODO: macOS下，未来可能弃用前进和后退侧键，因为他们在不同的设备厂商上可能具有不一致的值。
                         case 3: event.button = MSBTN_BACK; break;       // 3 is back button.
                         case 4: event.button = MSBTN_FORWARD; break;    // 4 is forward button.
                         default: return false;
