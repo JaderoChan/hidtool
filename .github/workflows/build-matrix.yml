@@ -1,0 +1,47 @@
+name: Build Matrix
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: build-matrix-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: ${{ matrix.os }} / ${{ matrix.configuration.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+        configuration:
+          - name: static-all
+            cmake-options: ""
+          - name: shared-all
+            cmake-options: "-DHIDTOOL_BUILD_SHARED=ON"
+          - name: keyboard-only
+            cmake-options: "-DHIDTOOL_BUILD_WITH_MOUSE=OFF"
+          - name: mouse-only
+            cmake-options: "-DHIDTOOL_BUILD_WITH_KEYBOARD=OFF"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure
+        shell: bash
+        run: |
+          set -euo pipefail
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release ${{ matrix.configuration.cmake-options }}
+
+      - name: Build
+        shell: bash
+        run: |
+          set -euo pipefail
+          cmake --build build --config Release --parallel
