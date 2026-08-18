@@ -1,6 +1,6 @@
 #include "hooker_private.hpp"
 
-#include <cerrno>           // errno
+#include <errno.h>          // errno
 
 #include <dirent.h>         // dirent
 #include <fcntl.h>          // open()

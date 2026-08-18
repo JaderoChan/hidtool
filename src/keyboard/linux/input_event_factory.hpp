@@ -1,7 +1,7 @@
 #ifndef HIDTOOL_INPUT_EVENT_FACTORY_HPP
 #define HIDTOOL_INPUT_EVENT_FACTORY_HPP
 
-#include <cstdint>  // int32_t
+#include <stdint.h> // int32_t
 
 #include <linux/input.h>
 

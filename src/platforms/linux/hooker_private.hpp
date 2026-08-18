@@ -1,7 +1,7 @@
 #ifndef HIDTOOL_HOOKER_PRIVATE_HPP
 #define HIDTOOL_HOOKER_PRIVATE_HPP
 
-#include <cstdint>  // uint8_t
+#include <stdint.h> // uint8_t
 #include <atomic>   // atomic
 #include <list>     // list
 #include <mutex>    // mutex, lock_guard

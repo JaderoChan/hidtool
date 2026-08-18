@@ -1,7 +1,7 @@
 #include "uinput.hpp"
 
-#include <cerrno>           // errno
-#include <cstdio>           // sprintf()
+#include <errno.h>          // errno
+#include <stdio.h>          // sprintf()
 
 #include <fcntl.h>          // open()
 #include <unistd.h>         // write(), close()

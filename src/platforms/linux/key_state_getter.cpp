@@ -1,6 +1,6 @@
 #include "key_state_getter.hpp"
 
-#include <cerrno>          // errno
+#include <errno.h>          // errno
 #include <string>
 
 #include <dirent.h>         // dirent ...

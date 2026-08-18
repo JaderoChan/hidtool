@@ -3,8 +3,8 @@
 
 #include <hidtool/config.hpp>
 
-#include <cstddef>
-#include <cstdint>
+#include <stddef.h>
+#include <stdint.h>
 
 #ifdef _WIN32
     #define HIDTOOL_WIN

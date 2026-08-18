@@ -1,8 +1,8 @@
 #ifndef HIDTOOL_UINPUT_HPP
 #define HIDTOOL_UINPUT_HPP
 
-#include <cstddef>  // size_t
-#include <cstdint>  // uint16_t
+#include <stddef.h> // size_t
+#include <stdint.h> // uint16_t
 #include <string>   // string
 #include <mutex>    // mutex, lock_guard
 
