@@ -7,13 +7,6 @@
 
 一个跨平台的 C++ HID（人机接口设备）输入模拟与事件监听库，支持键盘和鼠标。
 
-这个库拥有其他语言的绑定：
-
-| 语言 | 存储库 URL |
-| -------- | -------------- |
-| C | [HID Tool C](https://github.com/JaderoChan/hidtool_c) |
-| Python | [HID Tool Python](https://github.com/JaderoChan/hidtool_python) |
-
 ## 特性
 
 - **键盘模块**：全局键盘事件监听、键盘输入模拟
